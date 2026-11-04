@@ -22,3 +22,8 @@ Vicky 人工测后复盘；时延（考虑默认 5+15）；嫌疑板页面、预
 ## 封面 V2（2026-11-03，Vicky：把最帅的男主放中间）
 - opening-v1/cover.py 出 3 张（Jasper 居中靠前、六人 V 字排在两侧、脸在上半、下半留给标题），选 COVER_2（最正中、七人都认得出）→ docs/media/poster.jpg（?v=2）；旧封面在 opening-v1/qa/rejected/poster-v1-lineup.jpg。
 - 飞书 8️⃣ 封面图同步换成 cover-v2.jpg（realtime-drama-test-log v/ila-pack/）。
+
+## 海报版封面（2026-11-03，Vicky：改成海报，女主 C 位，可加别的女生做对比，男生随机排列）
+- opening-v1/poster.py：P1 只有她、P2 她 + Sloane、P3 她 + Sloane + Mei、P4 她 + Sloane + 两位新女嘉宾（黑色波波头祖母绿缎裙、红棕长卷发白色钩花短裙，未定装）。男生顺序按固定种子随机。每版一张带片名（FOUR LIARS, ONE ISLAND + 宣传语）、一张无字版（播放页用）。
+- 对比板 ../casting/poster_v1.jpg。返修：P2 带字版她的左臂发白、P4 带字版 Sloane 穿成白色上衣 → 各重出一张，旧图在 opening-v1/qa/rejected/poster/。
+- 等她选；选定后无字版进 docs/media/poster.jpg（?v=3）、带字版进飞书 8️⃣ 封面。播放页现在还是封面 V2（Jasper 居中）。
