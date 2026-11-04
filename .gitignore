@@ -24,3 +24,8 @@ masters/*.png
 masters/urls-shared.json
 feishu/chunks/
 feishu/*.zip
+tests/runs/
+feishu/img/
+feishu/zip/
+feishu/*.mp4
+feishu/*.mp3

@@ -1,0 +1,252 @@
+# -*- coding: utf-8 -*-
+"""把《三真四假 Four Liars, One Island》第三视角实时版整理成飞书「角色样例」文档的统一内容包格式（版式以 1️⃣ Magnus 为准，结构照 7️⃣ Rowan 的 build_pack_xml.py），
+按块写成 chunks/*.xml，每块尽量不超过约 10 张图。人物、真相、地点、K 卡从两条线的资料包读，开场台词从确认版 cues 读。
+图片的公网地址见 urls.json（prep_images.py 推到 realtime-drama-test-log 的 v/ila-pack/）。视频、音频、压缩包先写占位，media.py 再插进单元格。"""
+import json, sys
+from html import escape as E
+from pathlib import Path
+D = Path(__file__).resolve().parent; R = D.parent
+sys.path.insert(0, str(R / 'opening-v1'))
+from cast import CAST
+PW = json.loads((R / 'wes/pack/ila_pack.json').read_text(encoding='utf-8')); PJ = json.loads((R / 'jasper/pack/ila_pack.json').read_text(encoding='utf-8'))
+CUES = json.loads((R / 'opening-v1/delivery/cues-确认版.json').read_text(encoding='utf-8'))['cues']
+U = json.loads((D / 'urls.json').read_text()); SZ = json.loads((D / 'sizes.json').read_text())
+PAGE = 'https://lyx1265897416-lab.github.io/four-liars-one-island/?k=' + (R / 'wes/token.txt').read_text().strip()  # 口令不进仓库
+LOC = {'L1': 'L1 篝火露台', 'L2': 'L2 配对套房', 'L3': 'L3 泻湖海滩', 'L4': 'L4 无边泳池', 'L5': 'L5 天台', 'L6': 'L6 户外吧台'}
+ROUND = {'K02': '第 1 轮', 'K03': '约第 2 轮', 'K04': '约第 3–4 轮', 'K05': '约第 5 轮', 'K06': '约第 6 轮', 'K07': '约第 7 轮', 'K08': '约第 8 轮',
+         'K09': '约第 9 轮', 'K10': '约第 10 轮', 'K11': '约第 11–12 轮', 'K12': '第 13 轮以后'}
+WHO = {'mei': 'Mei', 'her': '她 Sofia', 'sloane': 'Sloane', 'wes': 'Wes', 'jasper': 'Jasper'}
+
+
+def e(t): return E(str(t), quote=False)
+def p(t=''): return f'<p>{t}</p>'
+def b(t): return f'<b>{e(t)}</b>'
+def a(u, t): return f'<a href="{E(u)}">{e(t)}</a>'
+def h3(t): return f'<h3>{e(t)}</h3>'
+def h4(t, seq=None): return f'<h4 seq="{seq}">{e(t)}</h4>' if seq else f'<h4>{e(t)}</h4>'
+def pre(cap, t): return f'<pre caption="{E(cap)}" lang="Plain Text"><code>' + '<br/>'.join(e(x) for x in t.strip().split('\n')) + '</code></pre>'
+def img(k, cap, w=300):
+    ow, oh = SZ[k]; return f'<img width="{w}" height="{round(w * oh / ow)}" caption="{E(cap)}" name="{k}.jpg" href="{E(U[k])}"/>'
+def td(x): return f'<td vertical-align="top">{x if x.startswith("<") else p(e(x))}</td>'
+def table(widths, head, rows):
+    cols = ''.join(f'<col width="{w}"/>' for w in widths)
+    h = ('<thead><tr>' + ''.join(f'<th vertical-align="top">{p(e(x))}</th>' for x in head) + '</tr></thead>') if head else ''
+    return f'<table><colgroup>{cols}</colgroup>{h}<tbody>' + ''.join('<tr>' + ''.join(td(c) for c in r) + '</tr>' for r in rows) + '</tbody></table>'
+def ph(kind, name): return p(f'〔{kind}占位 {name}〕')
+NONE = '—（暂无）'
+GAP = p()
+CH = {}
+
+# ---------- 1 头部 + 视频效果 ----------
+lines = '\n'.join(f"〔{c['s']:.1f}s〕{WHO.get(c['who'], c['who'])}：{c['en']}　{c['zh']}" for c in CUES)
+OPEN_TXT = f"""〔0.0s｜航拍〕夜里的私人海岛别墅：青绿色的无边泳池、棕榈、火炬、篝火，月光铺在海面上。
+〔2.0s｜Mei〕主持人 Mei 站在篝火前，对着镜头宣布规则。
+〔7.6s｜七人〕七位男嘉宾在篝火前站成一排，镜头横移（Jasper、Wes、Ethan、Brody、Kian、Jude、Ravi）。
+〔17.3s｜她〕她穿着香槟金缎面吊带裙，沿着泳池走进派对，嘴角带着笑。
+〔42.7s｜她〕她抬眼看向楼梯上的 Jasper，又看回面前的 Wes，在掂量。
+
+{lines}
+
+〔交互开始〕午夜配对：我选 Wes／我选 Jasper；也可以直接打字，替她说一句话或做一个动作（提到 Jasper、楼梯、天台的话走 Jasper 线，其余走 Wes 线）。"""
+
+intro = (h3('角色简介') + p(e('恋爱真人秀《三真四假》：七个男人上了私人海岛，三个是来找老婆的千万富翁，四个是为一百万奖金装富豪的骗子。选到骗子，就得跟他一起回家。'))
+         + p(e('观众就是她：索菲亚 Sofia，26 岁，女嘉宾，干脆、聪明、带一点冷幽默，想找一个真的人，不是一张支票。第三视角：观众像看真人秀一样看着她，每轮替她选一个动作，或直接打一句她要说的话。'))
+         + p(e('两位领跑的男嘉宾就是两条线：Wes（暖派，记得她说过的每件小事）和 Jasper（冷派，话少、只说一半）。开场后她选谁做今晚的搭档，就走谁的线。谁是真谁是假藏在资料包里，揭晓之前角色不会说破。'))
+         + h3('开场白') + pre('开场白｜逐句对应开场确认版 50 秒（V2）', OPEN_TXT))
+CH['01'] = ('<h2>8️⃣ 三真四假 Four Liars, One Island｜Wes · Jasper</h2>'
+  + '<blockquote>' + p(b('一句话概念：') + e('《三真四假 Four Liars, One Island》。七个男人，三个真富豪，四个骗子；选到骗子，你就得跟他回家。第三视角恋综实时互动剧：你是女嘉宾，每一轮替她决定信谁、试探谁、靠近谁。学习 Taplot《Don\'t Hate the Player》的恋综玩法后原创改编，剧名、人物、桥段都是新的。')) + '</blockquote>'
+  + table([164, 656], None, [[img('cover', '七位男嘉宾｜开场队列（封面）', 160), intro]])
+  + h3('视频效果')
+  + p('体验🔗：' + a(PAGE + '&lang=zh', '中文测试链接') + '｜' + a(PAGE + '&lang=en', '英文测试链接') + e('（开场之后全部实时生成；链接里的口令用来调用生成，只内部发；要这台 Mac 开着）'))
+  + p(e('实时生成测试记录：还没进测试记录页。2026-11-03 冒烟测试 3 轮（Wes 线 2 轮、Jasper 线 1 轮）都生成成功，见右侧样例。'))
+  + table([348, 348, 348], ['开场视频', '关键情节视频', '状态参考视频'], [[
+      p(b('开场确认版｜50 秒')) + ph('视频', 'ila-opening') + p(e('航拍 → Mei 宣布三真四假 → 七人队列 → 她入场 → Sloane 挑衅 → Wes 递酒、她问真假 → Jasper 在楼梯上邀她听实话 → Mei 宣布午夜配对。')),
+      p(b('实时生成样例｜Jasper 线第 1 轮（15+15 秒）')) + ph('视频', 'ila-live-jasper') + p(e('她当众选了 Jasper；Mei 宣布配对，Sloane 挽着 Wes 冷笑，Mei 让两人回套房。冒烟测试，不是她本人测的。')),
+      p(b('待定')) + p(e('还没有状态参考视频（她本人测试之后补）。')),
+    ]])
+  + p(e('视频制作说明：开场用 Seedance 2.5（720p，9:16）原生演出，对白是模型原声；首帧用 gpt-image-2/edit 出，场地先出空镜母版，人物按定装图；对白一律单人近景，视线贴镜头一侧，画边留对方一缕虚焦。字幕不烧进画面，中英由页面显示。'
+             '实时段接第三视角共用 PE（Vivix，auto 时长，第 1 段按第 2 段预计出片倒推开播）；两条线各一个中转（Wes 8906、Jasper 8907），本剧只提供资料包和人物、地点、时间线。')))
+
+# ---------- 2 角色地图（分两块，每块不超过约 10 张图） ----------
+VOICE = {'wes': p(b('Wes · Seedance 原生')) + ph('音频', 'voice-wes') + p(e('温暖、轻松、带笑意的美式英语男声。')),
+         'jasper': p(b('Jasper · Seedance 原生')) + ph('音频', 'voice-jasper') + p(e('低沉、安静、不紧不慢的美式英语男声。')),
+         'her': p(b('她 · Seedance 原生')) + ph('音频', 'voice-her') + p(e('自然、偏低、干脆、带一点冷幽默的美式英语女声。')),
+         'mei': p(b('Mei · Seedance 原生')) + ph('音频', 'voice-mei') + p(e('四十出头、精致、带调侃的美式英语主持人声线。')),
+         'sloane': p(b('Sloane · Seedance 原生')) + ph('音频', 'voice-sloane') + p(e('甜、亮、话里带刺的美式英语女声。'))}
+ROLE = {'wes': 'Wes（男主 A）', 'jasper': 'Jasper（男主 B）', 'her': '她 Sofia（观众）', 'mei': 'Mei（主持人）', 'sloane': 'Sloane（对手）', 'ethan': 'Ethan', 'brody': 'Brody', 'kian': 'Kian', 'jude': 'Jude', 'ravi': 'Ravi'}
+SRC = {'wes': '角色库 欧美男 28 组 11', 'jasper': '角色库 欧美男 28 组 01', 'her': '角色库 白底女 32 组 11', 'mei': '新生成 H1（欧亚混血）', 'sloane': '角色库 白底女 32 组 23',
+       'ethan': '角色库 欧美男 28 组 16', 'brody': '角色库 欧美男 28 组 02', 'kian': '角色库 男角色第二版 03（APP 新人 Kian Mercer）', 'jude': '角色库 欧美男 28 组 27（APP 新人 Jude Larsen）', 'ravi': '角色库 男角色 31 组 26'}
+def mrow(c):
+    return [ROLE[c], img(f'{c}_front', f'{ROLE[c]}｜{SRC[c]}', 100), img(f'{c}_suit', f'{ROLE[c]}｜定装：{CAST[c][5]}', 110), NONE, NONE, NONE, NONE, VOICE.get(c, '未单独出声（仪式、群像里出现）')]
+HEAD = ['角色名', '角色主图', '角色全身图', '面部三视图', '全身三视图', '多角度视图', '角色表情', '角色音']
+W8 = [100, 110, 100, 110, 100, 100, 100, 378]
+CH['02'] = (GAP + h3('完整角色地图') + p(e('演员全部取自 Vicky 角色库（主持人 Mei 是新生成的 H1），定装是开场工程按库图出的白底全身图（opening-v1/costume/）。三视图、多角度、表情图都还没做；实时版用的是正面头像、头部裁图、定装上半身和合图（masters/）。'))
+  + table(W8, HEAD, [mrow(c) for c in ('wes', 'jasper', 'her', 'mei', 'sloane')]))
+CH['03'] = table(W8, HEAD, [mrow(c) for c in ('ethan', 'brody', 'kian', 'jude', 'ravi')])
+SCENES = [('L1', 'L1 篝火露台（空镜母版）'), ('S01', '海岛别墅航拍（开场首镜）'), ('L4', 'L4 无边泳池（空镜母版）'), ('S11', '通往天台的楼梯（开场 Jasper）')]
+PROPS = [('key_wes', '第 1 轮关键帧｜Wes 线（男左女右，她拿着那杯青柠鸡尾酒）'), ('key_jasper', '第 1 轮关键帧｜Jasper 线'), ('S04', '主持人的素面奶油色卡片（不写字）'), ('scooter', '岛上代步的白色电动小摩托（她要兜风时用）')]
+CH['04'] = h4('场景图与道具图') + table([431, 389], ['场景图', '道具图'], [[p(b(n)) + img(k, n, 240), p(b(PROPS[i][1])) + img(PROPS[i][0], PROPS[i][1], 220)] for i, (k, n) in enumerate(SCENES)])
+
+# ---------- 3 资料包 + 人设 ----------
+def chars(P, he): return P['chars'][he]
+CH['05'] = (GAP + h3('资料包') + ph('附件', 'ila-pack')
+  + p(e('压缩包里有：两条线的资料包 JSON、开场确认版中英字幕和 cues、开场分镜、改编方案、本包全部配图。完整工程在本机 ') + '<code>output/island-liars-live-v1/</code>' + e('：') + '<code>make_lines.py</code>' + e(' 生成两条线的资料包（') + '<code>wes/pack/ila_pack.json</code>' + e('、') + '<code>jasper/pack/ila_pack.json</code>' + e('：世界、人物、真相表、地点 L1–L6、关键片段卡 K01–K12、规则、冲突）和 ') + '<code>drama_slots.py</code>' + e('（填进第三视角共用模板的内容），通用规则在 ') + '<code>tools/realtime-third/templates/</code>' + e('；开场工程在 ') + '<code>opening-v1/</code>' + e('（先读 STATUS.md）；原作拆包在 ') + '<code>refs/taplot-dont-hate-the-player/</code>' + e('。公开仓库 ') + a('https://github.com/lyx1265897416-lab/four-liars-one-island', 'four-liars-one-island') + e('。'))
+  + p(e('资料包是兜底的剧情地图，不是轨道：她有明确的剧情方向就按她的来（换搭档、离开节目、去找别人都照演），资料包只在推进慢时兜底。'))
+  + GAP + h3('完整性格与角色设定')
+  + h4('身份', 1) + pre('身份', """男主 A：Wes，28 岁，成年男性，男嘉宾，自称在圣地亚哥开冲浪酒吧。
+男主 B：Jasper，29 岁，成年男性，男嘉宾，话少，被问到钱就转开话题。
+女主（观众）：索菲亚 Sofia，26 岁，成年女性，女嘉宾。观众替她做决定。
+配角：主持人 Mei（42 岁）；女嘉宾 Sloane（26 岁，她的对手）；男嘉宾 Ethan、Brody、Kian、Jude、Ravi。
+作品：《三真四假 Four Liars, One Island》。类型：女性向恋爱真人秀悬疑喜剧，第三视角开放式实时互动剧，两条男主线。""")
+  + h4('世界观与背景', 'auto') + pre('世界观与背景', '\n'.join(PW['world']) + '\n\n【隐藏真相｜揭晓之前角色不说破】\nWes 线：' + PW['truth']['secret'] + '\nJasper 线：' + PJ['truth']['secret'] + '\n' + '\n'.join(PW['truth']['he_never'][2:]))
+  + h4('外观', 'auto') + pre('外观｜以 opening-v1/costume 定装为准', '\n'.join(f"{ROLE[c]}：{CAST[c][5]}" for c in CAST) + """
+
+画风：写实真人恋爱真人秀电影画面。夜里按脸定曝光，人物的脸被火炬和串灯的暖光照亮，环境压暗成深蓝夜色，泳池的青绿色光做轮廓光；饱和度饱满，不雾、不灰、不平光。脸、发型、服装和局部细节（她的小金圈耳环、Wes 的皮绳手链、指甲）全程不变。""")
+  + h4('自我看法和优先事项', 'auto') + pre('自我看法和优先事项', """她：想找一个真的人，不想被一张支票或一句漂亮话骗；先自己判断，再决定信谁。
+Wes：太想被选中；钱是真的需要，喜欢她也是真的，这两件事让他越来越难受。
+Jasper：受够了冲着钱来的人，所以先看人；在意的不是她选不选他，而是她为什么选他。""")
+  + h4('性格与行为', 'auto') + pre('性格与行为', 'Wes：' + chars(PW, 'Wes') + '\n\nJasper：' + chars(PJ, 'Jasper') + '\n\n她：' + PW['chars']['她'] + '\n\nMei：' + PW['chars']['Mei'] + '\n\nSloane：' + PW['chars']['Sloane'] + '\n\nEthan：' + PW['chars']['Ethan'] + '\n\nBrody：' + PW['chars']['Brody'])
+  + h4('喜好与厌恶', 'auto') + pre('喜好与厌恶', """她在意：真话、自己做决定、不被当成奖品。讨厌：背好的台词、当众被挑拨、别人替她选。
+Wes 在意：她说过的每件小事（她爱喝不加糖的东西、怕被晾在一边）。他调酒的手法专业得不像老板。
+Jasper 在意：她为什么选他。一眼认得出酒的年份，手上有帆船缆绳磨出的茧，但从不谈钱。
+本包不补造和故事无关的口味、怪癖或私史。""")
+  + h4('说话风格', 'auto') + pre('说话风格', """全程美式英语，中文字幕。恋综的轻快互怼、当众的小冲突、一句话的反差；中文不逐字翻。
+Wes：接梗、自嘲、说得快，太顺的时候会自己点破（“That came out fast, didn't it?”）。
+Jasper：短句，常反问，干巴巴的幽默，笑意少但一出来就很真（“Would you believe me either way?”）。
+她：干脆、不买账、话少；第三视角里她在画面里每轮最多说一句。
+Mei：主持腔，享受反转；Sloane：甜里带刺，叫人 sweetie 之类的称呼不用（避免像原作）。""")
+  + h4('对话示例', 'auto') + pre('对话示例｜开场确认版 + 资料包 K 卡', '\n'.join(f"{WHO.get(c['who'], c['who'])}：{c['en']}（{c['zh']}）" for c in CUES)
+                                  + '\n' + '\n'.join(f"Wes 线 {b_['id']}：{en}（{zh}）" for b_ in PW['beats'][1:] for en, zh in b_['lines'])
+                                  + '\n' + '\n'.join(f"Jasper 线 {b_['id']}：{en}（{zh}）" for b_ in PJ['beats'][1:] if b_['id'] in ('K03', 'K06', 'K10') for en, zh in b_['lines'])))
+
+# ---------- 4 场景设定 ----------
+CH['06'] = (GAP + h3('场景设定')
+  + h4('背景和过去', 1) + pre('背景和过去', '恋爱真人秀《三真四假》在一座私人海岛的白色别墅里拍摄。七位男嘉宾里三个是真富豪、四个是装富豪的骗子，骗子撑到最后就拿走一百万；女嘉宾配对、做挑战、投票淘汰，淘汰时主持人 Mei 公开揭晓被淘汰者是真是假；最终仪式上女嘉宾决定带不带搭档回家，带回骗子就算输。手机都被节目组收走，合同禁止自曝身份。')
+  + table([164, 343, 313], ['时间', '经历', '对当前的影响'], [
+      ['节目开拍前', 'Wes 签了“假富豪”合同来拿奖金（他欠着母亲的医药费）；Jasper 卖掉公司后报名，想找不冲着钱来的人', '两人都不能自曝；真假只能靠线索判断'],
+      ['第一晚入场', '她穿香槟金吊带裙入场，Sloane 当面挑衅', 'Sloane 是她的对手，会一路挑拨'],
+      ['泳池边', 'Wes 递来一杯插青柠的淡色鸡尾酒，她问他“真的还是假的”', 'Wes：“一周后再问我，我还会在这儿。”'],
+      ['楼梯上', 'Jasper 说“想听实话？下面可没有”，上了天台', 'Jasper 线的开场钩子'],
+      ['23:55', 'Mei 宣布午夜配对', '交互从这里开始：她选今晚的搭档'],
+    ])
+  + h4('当前生活环境', 'auto') + pre('当前生活环境｜资料包 L1–L6', '\n'.join(f"{LOC[x['id']]}：{x['set']}" for x in PW['locs']) + '\n\n地点顺序（兜底）：' + PW['order']['locations'] + '。她要去别的地方（厨房、海边、离开节目）就当轮去。')
+  + h4('社交关系网', 'auto') + table([113, 113, 200, 200, 194], ['人物', '形象图', '身份与动机', '与她／男主的关系', '开场时状态'], [
+      ['Mei', img('mei_front', 'Mei', 100), '主持人，知道所有人的底细，只在仪式上揭晓', '主持配对、挑战、淘汰和最终仪式', '在篝火边宣布午夜配对'],
+      ['Sloane', img('sloane_front', 'Sloane', 100), '女嘉宾，想把她赶下岛；用嘴和小手段，不暴力', '抢搭档、挑拨、在挑战里装可怜', '挑衅过她；会挽住她没选的那位'],
+      ['Ethan', img('ethan_front', 'Ethan', 100), '腼腆，看起来最不像富豪，其实是真的', '第一次淘汰仪式被全场票送走（揭晓真富豪）', '在队列里'],
+      ['Brody', img('brody_front', 'Brody', 100), '笑得太熟练，台词像背过的，是骗子', '第二次仪式被揭穿', '在队列里'],
+      ['Kian、Jude、Ravi', '见角色地图', 'Kian 是真富豪；Jude、Ravi 是骗子（真相表）', '背景嘉宾，不主动推剧情', '在队列里'],
+    ])
+  + h4('与用户的关系', 'auto') + pre('与用户的关系', """观众就是她（默认叫 Sofia，她自己说别的名字就用她的）。第三视角：观众像看真人秀，画面里同时有她和男主；观众点的选项或打的话由她在画面里演出来。
+开场后她选今晚的搭档，选谁就走谁的线（Wes 线 / Jasper 线），两条线各自完整。
+她的感情没有预设：信他、怀疑他、换搭档、离开节目都是有效剧情，也都要往前推。""")
+  + h4('亲密关系与性行为', 'auto') + pre('亲密关系与性行为', """两人是节目里的配对搭档，不是情侣。资料包的亲密节点：K10 天台星空的心里话，K11 第一次吻（只在她有明确意愿时；他先看她、确认；吻后把下一步交回给她；吻不揭晓真假）。
+节目里的配对和镜头不算亲密的许可，只看她这一轮的意愿。配对套房里他主动说睡日床沙发。
+实时版按第三视角共用 PE：不写亲吻以上的亲密细节，任何一帧两人都穿着衣服。""")
+  + h4('初始场景与故事钩子', 'auto') + pre('初始场景', '节目第一晚 23:55，岛上别墅的篝火露台，午夜配对仪式马上开始。' + PW['locs'][0]['set'] + '。她刚和 Wes 喝过一杯、问过他真假；Jasper 在楼梯上邀她上天台听实话。Mei 举起卡片：午夜，女士们选出自己的搭档。')
+  + p('开场情境与开场白')
+  + table([178, 642], ['要素', '设定'], [
+      ['时间／地点', '节目第一晚 23:55，篝火露台（L1）'],
+      ['此前发生什么', 'Mei 宣布三真四假；Sloane 挑衅；Wes 递酒；Jasper 在楼梯上邀她听实话'],
+      ['她的初始状态', '手里拿着 Wes 给的那杯青柠鸡尾酒，好奇、不轻信'],
+      ['触发事件', 'Mei 宣布午夜配对'],
+      ['初始冲突', '七个人里四个在说谎；她要先选一个今晚的搭档'],
+      ['交互起点', '我选 Wes／我选 Jasper／自由输入（提到 Jasper、楼梯、天台走 Jasper 线）'],
+      ['场景标题（可选）', '三真四假｜Four Liars, One Island。场景风格：第三视角恋综'],
+    ])
+  + p('原始建议回复（Suggested replies）：') + '<ul><li>I pick Wes.／我选 Wes。（走 Wes 线：午夜配对，她选了 Wes）</li></ul><ul><li>I pick Jasper.／我选 Jasper。（走 Jasper 线：午夜配对，她选了 Jasper）</li></ul>'
+  + p(e('互动补充建议：建议回复只是入口。她也可以配对前先单独问 Wes“你到底是真的吗”、先上天台找 Jasper 要那句实话、直接当众问“你们谁是骗子”；每一种都要当轮有结果。'))
+  + h4('故事发展方向与长期剧情', 'auto') + pre('故事方向｜约 13 轮', """第 1–4 轮：午夜配对、第一晚的套房（他睡日床沙发，她问“你是那四个之一吗”）、早上的泻湖桨板挑战，Sloane 假装抽筋。
+第 5–8 轮：第一次淘汰仪式（全场票送走 Ethan，Mei 揭晓他是真富豪）、吧台的私聊“合同不让我说”、Sloane 当众挑拨、她发现一条线索。
+第 9–12 轮：第二次仪式揭穿 Brody 是骗子、天台星空的心里话、清醒的吻。
+第 13 轮以后：最终仪式，她决定带不带他回家，Mei 揭晓真相。
+Wes 线真相：他是骗子，但心动是真的。Jasper 线真相：他是真富豪，想找一个不冲着钱来的人。
+以上只在她没有自己的方向时兜底。""")
+  + h4('场景与道具素材', 'auto') + p(e('图见上面「场景图与道具图」。连续性约束：')) + pre('场景、道具连续性约束', '\n'.join(PW['rules'][3:]) + """
+轴线：和共用模板一致，男主在画面左侧、她在画面右侧。
+Wes 递的那杯酒：矮玻璃杯、淡色鸡尾酒、一片青柠，不插吸管、不插花；她拿着时一直是这一杯，放下就当场放下。
+Mei 的卡片永远是素面奶油色，不写字；节目组的提示卡、文件夹都没有可读文字。
+仪式在夜里的篝火露台；挑战在白天的泻湖。夜里不突然变白天。"""))
+
+# ---------- 5 互动设定 ----------
+def beats(P, tag): return [[f"{tag} {x['id']}｜{x['role'].split('：')[0]}", f"{LOC[x['loc']]}，{ROUND.get(x['id'], '')}", x['role'], x['acts'] + ' → ' + x['out'] + '。台词：' + ' / '.join(en for en, _ in x['lines'])] for x in P['beats'][1:]]
+BJ = [r for r in beats(PJ, 'Jasper') if r[0].split()[1].startswith(('K03', 'K06', 'K08', 'K10', 'K12'))]
+CH['07'] = (GAP + h3('互动设定')
+  + h4('预设选项') + pre('预设选项 PE｜第三视角共用', """只有第一个选择点是写好的，由播放页给出：A「我选 Wes。」→ Wes 线 K02；B「我选 Jasper。」→ Jasper 线 K02。自由输入里提到 Jasper、楼梯、天台走 Jasper 线，其余走 Wes 线。之后每轮两个选项由导演层按刚发生的剧情现写，都配自由输入框。
+选项写成她的动作或她说的一句带动作的话（中文不超过 16 字，英文不超过 12 词），用她的第一人称；不写提问。例如：走向他、拉他去天台、去泻湖、翻他放在套房的东西、去问 Mei、当众替他说话、伸手碰他、去找 Sloane 对质。
+她还不知道的事，选项不替她说出来（她没找到线索、节目也没揭晓，就不能写“原来他是骗子”）。""")
+  + h4('通用视频生成') + pre('通用视频生成｜本剧内容（规则用第三视角共用 PE）', """规则来源：飞书《通用 PE › realtime 生成 PE · 观众第三视角版》，所有第三视角剧共用同一份、同一个版本号，代码在 tools/realtime-third/templates/。本剧只填自己的内容（make_lines.py → wes/、jasper/ 的 drama_slots.py）：
+· 两条线：Wes 线中转 8906、Jasper 线中转 8907，同一套人物和母版，只有男主、真相、第 1 轮关键帧不同。
+· 人物外形：见「外观」，提示词层逐轮写入。配角 Mei、Sloane、另一位男主、Ethan、Brody 有身份母版（头像 + 定装合图），出镜写进 cast，只进第 2 段；Kian、Jude、Ravi 写 extras。
+· 地点：资料包 L1–L6 的 set，她要去别处就当轮写新 set。
+· 时间：从节目第一晚 23:55 往后走（午夜、第二天上午、傍晚、夜里）。
+· 第 1 轮首帧：午夜篝火边的双人镜头（男左女右，她拿着那杯青柠鸡尾酒），开场停在 Mei 举卡宣布配对的近景。
+· 画风：写实真人恋综夜景，按脸定曝光，环境压暗。
+
+冒烟测试（2026-11-03，3 轮）已知问题：Wes 线第 1 轮第 1 段开头有一个过肩镜，左右站位短暂对调；Wes 线第 2 轮换场到套房后，第 2 段中途又回到了泳池边。""")
+  + h4('用户行动与角色回应') + pre('用户行动与角色回应 PE｜V1.0', """先判断她是在给方向、提问、试探，还是要改剧情。她有明确的剧情方向就按她的设定演，不拉回资料包。
+她要的事当轮兑现：她要换搭档就真的换，她要离开节目就真的离开，她要去天台就真的到天台。
+她直接问“你是不是骗子”，他按真相回应但不自曝（合同禁止）；她拿出确凿证据时他不再否认。
+她说停、后退、要离开，他立刻照做，让开路，不挡、不拦；不拿节目、配对或奖金逼她表态。""")
+  + table([174, 282, 282], ['用户行动', '角色回应方向', '需要保留的连续信息'], [
+      ['当众选他', '他意外、高兴（Wes）或克制地问“为什么是我”（Jasper）；Sloane 挽住另一位', '两人成为搭档'],
+      ['直接问“你是那四个之一吗”', 'Wes 答“不是”太快又自己点破；Jasper 反问“我怎么回答你会信”', '她信了几分'],
+      ['翻他的东西、找证据', 'Wes 口袋里的节目组提示卡；Jasper 手上的茧、认出酒的年份', '找到了哪条线索'],
+      ['去问 Mei', 'Mei 笑着不答，只说仪式上见；可以给一句暗示', 'Mei 不提前揭晓'],
+      ['找 Sloane 对质', 'Sloane 装无辜，偶尔说漏一句', 'Sloane 的敌意'],
+      ['要换搭档、离开节目', '照演；他接受，可以失落，不纠缠', '新的搭档／离岛'],
+      ['伸手碰他、要亲近', '他先看她、确认；只看她这一轮的意愿', '亲近程度只按发生的记'],
+      ['要改设定或给自己新身份', '照演，后面按新设定往下走', '她给的身份和设定'],
+    ])
+  + h4('隐藏信息、事件与触发条件') + table([130, 170, 230, 230], ['关键事件', '地点与推荐轮次', '触发条件', '执行与状态变化'], beats(PW, 'Wes') + BJ)
+  + p(e('Jasper 线的 K02、K04、K05、K07、K09、K11 和 Wes 线相同，只是男主换成 Jasper。K 卡顺序：' + PW['order']['cards'] + '。推荐轮次只在她没有方向时兜底。'))
+  + h4('全剧视频检查：状态记录、连续性与剧情合理性推进') + pre('全剧视频检查 PE｜第三视角共用 + 本剧连续性', """按共用 PE 每轮记：地点和在这里的轮数、已演的 K 卡、她知道了什么（找到哪条线索、仪式揭晓了谁）、亲近程度、物品台账（那杯青柠鸡尾酒、Mei 的卡片、提示卡）、穿着。
+开播前硬检查：人数、动态（普通人做得到的动作）、裸露；不合格重生成。
+本剧要特别查：男主的脸和发色（Wes 深金色乱发、Jasper 深棕卷发不对调）、服装颜色（Wes 浅天蓝亚麻、Jasper 午夜藏蓝）；她的直发和小金圈耳环；Mei 的乌黑波波头和白西装裙；仪式结果按真相表；夜里不变白天。"""))
+
+# ---------- 6 声音 + 关键片段 + 核查 ----------
+CH['08'] = (GAP + h3('声音方案')
+  + pre('声音方案 PE｜V1.0', """声音世界：夜里的海岛派对。海浪、火炬燃烧、棕榈叶的风声、远处派对的人声；白天是泻湖的水声和海鸟。对话近，环境远。
+开场：对白是 Seedance 2.5 原生演出的原声，没有配音和对口型；没台词的镜头也保留原生音；环境声、音效、配乐分轨；两处揭秘点（Mei 说完规则、宣布午夜配对）各一声真人秀揭秘音效。
+实时版：每轮由 Vivix 现生成声音，和开场的原生声线不是同一个；等待时播放本剧配乐。""")
+  + h4('角色声音') + table([150, 150, 203, 378], ['角色名', '声音 ID／版本', '音色与演绎', '角色音'], [
+      ['Wes', 'Seedance 2.5 原生（开场）；实时段 Vivix 原声', '温暖、轻松、带笑意，会自嘲', VOICE['wes']],
+      ['Jasper', 'Seedance 2.5 原生（开场）；实时段 Vivix 原声', '低沉、安静、不紧不慢，句子短', VOICE['jasper']],
+      ['她 Sofia', 'Seedance 2.5 原生（开场）；实时段 Vivix 原声', '自然、偏低、干脆、带一点冷幽默', VOICE['her']],
+      ['Mei', 'Seedance 2.5 原生（开场）', '精致、带调侃的主持腔', VOICE['mei']],
+      ['Sloane', 'Seedance 2.5 原生（开场）', '甜、亮、话里带刺', VOICE['sloane']],
+    ])
+  + h4('BGM') + table([150, 353, 378], ['素材 ID／版本', '适配与使用说明', '音频试听'], [
+      ['island-groove · 新生成', '慵懒的热带 deep house 律动、带点悬疑的恋综垫乐。开场压在对白下面（约 -19 dB，对白时侧链压低）；实时版等待时循环播放', p(b('bgm-island.mp3')) + ph('音频', 'bgm-island')],
+    ])
+  + h4('音效') + table([150, 353, 378], ['素材 ID／版本', '适配与使用说明', '音频试听'], [
+      ['sting · 新生成', '真人秀揭秘音效（低音重击 + 上扬尾音），Mei 说完规则和宣布午夜配对后各一次', '已混入开场'],
+      ['whoosh · 新生成', '切到七人队列时的轻扫音', '已混入开场'],
+      ['amb · 新生成', '夜里泳池派对的环境声：海浪、蟋蟀、篝火、火炬、远处人声（不含音乐和清晰人声）', '已混入开场'],
+      ['SFX_NATIVE · 实时段', '实时段的环境声和动作声来自 Vivix 原声，没有分轨', '无独立文件'],
+    ])
+  + h4('BGM 适配／调用／生成规则') + pre('BGM 适配／调用／生成规则', """开场：配乐和对白、环境、音效分四轨混（opening-v1/edit/dialogue.wav、ambience.wav、sfx.wav、bgm.wav），amix 不做自动归一（normalize=0），整体响度约 -16 LUFS。
+实时版：等待生成时淡入本剧配乐，开播淡出。揭秘音效不用在实时段。""")
+  + h4('播放规则') + pre('播放规则 PE', """开场播完停在 Mei 举卡的近景（缓推循环），出配对选项和输入框。
+选了搭档后，在那条线的中转上开局；实时段第 1 段按第 2 段预计出片倒推开播，两段接着播；第 2 段没到就停在第 1 段最后一帧等。
+字幕只在说话时显示，中英按 lang 参数；菜单和状态条全英文。""")
+  + GAP + h3('关键片段预设｜ILA_PEAK_01')
+  + table([211, 348], ['参考视频', '素材资产'], [[
+      p(b('ILA_PEAK_01 · 最终仪式（K12）')) + p(e('这一段还没实际生成过。')),
+      p(e('L1 篝火露台（夜）；Mei 的素面卡片；男主和她的定装；Mei 母版。前置：两次淘汰仪式已过（Ethan 真、Brody 假），她对他的真假已有判断。'))]])
+  + pre('ILA_PEAK_01｜最终仪式｜高潮片段预设 PE｜V1.0', """【目的与触发】这部剧的揭晓：她决定带不带他回家，Mei 揭晓他是真富豪还是骗子。触发：第 13 轮以后，或她主动说要结束、要做决定。
+【读取实际起态】继承她找到的线索、他说过的心里话、吻有没有发生、Sloane 的状态。
+【分镜】第 1 段：篝火边，Mei 举着卡片问她；她看着他，说出决定（一句）。第 2 段：Mei 的近景，停一拍，宣布真相 → 他的近景，反应 → 她的近景 → 他开口（一句真话）→ 两人的双人镜头。
+【台词】Mei：Are you taking him home?（你要带他回家吗？）
+Wes 线（骗子）：I needed the money. I didn't need to fall for you. I did anyway.（我需要那笔钱。我不需要喜欢上你，可我还是喜欢上了。）
+Jasper 线（真富豪）：Now you know. I still want to know why you'd pick me without it.（现在你知道了。我还是想知道，不知道这些的时候你为什么会选我。）
+【选项】牵起他的手离开篝火；转身走向 Mei，把卡片还给她。
+【边界】真相按真相表，不因为她的选择改；他不纠缠、不逼她改口。""")
+  + GAP + p('内容包核查：')
+  + '<checkbox done="true">用户身份，以及用户与角色的关系（观众就是她 Sofia，第三视角，两条男主线）。</checkbox><checkbox done="true">角色性格、动机、说话和行为特点。</checkbox><checkbox done="true">开场的地点、事件和核心冲突（开场确认版 V2，50 秒）。</checkbox><checkbox done="true">用户可以采取的行动，以及角色可能的回应。</checkbox><checkbox done="true">隐藏信息或事件，以及触发条件（真相表、K01–K12）。</checkbox>'
+  + '<checkbox done="true">现有角色图、场景图、道具图、开场视频的链接与缺口（缺口：三视图、多角度、表情图未做；套房、泻湖、天台、吧台没有场景图）。</checkbox><checkbox done="false">声音：开场声线是 Seedance 原生；实时段 Vivix 声线和开场不同，衔接待定。</checkbox><checkbox done="false">实时版已能玩，冒烟测试 3 轮通过；还没有她本人的测试，测试记录和 ILA_PEAK_01 都没有生成；真相目前每条线固定，改编方案里的“每局代码抽定”、嫌疑板页面、预制仪式和结局都还没做。</checkbox><checkbox done="false">测试记录页、即兴剧场 APP 还没加这部剧。</checkbox>'
+  + p(e('来源与版本：学习 Taplot《Don\'t Hate the Player》的恋综玩法后原创改编（改编方案 output/island-liars-live-v1/改编方案.md，原作拆包 refs/taplot-dont-hate-the-player/）；演员取自 Vicky 角色库，主持人新生成；开场确认版 ILA_OPENING_确认版（V2，2026-11-03）。本包为整理归档，不改角色库。')) + GAP + GAP)
+
+out = D / 'chunks'; out.mkdir(exist_ok=True)
+for k, v in CH.items():
+    (out / f'{k}.xml').write_text(v, encoding='utf-8'); print(k, len(v), 'chars', v.count('<img '), 'imgs', v.count('占位'), 'placeholders')
