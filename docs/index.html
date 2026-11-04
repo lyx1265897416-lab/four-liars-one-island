@@ -276,7 +276,7 @@ async function liveRound(kind, choice, said){
   catch (e){ $('liveWait').hidden = true; busy = false; setChip('<b>Not sent</b> · ' + esc(e.message)); toast(T('Live generation unavailable', '实时生成不可用')); openChoice(); if (kind === 'free') $('sayIn').value = said.zh; return; }
   const V = [spare()]; V[0].dataset.keep = 1; V.push(spare()); delete V[0].dataset.keep;
   const poll = setInterval(async () => {
-    try { r = await api(`/api/round/${rid}?k=${encodeURIComponent(K)}`); } catch (e) {}
+    try { r = await api(`/api/round/${rid}?k=${encodeURIComponent(K)}`); } catch (e) { if (/not found|404/.test(e.message)) r = {status: 'error', err: T('The server restarted and this scene was lost. Please send again.', '中转刚才重启，这一轮中断了，请再发一次'), segs: []}; }  // 中转重启后这一轮在内存里没了：别一直等
     if (r && r.segs) r.segs.forEach((s, i) => { if (s.url && V[i].dataset.src !== s.url){ V[i].dataset.src = s.url; load(V[i], s.url); } });  // 一到就预载
   }, 500);
   // V1.5 提速：第 1 段不等第 2 段出片——按第 2 段的预计出片时间（中转给的 eta_left）倒推开播，第 1 段播完正好接上第 2 段
