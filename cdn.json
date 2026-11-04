@@ -1,12 +1,12 @@
 {
  "media/OPEN.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/b7c79cccba3a4a08aac9e28c555b765f/OPEN.mp4",
  "media/IDLE0.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/d2da982c075045569647a167c8c73611/IDLE0.mp4",
- "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/93d43a528d2b4862bd71e866cb5d08dd/poster.jpg",
+ "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/88a44e4c43414e85bd215b2fd7a531bd/poster.jpg",
  "audio/WAIT.mp3": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/37d71df984094a42bdd9014882082ad3/WAIT.mp3",
  "_sig": {
   "media/OPEN.mp4": "27934292-1793764974",
   "media/IDLE0.mp4": "358093-1793764975",
-  "media/poster.jpg": "205642-1793774176",
+  "media/poster.jpg": "298347-1793776154",
   "audio/WAIT.mp3": "1467501-1793764974"
  }
 }
