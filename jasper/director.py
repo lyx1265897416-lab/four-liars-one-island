@@ -1196,7 +1196,7 @@ def _shape(sp, mode):
 
 
 def _call(msgs, timeout):
-    body = {'model': MODEL, 'max_tokens': 5200,  # V2.9：多了 news、he_move，选项更长，3800 会截断
+    body = {'model': MODEL, 'max_tokens': 6400,  # V2.9：多了 news、he_move，选项更长，3800 会截断；11-04 三真四假 5200 截断过一次，加到 6400
             'reasoning': {'effort': 'low'}, 'temperature': 0.7, 'messages': msgs}
     body['provider'] = {'order': ['Anthropic'], 'allow_fallbacks': True}  # V1.5b 提速：直连 Anthropic 约快一倍（同一份输入 11.6 秒 vs AWS 22 秒）
     req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(),

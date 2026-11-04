@@ -1,0 +1,128 @@
+[
+ [
+  1.26,
+  0,
+  "submitted",
+  "vivix-w1-ultrafast 15s hls job_c5ebaff55caf8a97b85eb0885350ef73"
+ ],
+ [
+  1.74,
+  2,
+  "submitted",
+  "vivix-w1 15s hls job_1db02d8a79974aff7e6383a707124c82"
+ ],
+ [
+  2.26,
+  0,
+  "queued",
+  ""
+ ],
+ [
+  2.62,
+  2,
+  "queued",
+  ""
+ ],
+ [
+  3.97,
+  2,
+  "processing",
+  ""
+ ],
+ [
+  4.09,
+  0,
+  "processing",
+  ""
+ ],
+ [
+  15.84,
+  0,
+  "url",
+  "97b85eb0885350ef73/job_c5ebaff55caf8a97b85eb0885350ef73.m3u8"
+ ],
+ [
+  16.03,
+  0,
+  "hls",
+  "3 分片 end=False"
+ ],
+ [
+  17.85,
+  0,
+  "hls",
+  "9 分片 end=False"
+ ],
+ [
+  19.63,
+  0,
+  "hls",
+  "14 分片 end=False"
+ ],
+ [
+  21.03,
+  2,
+  "url",
+  "ff7e6383a707124c82/job_1db02d8a79974aff7e6383a707124c82.m3u8"
+ ],
+ [
+  21.05,
+  0,
+  "succeeded",
+  ""
+ ],
+ [
+  21.21,
+  2,
+  "hls",
+  "1 分片 end=False"
+ ],
+ [
+  21.21,
+  0,
+  "hls",
+  "16 分片 end=True"
+ ],
+ [
+  24.27,
+  2,
+  "hls",
+  "3 分片 end=False"
+ ],
+ [
+  25.72,
+  2,
+  "hls",
+  "6 分片 end=False"
+ ],
+ [
+  27.37,
+  2,
+  "hls",
+  "8 分片 end=False"
+ ],
+ [
+  28.97,
+  2,
+  "hls",
+  "10 分片 end=False"
+ ],
+ [
+  31.32,
+  2,
+  "hls",
+  "13 分片 end=False"
+ ],
+ [
+  33.4,
+  2,
+  "hls",
+  "16 分片 end=True"
+ ],
+ [
+  34.73,
+  2,
+  "succeeded",
+  ""
+ ]
+]
