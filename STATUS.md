@@ -27,3 +27,4 @@ Vicky 人工测后复盘；时延（考虑默认 5+15）；嫌疑板页面、预
 - opening-v1/poster.py：P1 只有她、P2 她 + Sloane、P3 她 + Sloane + Mei、P4 她 + Sloane + 两位新女嘉宾（黑色波波头祖母绿缎裙、红棕长卷发白色钩花短裙，未定装）。男生顺序按固定种子随机。每版一张带片名（FOUR LIARS, ONE ISLAND + 宣传语）、一张无字版（播放页用）。
 - 对比板 ../casting/poster_v1.jpg。返修：P2 带字版她的左臂发白、P4 带字版 Sloane 穿成白色上衣 → 各重出一张，旧图在 opening-v1/qa/rejected/poster/。
 - 等她选；选定后无字版进 docs/media/poster.jpg（?v=3）、带字版进飞书 8️⃣ 封面。播放页现在还是封面 V2（Jasper 居中）。
+- 11-03 Vicky 选 P1（只有她，C 位）：无字版 → docs/media/poster.jpg（?v=3，已上线）；带字版 → 飞书 8️⃣ 封面 cover-v3.jpg。确认版存 casting/poster_P1_确认版.png、poster_P1_确认版_无字.png；封面 V2 存 opening-v1/qa/rejected/poster-v2-jasper.jpg。
