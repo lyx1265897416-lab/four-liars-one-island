@@ -1,0 +1,22 @@
+[
+ {
+  "n": 1,
+  "input": "我选 Wes。",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 269.3,
+  "seg2_ready": 173.4,
+  "stall": 0
+ },
+ {
+  "n": 2,
+  "input": "我放下酒，约他明早去海滩赢下夺旗赛，用私人约会逼他说一个真答案",
+  "status": "error",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 123.5,
+  "seg2_ready": 300.8,
+  "stall": 165.3
+ }
+]

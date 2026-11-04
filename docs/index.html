@@ -212,7 +212,10 @@ async function api(path, body){ await relayReady; const r = await fetch(API + pa
 const ov = pool[1]; load(ov, SRC('media/OPEN.mp4')); const idle = pool[2]; load(idle, SRC('media/IDLE0.mp4'), true);
 if (PAGES) [[ov, 'media/OPEN.mp4'], [idle, 'media/IDLE0.mp4']].forEach(([v, p]) => v.addEventListener('error', () => { if (!v.src.endsWith(p)) { v.src = p; v.load(); } }));
 async function startSession(){ next = PICK; sid = null; round = 0; LINE = null; $('brandHe').textContent = 'Island'; }  // 会话在她选了搭档之后才在那条线的中转上开
-async function openLine(l){ useLine(l); const j = await api('/api/session', {mode: MODE}); sid = j.sid; round = 0; }
+async function openLine(l, recap, cards){ useLine(l); const j = await api('/api/session', Object.assign({mode: MODE}, recap ? {recap, cards: cards || []} : {})); sid = j.sid; if (!recap) round = 0; }
+// V3.2 换搭档（恋综重新配对）：她点“重新配对：我改选 Jasper/Wes”或打类似的话，就在另一条线的中转上开会话，带上这一刻的剧情状态和已演过的关键片段，接着演
+let lastState = '', lastCards = [];
+const switchTo = t => { if (!LINE) return null; const o = LINE === 'wes' ? 'jasper' : 'wes'; return (/重新配对|换搭档|改选|换成|换到|switch|recouple/i.test(t || '') && (t || '').toLowerCase().includes(HE[o].toLowerCase())) ? o : null; };
 $('startBtn').onclick = async () => {
   $('startCard').hidden = true; setMode('playing');
   [pool[0], idle].forEach(v => { const p = v.play(); if (p) p.then(() => { if (v !== front) v.pause(); }).catch(() => {}); });  // 在这次点击里解锁
@@ -263,6 +266,11 @@ async function pickLine(l, kind, said){
 // 一轮：发出去 → 等导演层和两段生成 → 两段都好、都缓冲好 → 一次连续播完 → 下一个选择点
 let liveRun = 0;
 async function liveRound(kind, choice, said){
+  const sw = switchTo((said && (said.zh || said.en)) || '');
+  if (sw && K && !busy){
+    try { await openLine(sw, (lastState ? lastState + ' ' : '') + `现在是夜里篝火露台的重新配对仪式，她当着所有人决定改选 ${HE[sw]} 做搭档，${HE[sw]} 站在她面前。`, lastCards); kind = 'free'; choice = null; said = {zh: (said.zh || said.en), en: (said.en || said.zh)}; toast(T(`Switched partner to ${HE[sw]}`, `换搭档：${HE[sw]}`)); }
+    catch (e){ setChip('<b>Could not switch</b> · ' + esc(e.message)); }
+  }
   if (!K){ toast(T('Live scenes need the test link with a key', '实时生成需要带口令的测试链接')); return; }
   if (busy) return; busy = true; const my = ++liveRun, t0 = Date.now(); let r = null, rid = null;
   closeChoice(); setMode('waiting'); waitMusic(true); showSub(null);
@@ -310,7 +318,7 @@ async function liveRound(kind, choice, said){
     RT.begin({key: 'round:' + rid, mix: r.mix, free: true, parts: r.segs.map((x, i) => ({v: V[i], d: x.dur || x.seconds})), label: T(`Scene ${sceneNo}`, `第 ${sceneNo} 幕`), jump: (j, t) => { V.forEach(x => { if (x !== V[j]){ x.pause(); x.onended = null; x.ontimeupdate = null; } }); go(j, t); }});
     go(0, 0);
   };
-  round++; next = r.next || next; openChoice();
+  round++; next = r.next || next; lastState = r.state || lastState; lastCards = r.cards_after || lastCards; openChoice();
 
   function subLine(i, v){
     const Lns = (r.lines['seg' + (i + 1)] || []).filter(Boolean), Z = ((r.zh || {})['seg' + (i + 1)] || []).filter(Boolean), off = i === 1 ? 2 : 0;  // 第 2 段前 2 秒是静止承接

@@ -32,6 +32,9 @@ CAST = {
     'Sloane': ('Sloane：二十六岁女人，女嘉宾、她的对手，白皙皮肤，蓝灰色眼睛，很长的蓬松金色波浪长发带空气刘海；电光蓝缎面挂脖短裙，银色细带高跟凉鞋，小银色垂坠耳环，淡粉色长杏仁形指甲。长相和衣着以她的身份母版为准。', TU['sloane']),
     'Wes': ('Wes：二十八岁男人，男嘉宾，蓬松的深金色头发，灰绿色眼睛，浅麦色皮肤；浅天蓝亚麻衬衫（袖子卷起、领口敞开、不塞），石米色亚麻长裤，棕色麂皮乐福鞋，左腕一条细棕皮绳手链。长相和衣着以他的身份母版为准。', TU['wes']),
     'Ethan': ('Ethan：二十七岁男人，男嘉宾，棕色短卷发，蓝灰色眼睛，腼腆的笑；鼠尾草绿短袖针织 polo（扣到最上），及膝卡其短裤，白色帆布鞋。长相和衣着以他的身份母版为准。', TU['ethan']),
+    'Kian': ('Kian：三十岁男人，男嘉宾，深色短卷发，深色眼睛，浅橄榄色皮肤，从容自信；赤陶色亚麻衬衫（领口敞开、袖子卷起、塞进裤子），奶油色长裤，棕皮带，棕色乐福鞋。长相和衣着以他的身份母版为准。', TU['kian']),
+    'Jude': ('Jude：二十七岁男人，男嘉宾，蓬乱的浅金色头发，灰蓝色眼睛，冷淡；奶油色短袖针织 polo（领口敞开），黑色亚麻长裤，黑色皮凉鞋。长相和衣着以他的身份母版为准。', TU['jude']),
+    'Ravi': ('Ravi：二十九岁男人，男嘉宾，黑色短发，深棕色眼睛，暖棕色皮肤，安静爱观察；浅灰亚麻无衬里西装外套，里面纯白圆领 T 恤，浅灰亚麻长裤，白色皮质运动鞋。长相和衣着以他的身份母版为准。', TU['ravi']),
     'Brody': ('Brody：二十八岁男人，男嘉宾，沙棕色蓬松卷发，晒黑的皮肤，笑得很熟练；珊瑚红白扶桑花短袖衬衫敞开，里面白色贴身背心，白色短裤，棕色皮拖鞋，一条细金链。长相和衣着以他的身份母版为准。', TU['brody']),
 }
 HE_LOOK = ('Jasper：二十九岁男人，一米八七左右，宽肩、修长结实，白皙偏暖的皮肤，干净无胡须，轮廓深、下颌利落，浓黑的眉毛，灰绿色眼睛，直鼻，饱满的嘴唇，浓密的深棕色卷发（几缕垂在额前，不是直发、不是金发）；没有纹身、没有项链、不戴手表、不戴戒指。日常穿着：午夜藏蓝丝感软领衬衫（开两粒扣、袖子卷到小臂、塞进裤子），黑色修身西裤，黑色皮乐福鞋。他的长相和服装全程不变，以参考的身份母版为准。')
@@ -45,7 +48,7 @@ SEAM = '第一个镜头接着上一刻往下演：两个人的姿势、手的位
 KISS = '吻戏的拍法（V1.4）：靠近只用一个干脆的动作，不慢慢凑近；从嘴唇贴上开始，到动作里写明分开之前，是同一次连续的吻，正常速度，动作一直在细微地变化（头部角度微调、他的手在她背上收紧、她的手指攥紧他的肩），不慢动作、不定格、不僵住；切镜之后的镜头一开始两人就已经在接吻，接着上一镜继续，不重新靠近，不中途分开再吻；手的特写里手一定在动。两人的五官、发型、服装和男左女右在吻中保持不变：每个接吻镜头里 Jasper 的脸都在画面左半边、脸朝画面右侧，她的脸都在画面右半边、脸朝画面左侧，近景和侧面近景也不对调（V1.4 便携包自测第 1 轮最后一个接吻近景两人左右对调）。'
 ACT = '表演克制：Jasper 话少，句子短，冷静、带一点干巴巴的幽默，笑意很少但一出来就很真，认真时目光很定，不压嗓、不耳语；她说话干脆，带一点不买账的冷幽默；情绪在眼神和嘴角。'
 PACE = '节奏（V3.0，Vicky 11-04：说话、动作慢吞吞，有定格感）：人物说话是正常偏快的自然语速，一句接一句，句间不留长停顿；动作是真人速度的连续动作，一个动作做完马上接下一个，不慢动作、不定格、不在一个姿势上停住；镜头里始终有人在动或在说话。'
-STYLE = ('画面和角色参考图是同一种画质：写实真人恋爱真人秀电影画面，自然的皮肤纹理，眼睛和睫毛清晰，发丝分明，织物质感真实，浅景深；夜里按脸定曝光，人物的脸被火炬和串灯的暖光照亮，环境压暗成深蓝夜色，泳池的青绿色光做轮廓光；白天是明亮通透的海岛阳光；饱和度饱满，不雾、不灰、不平光、不塑料感、不 CG、不动漫，标准焦段，五官比例自然，画风全程统一；时间和光线按这个地点写的来，肤色保持参考图的颜色，不偏橙不偏黄。'
+STYLE = ('画面和角色参考图是同一种画质：写实真人恋爱真人秀电影画面，自然的皮肤纹理，眼睛和睫毛清晰，发丝分明，织物质感真实，浅景深；夜里按脸定曝光，人物的脸被火炬和串灯的暖光照亮，环境压暗成深蓝夜色，泳池的青绿色光做轮廓光；白天是明亮通透的海岛阳光；饱和度饱满，不雾、不灰、不平光、不塑料感、不 CG、不动漫，标准焦段，五官比例自然，画风全程统一；时间和光线按这个地点写的来：地点写着夜里时，天空从头到尾是全黑的深蓝夜色，不会慢慢变亮，不出现蓝天和晚霞（V3.2）；肤色保持参考图的颜色，不偏橙不偏黄。'
          '镜头之间一律硬切，不用叠化、溶镜、淡入淡出、闪白或闪黑；同一地点所有镜头的光线、色温和色调完全一致，跟随这个地点的主光源，不突然变冷变暖、变亮变暗。')
 
 
@@ -78,8 +81,19 @@ def framing(shot):
     return shot
 
 
+NUM = '零一二三四五六七八九'
+
+
+def on_screen(c, b):
+    """V3.3：这一拍 c 是不是在画面里。只出声的（画外传来 Mei 的声音）不算：S013528c90 第 1 段 Mei、Sloane 只是画外音，提示词仍把她们写成主要人物，模型把两个 Sloane 拍进了画面。"""
+    if len(b) > 3 and b[3] == c: return True
+    a = str(b[0])
+    if c not in a: return False
+    return c in re.sub(rf'(画外|远处|门外)?(传来)?\s*{c}\s*的(声音|喊声|笑声)', '', a)
+
+
 def pov(cast):
-    who = 'Jasper（画面左侧）和她（画面右侧）两个人' if not cast else 'Jasper（画面左侧）、她（画面右侧）和 ' + '、'.join(cast) + ' 三个人'
+    who = 'Jasper（画面左侧）和她（画面右侧）两个人' if not cast else 'Jasper（画面左侧）、她（画面右侧）和 ' + '、'.join(cast) + f' {NUM[2 + len(cast)]}个人（每人只有一个）'
     return (f'第三人称电影镜头：观众站在旁边看着他们，不是任何人的主观视角。主要人物是{who}。'
             '景别和机位按每个镜头写的来（全景、中景、近景、特写、空镜交替，可以略俯、略仰），他比她高一个头；两人同在画面里时 Jasper 永远在画面左侧、她永远在画面右侧，不越轴，两人都不背对镜头。')
 
@@ -118,8 +132,12 @@ def side_of(shot, act, speaker=''):
     第三视角 v1 第 4 轮车里的双人近景拍成了反打（她到了左边），第 5、6 轮的过肩镜头也换了边。"""
     shot = str(shot)
     if shot.startswith('空镜'): return ''
-    if shot.startswith('双人'): return 'Jasper 在画面左侧、她在画面右侧（从这一镜的第一秒起就是这样），'  # V1.3：MD-B 越轴都发生在段落开头几秒
+    if shot.startswith('双人'):
+        extra = [c for c in CAST if on_screen(c, [act, '', '', speaker])]
+        return 'Jasper 在画面左侧、她在画面右侧（从这一镜的第一秒起就是这样），' + (f"画面里另外只有{'、'.join(f'一个 {c}' for c in extra)}，在两人身后或侧后方，不和他们站在一起，" if extra else '')  # V3.3：S015323dc3 第 2 轮双人镜里写了 Sloane 扑倒，三次都拍出两个 Sloane、她的裙子变成 Sloane 的蓝色  # V1.3：MD-B 越轴都发生在段落开头几秒
     if shot.startswith('单人'):
+        other = speaker if speaker in CAST else next((c for c in CAST if re.match(rf'(切到)?{c}', act or '')), '')
+        if other: return f'画面里只有 {other} 一个人（只有一个 {other}，Jasper 和她在画外），'  # V3.3：配角说话的单人镜原来写成“只有 Jasper 一个人”，Mei 宣布开跑时拍出了两个 Mei
         her = speaker == '她' or (speaker != 'Jasper' and re.match(r'(切到)?(她|她的)', act or '') is not None)
         return ('画面里只有她一个人，她在画面右半边、看向画面左侧的他（他在画外），' if her
                 else '画面里只有 Jasper 一个人，他在画面左半边、看向画面右侧的她（她在画外），')
@@ -138,6 +156,8 @@ def shots(beats, dur, start=0, first=1, marks=None):
         if m and not re.search(r'景|特写|镜头|他|她|Jasper|两人', m.group(1).replace('的空镜', '')): here = m.group(1).replace('的空镜', '')  # 第三视角常写“切到她的单人近景”：那是切镜不是换地点
         elif here: a = f'（仍在{here}）' + a  # 换场之后的每一拍都写明地点：参考图还是上一个地点，不写模型会切回去（v0.15 第 3 轮车里的戏最后回到了车库）
         who = b[3] if len(b) > 3 and b[3] else 'Jasper'
+        vo = who.split(':', 1)[-1].split('：', 1)[-1] if who.startswith('画外') else ''
+        if vo in CAST and on_screen(vo, [a, '', '', '']): who = vo; a = a.replace('看向画外', f'看向 {vo}')  # V3.3：动作里人在画面里（Sloane 扑倒在沙上）却写成画外音，改成她在画面里说
         if not l: say = ''
         elif who.startswith('画外'): say = f'，画外传来{who.split(":", 1)[-1].split("：", 1)[-1] or "门外的人"}的声音："{l}"，画面里的 Jasper 和她都闭着嘴在听，这句话不是他们说的，只用眼神回应'
         elif who == 'Jasper':
@@ -219,8 +239,12 @@ def _prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, s
     st1 = sp.get('staging') or 'face'
     st0 = stage_start if stage_start in STAGING else st1
     cast_all = [c for c in (sp.get('cast') or []) if c in CAST]
-    def seg_cast(beats): return [c for c in cast_all if any(c in b[0] or (len(b) > 3 and b[3] == c) for b in beats)]
+    def seg_cast(beats): return [c for c in cast_all if any(on_screen(c, b) for b in beats)]
     c1, c2 = seg_cast(sp['seg1']), seg_cast(sp['seg2'])
+    def voice_only(beats, cs):  # V3.3：只出声的配角写明不进画面
+        v = [c for c in cast_all if c not in cs and any(c in str(b[0]) or (len(b) > 3 and c in str(b[3])) for b in beats)]
+        return f"{'、'.join(v)} 这一段只有画外的声音，人不出现在画面里。" if v else ''
+    vo1, vo2 = voice_only(sp['seg1'], c1), voice_only(sp['seg2'], c2)
     amb = sp.get('amb') or '海浪、火炬燃烧声和远处派对的人声'
     amb1 = steady(amb)
     s0 = (set_start or sp.get('set') or '').rstrip('。'); s1 = (sp.get('set') or '').rstrip('。')
@@ -244,17 +268,17 @@ def _prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, s
         lock = ('固定机位，一镜到底：镜头像架在三脚架上，全程不移动、不推近、不拉远、不切镜；两个人在画面里的大小和位置全程和首帧一样，'
                 '画面上半部分的背景全程保持首帧的样子和位置。')
         lead = '首帧和尾帧是同一张画面（上一刻）：开头的场景、光线、两个人的长相、服装、位置、朝向和距离都与首帧一致，这一段不离开这个地点。两人的皮肤质感、他的瞳色和两人的发型全程和首帧完全一样。'
-        p1 = (lock + pov(c1) + place1 + lead + mag1 + her1 + take(sp['seg1'], d1)
+        p1 = (lock + pov(c1) + place1 + lead + mag1 + her1 + vo1 + take(sp['seg1'], d1)
               + '最后 2 秒两人回到首帧的位置、姿势、表情和距离停住，画面和首帧一致。' + ACT + PACE + STYLE + tail(amb1, c1))
         hold2 = '图片1的画面（两人在原位的双人镜头）' if not moved else sp['hold'].rstrip('。')
-        p2 = (refs + pov(c2) + place2 + mag2 + her2 + ''.join(CAST[c][0] for c in c2) + wolf
+        p2 = (refs + pov(c2) + place2 + mag2 + her2 + ''.join(CAST[c][0] for c in c2) + vo2 + wolf
               + f'这一段从上一刻切过来，上一刻是：{hold2}。' + ('换场之前，' if moved else '') + '地点、背景、光线、两个人的位置和朝向与上一刻一致。' + SEAM
               + shots(sp['seg2'], d2, marks=marks2) + (f"最后停在{sp.get('location') or '新地点'}里，" if moved else '') + end + ACT + PACE + STYLE + tail(amb, c2))
         return [(d1, p1, 'lock'), (d2, p2, False)]
     lead = '这一段从首帧那一刻接着演：地点、背景、光线、两个人的长相、服装、位置、朝向和距离都和首帧一致，这一段不离开这个地点。'  # 第 1 段用首帧续接，和上一轮无缝接上；5 秒漂移小，末帧也不传给下一轮
-    p1 = (pov(c1) + place1 + lead + mag1 + her1 + ''.join(CAST[c][0] for c in c1) + wolf
+    p1 = (pov(c1) + place1 + lead + mag1 + her1 + ''.join(CAST[c][0] for c in c1) + vo1 + wolf
           + shots(sp['seg1'], d1, marks=marks1) + f'最后停在：{sp["hold"].rstrip("。")}。' + ACT + PACE + STYLE + tail(amb1, c1))
-    p2 = (refs + pov(c2) + place2 + mag2 + her2 + ''.join(CAST[c][0] for c in c2) + wolf
+    p2 = (refs + pov(c2) + place2 + mag2 + her2 + ''.join(CAST[c][0] for c in c2) + vo2 + wolf
           + f'这一段从上一刻切过来，上一刻是：{sp["hold"].rstrip("。")}。' + ('换场之前，' if moved else '') + '地点、背景、光线、两个人的位置和朝向与上一刻一致。' + SEAM
           + shots(sp['seg2'], d2, marks=marks2) + (f"最后停在{sp.get('location') or '新地点'}里，" if moved else '') + end + ACT + PACE + STYLE + tail(amb, c2))
     return [(d1, p1, True), (d2, p2, False)]
@@ -262,7 +286,7 @@ def _prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, s
 
 def seg2_cast_refs(sp):
     """第 2 段需要追加的配角身份母版（按出现顺序）。"""
-    return [CAST[c][1] for c in (sp.get('cast') or []) if c in CAST and any(c in b[0] or (len(b) > 3 and b[3] == c) for b in sp['seg2'])]
+    return [CAST[c][1] for c in (sp.get('cast') or []) if c in CAST and any(on_screen(c, b) for b in sp['seg2'])]
 
 
 def plate_for(sp):
@@ -409,7 +433,7 @@ def prompts(sp, mode, *a, **kw):
         if k == 1 and use == 'bridge' and i >= 0:  # V2.0：第 2 段从关键帧开始，一开始就是变化之后的样子；不带参考图，服装母版不会把衣服穿回去
             f = True; p = x + '这一段从首帧那一刻接着演：地点、背景、光线、两个人的长相、穿着、姿态、手里的东西都和首帧一样，全程保持，不变回去。' + p[i:]
         if k == 1 and use == 'ref' and i >= 0:
-            sel = [c for c in (sp.get('cast') or []) if c in CAST and any(c in b[0] or (len(b) > 3 and b[3] == c) for b in sp['seg2'])]
+            sel = [c for c in (sp.get('cast') or []) if c in CAST and any(on_screen(c, b) for b in sp['seg2'])]
             f = False; p = x + '图片1是这一段的新地点和两人此刻的样子：地点、光线、两人的穿着、姿态和道具都照它，每个镜头保持，不变回去；图片2只看 Jasper 的脸和头发，图片3只看她的脸和头发' + ''.join(f'，图片{4 + n}是 {c}' for n, c in enumerate(sel)) + '；他们的影棚背景不进画面。' + ('第一个镜头是空镜：画面里完全没有人，也没有车，两人从第二个镜头才出现。' if str(sp['seg2'][0][2]).startswith('空镜') else '') + p[i:]
         if k == 1 and use == 'ref':  # 图片1已经是新地点，再写旧地点和“上一刻”模型会先拍半秒旧地点再叠化（Magnus 实测第 2 段开头闪车库）
             p = re.sub(r'开头的地点：.*?切到新地点后：', '地点：', p, flags=re.S).replace('新地点的站位：', '站位：')

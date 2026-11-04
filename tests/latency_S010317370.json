@@ -1,0 +1,32 @@
+[
+ {
+  "n": 1,
+  "input": "我选 Wes。",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 81.8,
+  "seg2_ready": 108.9,
+  "stall": 15.0
+ },
+ {
+  "n": 2,
+  "input": "我跟他回套房，趁他整理日床，抽出他口袋那张纸",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 40.7,
+  "seg2_ready": 60.6,
+  "stall": 7.9
+ },
+ {
+  "n": 3,
+  "input": "我把纸条压在日床上，再逼他说出纸是谁给的",
+  "status": "done",
+  "mode": "5+15",
+  "director": "prefetched",
+  "send_to_play": 41.6,
+  "seg2_ready": 52.6,
+  "stall": 0
+ }
+]

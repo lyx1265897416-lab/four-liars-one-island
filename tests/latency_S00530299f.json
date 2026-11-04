@@ -1,0 +1,32 @@
+[
+ {
+  "n": 1,
+  "input": "我选 Jasper。",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 88.0,
+  "seg2_ready": 128.5,
+  "stall": 28.5
+ },
+ {
+  "n": 2,
+  "input": "我拉他回套房，当场猜他的一件事，赢了就逼他回答他是不是那四个之一",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 48.5,
+  "seg2_ready": 56.1,
+  "stall": 0
+ },
+ {
+  "n": 3,
+  "input": "我猜他睡日床，趁他不备翻他床头柜里的东西",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 137.4,
+  "seg2_ready": 69.7,
+  "stall": 0
+ }
+]

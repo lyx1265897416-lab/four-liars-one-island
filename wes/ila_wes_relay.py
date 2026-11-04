@@ -9,7 +9,7 @@ POST /api/round   {k, sid, kind, choice, input}    → {id}              kind=op
 GET  /api/round/<id>?k=…                           → 状态、两段视频地址、台词字幕、下一轮选项、各阶段时刻（毫秒）
 POST /api/round/<id>/view {k, play_at, seg1_end, stall, end_at, buffer}  网页回报实际开播时刻和接缝
 用法：ila_wes_relay.py <口令> [端口，默认 8906]"""
-import json, os, re, subprocess, sys, threading, time, uuid
+import json, os, re, shutil, subprocess, sys, threading, time, uuid
 from concurrent.futures import ThreadPoolExecutor
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
@@ -118,13 +118,35 @@ def crop_close(jpg, fb, target=0.34):
     tmp.replace(jpg)
 
 
+DL = {}  # V3.3：url → 本机文件，同一段只下载一次（原来开播前检查、段内快检、末帧各下一次）
+
+
+def fetch(url, dest, parts=6):
+    """V3.3：成片分 6 段并行下载、不走代理。S015323dc3 生成只要 20–30 秒，单线程下载 8 MB 却花了 55–190 秒（开播 269 秒）；并行实测快约 3 倍。失败退回整段下载。"""
+    dest = Path(dest); c = DL.get(url)
+    if c and Path(c).exists(): shutil.copyfile(c, dest); return dest
+    op = U.build_opener(U.ProxyHandler({}))
+    try:
+        r = op.open(U.Request(url, headers={'Range': 'bytes=0-0'}), timeout=20); size = int(r.headers['Content-Range'].split('/')[-1]); r.read()
+        step = size // parts + 1
+        def part(k): return op.open(U.Request(url, headers={'Range': f'bytes={k * step}-{min(size, (k + 1) * step) - 1}'}), timeout=90).read()
+        with ThreadPoolExecutor(parts) as ex: data = b''.join(ex.map(part, range(parts)))
+        if len(data) != size: raise IOError(f'size {len(data)} != {size}')
+        dest.write_bytes(data)
+    except Exception as e:
+        log('FETCH fallback', str(e)[:80]); U.urlretrieve(url, dest)
+    keep = FR / f'dl_{uuid.uuid5(uuid.NAMESPACE_URL, url).hex}.mp4'; shutil.copyfile(dest, keep); DL[url] = str(keep)
+    for u, p in list(DL.items())[:-12]: Path(p).unlink(missing_ok=True); DL.pop(u, None)
+    return dest
+
+
 def prepare_frame(s, rid, seg2_url):
     """上一轮第 2 段的最后一帧 → 下一轮第 1 段的首帧和第 2 段的参考图。
     末帧里看不到他的脸（插入特写收尾）就往前 1.5、3、5 秒再找；质检没有严重问题时原图放进 frame_raw，下一轮最多等 FIX_WAIT 秒；有严重问题必须等修图完成。"""
     try:
         mp4 = FR / f'{rid}_2.mp4'; jpg = FR / f'{rid}_last.jpg'
         if seg2_url.startswith('/'): mp4.write_bytes((SITE / seg2_url.lstrip('/')).read_bytes())  # 校色后的第 2 段在本机
-        else: U.urlretrieve(seg2_url, mp4)
+        else: fetch(seg2_url, mp4)
         try:  # V1.5 提速：先抽一张没查过的末帧传上去，下一轮发送时质检、修图还没好就用它（不等）
             q0 = FR / f'{rid}_last_quick.jpg'
             subprocess.run([L.FFMPEG, '-v', 'error', '-y', '-sseof', '-0.15', '-i', str(mp4), '-frames:v', '1', '-q:v', '2', str(q0)], check=True)
@@ -295,13 +317,13 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
     try:
         job = gen(c.build(**kw)); s['gen_ready_at'] = now()
         sp_hc = R[rid].get('spec') or {}; looks = lambda txt, n: re.sub(r'^[^：]{0,12}：', '', str(txt or ''))[:n]  # V3.0：每个人带一句外形，检查模型才分得清谁是女主、谁是配角（三真四假 S2351533a4 把 Sloane 的蓝裙子当成女主的裙子变色）
-        names = [f'男主（{looks(L.HE_LOOK, 50)}）', f'女主（{looks(L.HER, 90)}）'] + [f'{c}（{looks(L.CAST[c][0], 110)}）' if c in L.CAST else c for c in (sp_hc.get('cast') or [])] + [x['name'] for x in (sp_hc.get('extras') or []) if isinstance(x, dict) and x.get('name')]  # V2.7：每一轮每一段都查，不合格重新生成，最多三次，都不合格就拦下
+        names = [f'男主（{looks(L.HE_LOOK, 50)}）', f'女主（{looks(L.HER, 90)}）'] + [f'{c}（{looks(L.CAST[c][0], 110)}）' if c in L.CAST else c for c in (sp_hc.get('cast') or []) if not (c in L.CAST and hasattr(L, 'on_screen') and not any(L.on_screen(c, b) for b in (sp_hc.get(f'seg{i + 1}') or [])))] + [x['name'] for x in (sp_hc.get('extras') or []) if isinstance(x, dict) and x.get('name')]  # V3.3：只按这一段画面里的配角查（只出声的不算，出现就是多人）；V2.7：每一轮每一段都查，不合格重新生成，最多三次，都不合格就拦下
         people = f"{len(names)} 个人：{'；'.join(names)}" + ('；背景远处的路人不算' if re.search('酒吧|餐厅|夜宵|摊|街|人群|派对', str(sp_hc.get('set') or '')) else '') + ('；这一段他会变身成狼，不算错误' if sp_hc.get('wolf') else '')
         w_hc = sp_hc.get('wardrobe_end') or {}; wear = f"男主：{w_hc.get('he') or L.HE_DEFAULT}；女主：{w_hc.get('she') or L.SHE_DEFAULT}"  # 只查第 2 段：第 1 段可能正在穿脱
         magic = re.search('飞|魔法|悬浮|漂浮|超能力|变身|穿越', str(R[rid].get('input') or ''))
         for tn in range(3):
             hcf = FR / f'{rid}_{i + 1}_hc.mp4'
-            try: U.urlretrieve(job['video_url'], hcf); hc = qa_guard.hard_check(hcf, people, wear if i == 1 else '')
+            try: fetch(job['video_url'], hcf); hc = qa_guard.hard_check(hcf, people, wear if i == 1 else '')
             except Exception as e: hc = {'bad': False, 'kinds': [], 'err': str(e)[:120]}
             hcf.unlink(missing_ok=True); s.setdefault('hard_check', []).append(hc); log('HARDCHECK', rid, i + 1, tn, json.dumps(hc, ensure_ascii=False)[:200])
             kinds = set(hc.get('kinds') or []) or ({'people'} if hc.get('bad') else set())
@@ -317,7 +339,7 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
         def bg_qa(u=job['video_url'], jid=s.get('job_id')):  # V1.5 提速：段内快检移出等待路径，只记录，不再重生成。V2.2：状态复查也只记录（挡开播时加 12 秒，重生成再加 30–45 秒，3 次触发都是半躺算不算躺这种误报）
             mp4 = FR / f'{rid}_{i + 1}_q0.mp4'
             try:
-                U.urlretrieve(u, mp4); q = qa_guard.seg_check(mp4, cast=cast, props=props)
+                fetch(u, mp4); q = qa_guard.seg_check(mp4, cast=cast, props=props)
                 if st_seg: s['state_check'] = qa_guard.seg_state(mp4, st_seg); log('SEGSTATE', rid, i + 1, 'logged', json.dumps(s['state_check'], ensure_ascii=False)[:200])
             except Exception as e: q = {'regen': False, 'err': str(e)[:160]}; log('SEGQAFAIL', rid, i + 1, e)
             s.setdefault('seg_qa', []).append(dict(q, job=jid)); save(rid)
@@ -578,7 +600,7 @@ class H(BaseHTTPRequestHandler):
         if q.get('k') != TOKEN: return self.out(403, {'err': 'bad token'})
         rid = path.rsplit('/', 1)[-1]
         if path.startswith('/api/round/') and rid in R:
-            out = {k: v for k, v in R[rid].items() if k not in ('prompts', 'spec')}
+            out = {k: v for k, v in R[rid].items() if k not in ('prompts', 'spec')}; out['state'] = (R[rid].get('spec') or {}).get('state')  # V3.2：换搭档时播放页把这一刻的状态带给另一条线
             out['segs'] = [dict(x, eta_left=seg_eta(R[rid], i)) for i, x in enumerate(R[rid].get('segs') or [])]  # V3.1：第 2 段排在第 1 段后面时按串行估（seg_eta）  # V1.5：播放页按它倒推第 1 段开播
             return self.out(200, out)
         if path.startswith('/api/round/') and re.fullmatch(r'L[0-9a-f]{9,}', rid) and (RD / f'{rid}.json').exists():  # 中转重启后内存里没有这一轮：按文件回，没做完的告诉页面重发，别让页面一直等
@@ -603,7 +625,12 @@ class H(BaseHTTPRequestHandler):
         if self.path == '/api/session':
             mode = body.get('mode', '5+10')
             if mode not in L.MODES and mode != 'auto': return self.out(400, {'err': 'bad mode'})
-            s = new_session(mode); s['persona'] = str(body.get('persona') or '')[:1500] or None; return self.out(200, {'sid': s['sid'], 'next': s['next'], 'mode': mode})
+            s = new_session(mode); s['persona'] = str(body.get('persona') or '')[:1500] or None
+            rc = str(body.get('recap') or '').strip()[:2000]
+            if rc:  # V3.2：换搭档——从另一条线带着前情过来（三真四假重新配对仪式）。前情写进当前状态和剧情记录，已演过的关键片段卡照算
+                s['state'] = rc; s['history'] = [{'input': '（换搭档之前的剧情）', 'kind': 'option', 'lines': [], 'did': rc, 'opts': [], 'place': s.get('place'), 'input_type': 'direction', 'delivered': True}]
+                s['cards'] = [str(k).strip().upper() for k in (body.get('cards') or []) if re.fullmatch(r'K\d{2}', str(k).strip().upper())][:20]; s['recap'] = True
+            return self.out(200, {'sid': s['sid'], 'next': s['next'], 'mode': mode})
         if self.path.startswith('/api/round/') and self.path.endswith('/view'):
             rid = self.path.split('/')[3]
             if rid not in R: return self.out(404, {'err': 'not found'})

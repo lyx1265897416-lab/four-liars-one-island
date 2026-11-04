@@ -1,0 +1,32 @@
+[
+ {
+  "n": 1,
+  "input": "我选 Jasper。",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 119.2,
+  "seg2_ready": 90.7,
+  "stall": 0
+ },
+ {
+  "n": 2,
+  "input": "我逼他立个赌约，明早沙滩上我赢了，他就得老实回答我一个问题",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 61.5,
+  "seg2_ready": 102.7,
+  "stall": 29.1
+ },
+ {
+  "n": 3,
+  "input": "我不理她冲到终点拔旗赢下约会，再拿赌约逼他开口，等 Mei 宣布今晚换搭档约会",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 82.0,
+  "seg2_ready": 92.1,
+  "stall": 0
+ }
+]

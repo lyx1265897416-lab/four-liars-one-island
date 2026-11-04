@@ -29,3 +29,5 @@ feishu/img/
 feishu/zip/
 feishu/*.mp4
 feishu/*.mp3
+tests/review/
+*.before-v3*.py

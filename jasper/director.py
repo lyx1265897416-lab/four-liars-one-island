@@ -12,6 +12,7 @@ PACK = (Path(__file__).resolve().parent / 'pack' / 'ila_pack.json').read_text(en
 # 关键片段卡的推荐轮次（资料包 E 节）；K01 是开场，K11 只在她主动时演
 CARDS = {b['id']: b for b in json.loads(PACK)['beats']}
 CARD_DUE = {'K02': 1, 'K03': 2, 'K04': 3, 'K05': 4, 'K06': 5, 'K07': 6, 'K08': 8, 'K09': 9, 'K10': 10, 'K11': 11, 'K12': 12, 'K13': 14}  # K11 吻戏：每集至少一场
+CARD_DUE = json.loads(PACK).get('due') or CARD_DUE  # V3.2：资料包可以自己定每张卡的推荐轮次（三真四假节目流程快，9 轮走完）
 MODEL = os.environ.get('DIRECTOR_MODEL', 'anthropic/claude-sonnet-5.5')
 
 
@@ -86,7 +87,7 @@ Rafael 第 6–8 轮：她说“骑车带我去兜风”，视频只有戴头盔
 - 换场怎么发生：她选了方向就按她的，资料包里没有的地方也照去；她没有方向时，才按资料包的地点顺序（篝火露台 → 配对套房 → 白沙海滩 → 户外吧台 → 泳池 → 天台），由节目流程或外部事件推动（Mei 的广播、挑战开始、仪式时间到了、Sloane 来找茬、天亮了）。
 - 换场和她的意愿：她明确拒绝去某个地方，就不把她带去，换到她能接受的地方，或者让事件来找她。她只是提问、犹豫、没有表态时，可以由他带她走或由事件推动换场：他用一句话说清为什么现在必须走，给她留一句选择，而不是不解释就替她决定。
 - 关键片段时钟：资料包的关键片段按推荐轮次往前走，输入里会写下一张卡和它是否到期。她这一轮是 vague、或剧情已连续 2 轮没有推进，而下一张卡已经到期时，这一轮必须把这张卡的核心事件演出来，并写进 cards_done。她是 direction，或者是 question 但正在推自己的情节时，跟她走，卡不用、也不拿卡里的事件当钩子（V1.4）。
-- 节奏目标（只在她没有自己的方向时作为兜底参考，V1.4）：第 1–4 轮（V3.0 加快：第 1 轮午夜配对和第一晚的套房、“你是不是骗子”的试探；第 2 轮早上的沙滩夺旗赛和 Sloane 装扭脚；第 3–4 轮第一次淘汰仪式揭晓 Ethan 是真富豪、吧台私聊“合同不让我说”）；第 5–6 轮（Sloane 当众挑拨、她发现一条线索、第二次仪式揭穿 Brody）；第 7–8 轮（天台星空的心里话、清醒的吻）；第 9 轮以后进最终仪式：她决定带不带他回家，Mei 揭晓真相，然后开出新的悬念。到第 12 轮前后，要完成一段完整的关键剧情，而不是一直平淡问答。
+- 节奏目标（只在她没有自己的方向时作为兜底参考，V1.4）：第 1–4 轮（V3.2 按节目流程走，每轮演完一张卡：第 1 轮午夜配对和第一晚的套房；第 2 轮 Mei 在沙滩宣布夺旗赛、Sloane 装扭脚；第 3 轮 Mei 宣布换搭档约会、她和另一位男主在吧台约会；第 4 轮第一次淘汰仪式揭晓 Ethan、吧台私聊的线索）；第 5–6 轮（Sloane 当众挑拨、重新配对仪式：留下或改选）；第 7–8 轮（第二次仪式揭穿 Brody、天台心里话和清醒的吻）；第 9 轮以后进最终仪式：她决定带不带他回家，Mei 揭晓真相，然后开出新的悬念。到第 12 轮前后，要完成一段完整的关键剧情，而不是一直平淡问答。
 - 不原地打转：同一个问题、同一个二选一（例如上车还是不上车）不出现第二次；同一种钩子连续最多两次；已经演过的片段只引用、不重演。
 
 【吻戏（每集至少一场）】
@@ -122,12 +123,12 @@ Rafael 第 6–8 轮：她说“骑车带我去兜风”，视频只有戴头盔
 - 节目真相表：真富豪 Jasper、Ethan、Kian；骗子 Wes、Brody、Jude、Ravi。第一次淘汰仪式送走 Ethan（Mei 揭晓真富豪），第二次送走 Brody（Mei 揭晓骗子）；她的票不改变全场票。最终仪式上她决定带不带 Jasper 回家，Mei 再揭晓 Jasper 的真假。
 - 他的底线（硬规则）：她说停、后退、要离开，他立刻照做，让开路，不挡、不拦；不拿节目、配对或奖金逼她表态；她选别人，他接受，可以失落，但不纠缠。他可以嫉妒、紧张、判断失误，然后解释和纠正。
 - 已答的不重问：已经说过的事、已经约定的事，不换词再来一遍。
-- 可以正面出镜、有身份母版的配角：Mei、Sloane、Wes、Ethan、Brody（外形和身份见资料包）。剧情需要时让他们真的出镜、亲口说话（怎么拍见导演分镜）。
+- 可以正面出镜、有身份母版的配角：Mei、Sloane、Wes、Ethan、Kian、Jude、Ravi、Brody（外形和身份见资料包）。剧情需要时让他们真的出镜、亲口说话（怎么拍见导演分镜）。
 - 不写亲吻以上的亲密细节，不写暴力伤害。
 
 【下一轮的两个选项（硬规则，中转会校验）】
 - 每个选项都是剧情走向的关键引导（V2.9）：选了就打开一段新剧情（一张关键片段卡、一个秘密被揭开一角、关系的一次变化、去一个新地点、和一个人对质），不是杂事和小指令（浇水、挂东西、递工具、指位置、看一眼、走近一点、洒他一下）。两个 leads_to 是两件不同的关键事件。
-- 两个选项都是她的一个具体行动或决定，选了就会让下一件关键的事发生：拉他去天台、逼他把那句实话说完；赢下夺旗赛、再用约会换他一个答案；翻他放在套房的东西、拿着线索当面问他；去找 Sloane 对质、再当众替他说话……每个选项两三步，不写提问，不写“说清楚”“问清楚”“让我缓缓”“站在原地”“先别”“再想想”这类原地拉扯，不重复她已经拒绝过或做过的事，也不把上一轮她没选的那个选项换个说法再给一次。A、B 必须走向不同的方向（例如一个更靠近他、一个去做别的事或去别处；两个都是“碰他的手”就不合格）。
+- 两个选项都是她的一个具体行动或决定，选了就会让下一件关键的事发生：去沙滩赢下夺旗赛、再用约会卡换他一个答案；赴换搭档约会、从另一位男主那里套出他的事；在仪式上投票送走一个人、再当众说理由；重新配对：我改选 Jasper / Wes；去找 Sloane 对质、再当众替他说话……每个选项两三步，两个选项里至少一个推着节目主线走（挑战、约会、仪式、其他嘉宾），不写提问，也不要两个都只是和他两个人私聊，不写“说清楚”“问清楚”“让我缓缓”“站在原地”“先别”“再想想”这类原地拉扯，不重复她已经拒绝过或做过的事，也不把上一轮她没选的那个选项换个说法再给一次。A、B 必须走向不同的方向（例如一个更靠近他、一个去做别的事或去别处；两个都是“碰他的手”就不合格）。
 - 她在推自己的情节时（V1.4）：A 顺着她的情节走到下一件事，B 是她情节里另一条更大胆、更主动的路；两个都留在她的情节里，不引回资料包。她没有自己的情节时，A 才走向资料包里的下一个关键片段（输入里会写下一张卡）或下一个地点，B 是另一条同样往前走的路。两条路都不能让剧情停在原地。
 - 关键关头给两难（第 6 课，V2.5）：摊牌、要不要留下、要不要看破这类时刻，A、B 要各有得失，写之前先问“各自得到什么、失去什么”；说不出代价，或一条明显好、一条明显坏，就不算两难。日常推进和亲密戏升温时不强求，不拿选项打断她自己的情节，心意确认后走向吻的选项照旧。
 - 每个选项写上 leads_to：选了它下一轮会发生什么（一句事件，例如“她的客厅：他第一次坐进她的沙发”；走资料包时写关键片段编号加一句事件，例如“K05：第一次淘汰仪式”）。
@@ -212,8 +213,8 @@ V1.3 的写法是慢慢靠近、短暂一吻、静止的手、分开，实际只
 - 只写到成年双方自愿的亲吻和拥抱，不写更进一步。并排坐（side）时两人侧过身相对，同样适用。吻戏的那一轮在 spec 里标 "kiss": true。
 
 【出镜人物（硬规则）】
-- 默认画面里是 Jasper 和她两个人。Mei、Sloane、Wes、Ethan、Brody 出镜时写进 spec 的 "cast"（如 ["Mei"]，他们有身份母版，外形不用自己写），至少给一个 3 秒以上的单人近景并让他开口；他们只能出现在 seg2（seg2 能带上身份母版，seg1 不能），seg1 里最多是画外的声音（Mei 的广播、泳池那边的喊声）。
-- 其他角色（V1.5，Vicky：剧情需要时就出现，不用一直只有两个人）：她说的事涉及别人，或这件事本来就该有别人（其他男嘉宾 Kian（赤陶色亚麻衬衫、深色短发）、Jude（金发、奶油色针织 polo）、Ravi（浅灰亚麻西装、白 T 恤）、其他女嘉宾、节目组工作人员），就真的让他出镜，写进 "extras"：名字 + 写死的外形，几轮都用同一个名字和外形（【已经出场的角色】里有的照抄）。分镜里直接写他的名字，让他参与这件事，台词第四项写他的名字；每段最多一个别的角色开口。她点名要的人一定要真的出现，不让 Jasper 替掉。没有理由不硬加人。
+- 默认画面里是 Jasper 和她两个人。Mei、Sloane、Wes、Ethan、Kian、Jude、Ravi、Brody 出镜时写进 spec 的 "cast"（如 ["Mei"]，他们有身份母版，外形不用自己写），至少给一个 3 秒以上的单人近景并让他开口；他们只能出现在 seg2（seg2 能带上身份母版，seg1 不能），seg1 里最多是画外的声音（Mei 的广播、泳池那边的喊声）。
+- 其他角色（V1.5，Vicky：剧情需要时就出现，不用一直只有两个人）：她说的事涉及别人，或这件事本来就该有别人（其他女嘉宾（背景里虚化）、节目组工作人员、吧台的调酒师），就真的让他出镜，写进 "extras"：名字 + 写死的外形，几轮都用同一个名字和外形（【已经出场的角色】里有的照抄）。分镜里直接写他的名字，让他参与这件事，台词第四项写他的名字；每段最多一个别的角色开口。她点名要的人一定要真的出现，不让 Jasper 替掉。没有理由不硬加人。
 - 有配角的这一轮，seg1 只拍 Jasper 和她两个人，不写“看向门外”“门口有人”（模型会自己在门口补一个人）。
 - 配角出镜的那一段，女主保持在画面右侧，配角站在画面左后方或单独一个镜头；每个人的外形各按各的母版。
 - 配角和 Jasper 的对话用正反打：配角单人一个镜头（近景或中近景，背景是同一个地点），Jasper 和女主的双人一个镜头，交替切。
@@ -298,7 +299,7 @@ OUTPUT_PE = r"""【输出】只输出一个 JSON 对象，不要解释或 markdo
  "structure": {"seg1": "这一段用的切镜结构名", "seg2": "..."},
  "props": [{"name": "道具名", "look": "外观写死：颜色、材质、款式（已出现过的照抄）", "source": "scene 或 offscreen 或 carried", "how": "怎么到手、怎么拿、最后放在哪"}]（没有道具写空列表）,
  "kiss": true 或 false（这一轮有没有吻戏）,
- "cast": ["这一轮出镜的 Mei / Sloane / Wes / Ethan / Brody（他们有身份母版）；没有就写空列表"],
+ "cast": ["这一轮出镜的 Mei / Sloane / Wes / Ethan / Kian / Jude / Ravi / Brody（他们有身份母版）；没有就写空列表"],
  "extras": [{"name": "这一轮这几位以外出镜的别的角色的名字，没有写空列表 []", "look": "中文写死外形：年龄、性别、脸、发型、衣服"}],
  "set": "这一轮结束时所在地点的固定场景描述（见上）",
  "route": "follow" 或 "fallback",
@@ -463,7 +464,7 @@ def direct(history, state, text, kind, mode, timeout=60, place=None, place_round
         if attempt == 0 and intimate and sp.get('scene_changed') and not re.search('去|走|回|出门|离开|换|到|阳台|车|楼下|外面|浴室|厨房|客厅|卧室|床|家', text or ''):  # V1.8：亲密进行中自己换了场（第 8、12 轮跑去阳台），这条值得多等一次
             first_bad = ['亲密进行中不换场']; msgs = msgs + [{'role': 'assistant', 'content': txt}, {'role': 'user', 'content': '她没有说要换地方：亲密进行中不换场、不打断。scene_changed 改成 false，就在当前地点继续往下演，其余按原来的规则，重新输出完整 JSON。'}]
             continue
-        bad = lint(sp, m, dict(ask_text=text, he_now=(wardrobe or {}).get('he', ''), she_now=(wardrobe or {}).get('she', ''), must_scene=must_scene, must_card=must_card, seen=seen, place_rounds=place_rounds, must_kiss=must_kiss, n=n, prev_opts=(history[-1].get('opts') if history else None), set_now=set_now, lead=lead, stall=stall, her_said=' '.join([h.get('input') or '' for h in history] + [text or '']), items=cont.get('items') or [], left=cont.get('left') or {}, holding=cont.get('holding') or '', looks=list(cont.get('looks') or []), posture=cont.get('posture') or ''))
+        bad = lint(sp, m, dict(ask_text=text, he_now=(wardrobe or {}).get('he', ''), she_now=(wardrobe or {}).get('she', ''), must_scene=must_scene, must_card=must_card, kind=kind, done=list(done), seen=seen, place_rounds=place_rounds, must_kiss=must_kiss, n=n, prev_opts=(history[-1].get('opts') if history else None), set_now=set_now, lead=lead, stall=stall, her_said=' '.join([h.get('input') or '' for h in history] + [text or '']), items=cont.get('items') or [], left=cont.get('left') or {}, holding=cont.get('holding') or '', looks=list(cont.get('looks') or []), posture=cont.get('posture') or ''))
         if attempt == 0: first_bad = bad
         hard = [x for x in bad if x.startswith('【必改】')]
         if attempt == 0 and hard:  # V2.0：意图和状态连续错了比多等 10 秒更伤，这两类打回一次
@@ -477,9 +478,9 @@ def direct(history, state, text, kind, mode, timeout=60, place=None, place_round
             room = lambda t: (re.search('卧室|客厅|厨房|阳台|浴室|书房|车|酒吧|车库|走廊|大堂|露台|屋顶', t) or [''])[0]
             if _sim(k, str(sp.get('location') or '')) >= 0.6 and room(k) == room(str(sp.get('location') or '')): sp['location'] = k; sp['set'] = v; break  # 要是同一种房间（“公寓卧室”和“公寓客厅”相似度也有 0.67）
     settle_ride(sp, cont, set_now); settle_walk(sp, set_now)
-    ensure_empty_shot(sp); ensure_cast(sp); clean_empty_shots(sp); empty_first(sp, set_now); cast_out_of_seg1(sp)
+    ensure_empty_shot(sp); ensure_cast(sp); clean_empty_shots(sp); empty_first(sp, set_now); cast_out_of_seg1(sp); seg1_wide(sp)
     settle_wardrobe(sp, wardrobe, text, set_now, cont.get('posture') or '', cont.get('outfits') or ()); settle_state(sp, cont, wardrobe, text); clean_zh(sp)
-    ctx = dict(ask_text=text, he_now=(wardrobe or {}).get('he', ''), she_now=(wardrobe or {}).get('she', ''), must_scene=must_scene, must_card=must_card, seen=seen, place_rounds=place_rounds, must_kiss=must_kiss, n=n, prev_opts=(history[-1].get('opts') if history else None), set_now=set_now, lead=lead, stall=stall, her_said=' '.join([h.get('input') or '' for h in history] + [text or '']), items=cont.get('items') or [], left=cont.get('left') or {}, holding=cont.get('holding') or '', looks=list(cont.get('looks') or []), posture=cont.get('posture') or '')
+    ctx = dict(ask_text=text, he_now=(wardrobe or {}).get('he', ''), she_now=(wardrobe or {}).get('she', ''), must_scene=must_scene, must_card=must_card, kind=kind, done=list(done), seen=seen, place_rounds=place_rounds, must_kiss=must_kiss, n=n, prev_opts=(history[-1].get('opts') if history else None), set_now=set_now, lead=lead, stall=stall, her_said=' '.join([h.get('input') or '' for h in history] + [text or '']), items=cont.get('items') or [], left=cont.get('left') or {}, holding=cont.get('holding') or '', looks=list(cont.get('looks') or []), posture=cont.get('posture') or '')
     sp['lint_left'] = lint(sp, m, ctx)  # V1.5：修完还剩的问题只记录，不再为选项单独调一次导演层
     sp['lint_first'] = first_bad
     sp['director_attempts'] = attempt + 1
@@ -551,6 +552,13 @@ def lint(sp, mode, ctx=None):
     if ctx.get('must_scene') and not sp.get('scene_changed') and it != 'direction':
         bad.append(f"【必改】这个地点已经演了 {ctx.get('place_rounds')} 轮，她这一句不是明确引导（{it}），这一轮必须换场（scene_changed=true，用动作切到新地点）")
     mc = ctx.get('must_card')
+    got = [str(k).strip().upper() for k in (sp.get('cards_done') or [])]
+    if mc and ctx.get('kind') not in (None, 'free') and mc not in got:  # V3.2（Vicky 11-04：剧情推进慢，要引导到主线）：她点的是选项、到期的卡就要演，可以和她选的事接在一起；原来只在她含糊时才强制，点选项一直不算
+        bad.append(f'【必改】她点的是选项，关键片段 {mc}（{CARDS.get(mc, {}).get("role", "")[:40]}）已经到期：这一轮把它的核心事件演出来（和她选的事接在一起），写进 cards_done')
+    left_cards = [k for k in CARD_DUE if k not in (ctx.get('done') or []) and k not in got]
+    if left_cards and CARD_DUE[left_cards[0]] <= (ctx.get('n') or 0) + 1:  # V3.2：下一轮到期的卡，至少一个选项要通向它
+        k2 = left_cards[0]; lt = ' '.join(str(((sp.get('next') or {}).get(x) or {}).get('leads_to', '')) for x in ('A', 'B'))
+        if k2 not in lt.upper(): bad.append(f'【必改】下一轮该演关键片段 {k2}（{CARDS.get(k2, {}).get("role", "")[:40]}）：两个选项里至少一个通向它，leads_to 写上 {k2}')
     if mc and (it == 'vague' or (it == 'question' and ctx.get('stall', 0) >= 2)) and mc not in [str(k).strip().upper() for k in (sp.get('cards_done') or [])]:
         bad.append(f'她这一句是 {it}，关键片段 {mc} 已经到期：这一轮必须把 {mc} 的核心事件演出来，并写进 cards_done')
     said = (ctx.get('her_said') or '').lower()
@@ -585,6 +593,8 @@ def lint(sp, mode, ctx=None):
     if not str(sp.get('he_move') or '').strip(): bad.append('没写 he_move：他这一轮主动做了什么推进主线（V2.9）')
     waits = [str(b[0])[:24] for b in allb if WAIT_BEAT.search(str(b[0]))] + ([str(sp.get('hold'))[:24]] if WAIT_BEAT.search(str(sp.get('hold') or '')) else [])
     if waits: bad.append(f"【必改】有“等她决定/等她指路”这类让出主动权的拍子（{'；'.join(waits[:2])}）：换成他主动做的一件事或一件新发生的事（V2.9）")
+    cut1 = [str(b[0])[:20] for b in sp.get('seg1', []) if re.search('切到|已站在.{0,6}(套房|天台|吧台|海滩|泳池)', str(b[0]))]  # V3.2：第 1 段在原地，换场只从第 2 段开始（S00395099c 第 2 轮第 1 段中途切到套房，又漂回泳池）
+    if cut1: bad.append(f"【必改】第 1 段里换了地点（{'；'.join(cut1[:2])}）：第 1 段留在原地，换场放到第 2 段第一拍的空镜")
     fill = [str(b[0])[:20] for b in allb if is_filler(b)]  # V3.0（Vicky 11-04：一个动作拖很久、有定格感）：没有台词只有表情的拍子整轮最多一拍
     if len(fill) > 1 and not slow: bad.append(f"【必改】有 {len(fill)} 拍只有表情没有台词和动作（{'；'.join(fill[:3])}）：整轮最多一拍，其余改成一句台词或一个推动剧情的动作（V3.0）")
     stall = [str(b[1])[:40] for b in allb if len(b) > 1 and STALL_LINE.search(str(b[1]))]
@@ -627,7 +637,7 @@ def lint(sp, mode, ctx=None):
     text = json.dumps([sp.get('seg1'), sp.get('seg2'), sp.get('hold'), sp.get('her_hands'), sp.get('set')], ensure_ascii=False)  # set 也查：v0.15 的会议厅 set 写了“带爪痕纹样的旗”
     for w, why in BANNED.items():
         if w in text: bad.append(f'出现了“{w}”：{why}')
-    if any(c not in L.CAST for c in (sp.get('cast') or [])): bad.append('cast 里只能写 Mei、Sloane、Wes、Ethan、Brody，其他人写 extras')
+    if any(c not in L.CAST for c in (sp.get('cast') or [])): bad.append('cast 里只能写 Mei、Sloane、Wes、Ethan、Kian、Jude、Ravi、Brody，其他人写 extras')
     def on_screen(b): return any((len(b) > 3 and b[3] == c) or (c in b[0] and not any(w in b[0] for w in ('声音', '门外', '画外', '电话'))) for c in L.CAST)
     if any(on_screen(b) for b in sp.get('seg1', [])): bad.append('配角只能出现在 seg2，seg1 里最多是画外声音（说话人写“画外:Mei”这种）')
     crowd = [str(b[0])[:24] for b in sp.get('seg2', []) if sum(1 for c in L.CAST if c in str(b[0])) >= 2]  # V3.0：两个配角写在同一拍，模型会把其中一个画成两个（S235751ee5 第 3 轮 Mei 和 Sloane 同框，出现两个 Mei）
@@ -652,6 +662,14 @@ def _drop_clause(text, w):
     parts = re.split(r'(?<=[，；。,;])', text)
     keep = [p for p in parts if w not in p]
     return ''.join(keep).strip('，；,; ')
+
+
+def seg1_wide(sp):
+    """V3.2：第 1 段没有身份参考图（首帧续接），单人近景、特写最容易换脸（S00395099c 第 2、5 轮她的近景变成另一个人），改成双人中近景。"""
+    n = 0
+    for b in sp.get('seg1') or []:
+        if re.search('单人(中近景|近景)|特写', str(b[2])) and not str(b[2]).startswith('插入'): b[2] = re.sub('单人(中近景|近景)|(大)?特写', '双人中近景', str(b[2]), count=1); n += 1
+    if n: sp['seg1_widened'] = n
 
 
 def cast_out_of_seg1(sp):
@@ -1143,6 +1161,9 @@ def settle_wardrobe(sp, prev, asked='', set_now=None, posture='', outfits=()):
     if NUDE_SHE.search(str(end.get('she') or '')): sp['nude_cut'] = end.get('she'); end['she'] = start.get('she') or L.SHE_DEFAULT
     if NUDE_HE.search(str(end.get('he') or '')): sp['nude_cut'] = end.get('he'); end['he'] = start.get('he') or L.HE_DEFAULT
     if end != start and not want and not WEAR_ACT.search(text) and not TIME_SKIP.search(text): sp['wardrobe_reverted'] = end; end = dict(start)
+    if not want and end.get('she') != start.get('she') and not (start.get('she') and end.get('she') and L.LOOK_OUTER in str(start.get('she')) and L.LOOK_OUTER not in str(end.get('she'))):  # V3.2：她的衣服只在她自己要换时才换（S00395099c 第 5 轮男主一句“Go change”就给她换成深蓝长裙，脸也跟着变了）；脱掉最外面一层除外
+        sp['she_wear_reverted'] = end.get('she'); end['she'] = start.get('she')
+        if not end.get('she'): end.pop('she', None)
     if end.get('she'): end['she'] = end['she'].replace('奶油色和黑色条纹针织上衣', HER_TOP) if HER_TOP else end['she']  # V2.2：写死款式（只写“条纹针织上衣”，关键帧画成带领短袖 POLO，之后一路带下去）
     if not want and redress(sp, start, asked, set_now, posture): end = {}
     settle_change(sp, start, end)
