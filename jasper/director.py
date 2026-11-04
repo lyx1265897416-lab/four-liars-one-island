@@ -390,7 +390,7 @@ def direct(history, state, text, kind, mode, timeout=60, place=None, place_round
         if h.get('ask'): t += f"；她要的「{h['ask']}」{'已兑现' if h.get('delivered') else '没有兑现'}"
         return t
     hist = '\n'.join(line(i, h) for i, h in enumerate(history)) or '（还没有，这是开场之后的第 1 轮）'
-    n = len(history) + 1
+    n = sum(int(h.get('span') or 1) if isinstance(h, dict) else 1 for h in history) + 1  # V3.3：换线带来的前情算作之前演过的轮数（span），关键片段到期不因切线往后推
     pace = f"当前地点：{place or '篝火露台'}，在这里已经演了 {place_rounds} 轮。当前地点的 set：{set_now or OPEN_SET}（地点不变时 set 原样照抄）。"
     level = int((history[-1].get('intimacy') or 0) if history else 0)
     cont = dict(cont or {}, place=place)

@@ -1,0 +1,32 @@
+[
+ {
+  "n": 1,
+  "input": "我选 Wes。",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 95.5,
+  "seg2_ready": 113.4,
+  "stall": 5.9
+ },
+ {
+  "n": 2,
+  "input": "我拉他去沙滩赢下夺旗赛，再用约会卡逼他讲一件真事",
+  "status": "done",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": 52.1,
+  "seg2_ready": 131.8,
+  "stall": 67.7
+ },
+ {
+  "n": 3,
+  "input": "我接受换搭档，去吧台和 Jasper 约会，从他嘴里套出 Wes 的事",
+  "status": "error",
+  "mode": "15+15",
+  "director": "prefetched",
+  "send_to_play": null,
+  "seg2_ready": 77.1,
+  "stall": null
+ }
+]

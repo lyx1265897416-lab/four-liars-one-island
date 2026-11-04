@@ -329,6 +329,7 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
             kinds = set(hc.get('kinds') or []) or ({'people'} if hc.get('bad') else set())
             if magic: kinds.discard('motion')  # 她自己要飞、要魔法时不算
             if kinds == {'clothes'} and sp_hc.get('cast'): s['clothes_cast_ignored'] = s.get('clothes_cast_ignored', 0) + 1; kinds = set()  # V3.1：有配角在画面里时，只报衣服颜色的不重生成、只记录（S231920f01、S00530299f 都是把 Sloane 的蓝裙当成女主裙子变色，每次多等约 25 秒）
+            if i == 0 and kinds and hc.get('frames') and set(hc['frames']) <= {1}: s['first_frame_issue'] = hc.get('why'); kinds = set()  # V3.3：第 1 段第 1 帧就是上一轮末帧，重生成改不掉（S0209398d1 第 3 轮“第 1 帧边缘多一只手”连拦两次后报错），只记录
             if not kinds: break
             if tn == 2: raise RuntimeError('这段画面没有通过检查，已拦下，请再发送一次')
             s['gate_regen'] = tn + 1; job = gen(c.build(**kw)); s['gen_ready_at'] = now()
@@ -628,7 +629,7 @@ class H(BaseHTTPRequestHandler):
             s = new_session(mode); s['persona'] = str(body.get('persona') or '')[:1500] or None
             rc = str(body.get('recap') or '').strip()[:2000]
             if rc:  # V3.2：换搭档——从另一条线带着前情过来（三真四假重新配对仪式）。前情写进当前状态和剧情记录，已演过的关键片段卡照算
-                s['state'] = rc; s['history'] = [{'input': '（换搭档之前的剧情）', 'kind': 'option', 'lines': [], 'did': rc, 'opts': [], 'place': s.get('place'), 'input_type': 'direction', 'delivered': True}]
+                s['state'] = rc; s['history'] = [{'input': '（换搭档之前的剧情）', 'kind': 'option', 'lines': [], 'did': rc, 'opts': [], 'place': s.get('place'), 'input_type': 'direction', 'delivered': True, 'span': max(1, min(20, int(body.get('rounds') or 1)))}]
                 s['cards'] = [str(k).strip().upper() for k in (body.get('cards') or []) if re.fullmatch(r'K\d{2}', str(k).strip().upper())][:20]; s['recap'] = True
             return self.out(200, {'sid': s['sid'], 'next': s['next'], 'mode': mode})
         if self.path.startswith('/api/round/') and self.path.endswith('/view'):
