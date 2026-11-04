@@ -44,6 +44,7 @@ AUDIO_BANK = _json2.loads(_ab.read_text()) if _ab.exists() else {}  # V2.3：预
 SEAM = '第一个镜头接着上一刻往下演：两个人的姿势、手的位置和道具的状态都和上一刻一样，不把上一刻已经做完的动作再做一遍；换景别时同时换机位，不在同一个机位上突然放大缩小。'  # V1.2：评分里接缝跳回首帧、同轴跳切扣分最多
 KISS = '吻戏的拍法（V1.4）：靠近只用一个干脆的动作，不慢慢凑近；从嘴唇贴上开始，到动作里写明分开之前，是同一次连续的吻，正常速度，动作一直在细微地变化（头部角度微调、他的手在她背上收紧、她的手指攥紧他的肩），不慢动作、不定格、不僵住；切镜之后的镜头一开始两人就已经在接吻，接着上一镜继续，不重新靠近，不中途分开再吻；手的特写里手一定在动。两人的五官、发型、服装和男左女右在吻中保持不变：每个接吻镜头里 Jasper 的脸都在画面左半边、脸朝画面右侧，她的脸都在画面右半边、脸朝画面左侧，近景和侧面近景也不对调（V1.4 便携包自测第 1 轮最后一个接吻近景两人左右对调）。'
 ACT = '表演克制：Jasper 话少，句子短，冷静、带一点干巴巴的幽默，笑意很少但一出来就很真，认真时目光很定，不压嗓、不耳语；她说话干脆，带一点不买账的冷幽默；情绪在眼神和嘴角。'
+PACE = '节奏（V3.0，Vicky 11-04：说话、动作慢吞吞，有定格感）：人物说话是正常偏快的自然语速，一句接一句，句间不留长停顿；动作是真人速度的连续动作，一个动作做完马上接下一个，不慢动作、不定格、不在一个姿势上停住；镜头里始终有人在动或在说话。'
 STYLE = ('画面和角色参考图是同一种画质：写实真人恋爱真人秀电影画面，自然的皮肤纹理，眼睛和睫毛清晰，发丝分明，织物质感真实，浅景深；夜里按脸定曝光，人物的脸被火炬和串灯的暖光照亮，环境压暗成深蓝夜色，泳池的青绿色光做轮廓光；白天是明亮通透的海岛阳光；饱和度饱满，不雾、不灰、不平光、不塑料感、不 CG、不动漫，标准焦段，五官比例自然，画风全程统一；时间和光线按这个地点写的来，肤色保持参考图的颜色，不偏橙不偏黄。'
          '镜头之间一律硬切，不用叠化、溶镜、淡入淡出、闪白或闪黑；同一地点所有镜头的光线、色温和色调完全一致，跟随这个地点的主光源，不突然变冷变暖、变亮变暗。')
 
@@ -230,10 +231,13 @@ def _prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, s
     place1 = (f'地点：{s0}。' if s0 else '') + T0
     place2 = ((f'开头的地点：{s0}。' if s0 else '') + T0.replace('站位：', '开头的站位：') + f'切到新地点后：{s1}。' + T1.replace('站位：', '新地点的站位：')) if moved else place1
     people = 'Jasper 和她的长相、服装以这些图为准，它们的影棚背景不进画面'
-    if moved:
+    plate = plate_for(sp)  # V3.0：这个地点的固定空景（有就用，没有照旧）
+    if moved and plate:
+        refs = '图片1是新地点的空景：每个镜头的背景、陈设、墙面、窗和光线都照它，人物站位是 Jasper 在画面左侧、她在画面右侧，图片2是 Jasper 的脸，图片3是他的服装，图片4是她（女主）的身份母版（正面头像、全身正面、近景特写）' + ''.join(f'，图片{5 + i}是 {c}' for i, c in enumerate(c2)) + f'，{people}；整段都在图片1这个地点，不回到上一个地点。'
+    elif moved:
         refs = '图片1是两人的站位参考：Jasper 在画面左侧、她在画面右侧（只参考左右站位和两人的样子），图片2是 Jasper 的脸，图片3是他的服装，图片4是她（女主）的身份母版（正面头像、全身正面、近景特写）' + ''.join(f'，图片{5 + i}是 {c}' for i, c in enumerate(c2)) + f'，{people}；每个镜头的背景按下面写的地点。'
     else:
-        refs = '图片2是 Jasper 的脸，图片3是他的服装，图片4是她（女主）的身份母版（正面头像、全身正面、近景特写）' + ''.join(f'，图片{5 + i}是 {c}' for i, c in enumerate(c2)) + f'，{people}；图片1是上一刻的场景，每个镜头的背景、光线和色调都和图片1一致。'
+        refs = '图片2是 Jasper 的脸，图片3是他的服装，图片4是她（女主）的身份母版（正面头像、全身正面、近景特写）' + ''.join(f'，图片{5 + i}是 {c}' for i, c in enumerate(c2)) + (('，图片5是这个地点的空景（陈设、墙面和光线照它）' if plate and not c2 else '')) + f'，{people}；图片1是上一刻的场景，每个镜头的背景、光线和色调都和图片1一致。'
     lead = '这一段紧接图片1那一刻：地点、背景、光线、两个人的位置、朝向和距离都和图片1一致，这一段不离开这个地点。'
     end = '最后停在两人同框的镜头上（男左女右，两张脸都看得到），留出悬念。'
     if mode in SEG1_LOCK and not seg2_first:  # 首尾帧锁，一镜到底，最后回到首帧
@@ -241,24 +245,32 @@ def _prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, s
                 '画面上半部分的背景全程保持首帧的样子和位置。')
         lead = '首帧和尾帧是同一张画面（上一刻）：开头的场景、光线、两个人的长相、服装、位置、朝向和距离都与首帧一致，这一段不离开这个地点。两人的皮肤质感、他的瞳色和两人的发型全程和首帧完全一样。'
         p1 = (lock + pov(c1) + place1 + lead + mag1 + her1 + take(sp['seg1'], d1)
-              + '最后 2 秒两人回到首帧的位置、姿势、表情和距离停住，画面和首帧一致。' + ACT + STYLE + tail(amb1, c1))
+              + '最后 2 秒两人回到首帧的位置、姿势、表情和距离停住，画面和首帧一致。' + ACT + PACE + STYLE + tail(amb1, c1))
         hold2 = '图片1的画面（两人在原位的双人镜头）' if not moved else sp['hold'].rstrip('。')
         p2 = (refs + pov(c2) + place2 + mag2 + her2 + ''.join(CAST[c][0] for c in c2) + wolf
               + f'这一段从上一刻切过来，上一刻是：{hold2}。' + ('换场之前，' if moved else '') + '地点、背景、光线、两个人的位置和朝向与上一刻一致。' + SEAM
-              + shots(sp['seg2'], d2, marks=marks2) + (f"最后停在{sp.get('location') or '新地点'}里，" if moved else '') + end + ACT + STYLE + tail(amb, c2))
+              + shots(sp['seg2'], d2, marks=marks2) + (f"最后停在{sp.get('location') or '新地点'}里，" if moved else '') + end + ACT + PACE + STYLE + tail(amb, c2))
         return [(d1, p1, 'lock'), (d2, p2, False)]
     lead = '这一段从首帧那一刻接着演：地点、背景、光线、两个人的长相、服装、位置、朝向和距离都和首帧一致，这一段不离开这个地点。'  # 第 1 段用首帧续接，和上一轮无缝接上；5 秒漂移小，末帧也不传给下一轮
     p1 = (pov(c1) + place1 + lead + mag1 + her1 + ''.join(CAST[c][0] for c in c1) + wolf
-          + shots(sp['seg1'], d1, marks=marks1) + f'最后停在：{sp["hold"].rstrip("。")}。' + ACT + STYLE + tail(amb1, c1))
+          + shots(sp['seg1'], d1, marks=marks1) + f'最后停在：{sp["hold"].rstrip("。")}。' + ACT + PACE + STYLE + tail(amb1, c1))
     p2 = (refs + pov(c2) + place2 + mag2 + her2 + ''.join(CAST[c][0] for c in c2) + wolf
           + f'这一段从上一刻切过来，上一刻是：{sp["hold"].rstrip("。")}。' + ('换场之前，' if moved else '') + '地点、背景、光线、两个人的位置和朝向与上一刻一致。' + SEAM
-          + shots(sp['seg2'], d2, marks=marks2) + (f"最后停在{sp.get('location') or '新地点'}里，" if moved else '') + end + ACT + STYLE + tail(amb, c2))
+          + shots(sp['seg2'], d2, marks=marks2) + (f"最后停在{sp.get('location') or '新地点'}里，" if moved else '') + end + ACT + PACE + STYLE + tail(amb, c2))
     return [(d1, p1, True), (d2, p2, False)]
 
 
 def seg2_cast_refs(sp):
     """第 2 段需要追加的配角身份母版（按出现顺序）。"""
     return [CAST[c][1] for c in (sp.get('cast') or []) if c in CAST and any(c in b[0] or (len(b) > 3 and b[3] == c) for b in sp['seg2'])]
+
+
+def plate_for(sp):
+    """V3.0（三真四假 S001455553：换到套房后第 2 段漂回泳池边，下一轮整轮都在泳池）：masters/urls.json 的 plates 是 {"地点关键词|关键词": 空景图}，这一轮的地点对上就用它当地点参考；没有 plates 的剧照旧。"""
+    loc = str(sp.get('location') or '') + str(sp.get('set') or '')[:20]
+    for k, u in (TU.get('plates') or {}).items():
+        if any(x and x in loc for x in k.split('|')): return u
+    return None
 
 
 def prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, stage_start=None, worn=None, jacket_start=False):

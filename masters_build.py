@@ -61,7 +61,7 @@ elif sys.argv[1] == 'upload':
     from vivix_w1 import W1Client
     cl = W1Client(); F = M / 'urls-shared.json'; U = json.loads(F.read_text()) if F.exists() else {}
     files = {'her': M / 'her-sheet.jpg', 'her_head': M / 'her-head.jpg', 'look_she_on': suit('her'), 'vehicle': M / 'vehicle.jpg', 'idle_key': M / 'idle-key.jpg',
-             **{c: M / f'{c}-sheet.jpg' for c in ('mei', 'sloane', 'wes', 'jasper', 'ethan', 'brody')},
+             **{c: suit(c) for c in ('mei', 'sloane', 'wes', 'jasper', 'ethan', 'brody')},  # V3.0：配角母版用单人定装全身图。原来的“头像 + 全身”两格合图被模型当成两个人，画出两个 Sloane、两个 Mei（S2351533a4）
              **{f'face-{c}': face(c) for c in ('wes', 'jasper')}, **{f'face_head-{c}': M / f'{c}-head.jpg' for c in ('wes', 'jasper')},
              **{f'outfit-{c}': M / f'{c}-upper.jpg' for c in ('wes', 'jasper')},
              **{f'staging-{c}': M / f'staging-{c}.jpg' for c in ('wes', 'jasper')}, **{f'open_key-{c}': M / f'open-key-{c}.jpg' for c in ('wes', 'jasper')}}

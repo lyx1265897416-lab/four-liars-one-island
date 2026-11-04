@@ -7,7 +7,7 @@ op = U.build_opener(U.ProxyHandler({}))
 def call(p, b=None):
     q = U.Request(API + p, data=json.dumps(dict(b, k=K)).encode() if b is not None else None, headers={'Content-Type': 'application/json'}, method='POST' if b is not None else 'GET')
     with op.open(q, timeout=60) as r: return json.loads(r.read())
-STEPS = {'wes': [('option', 'A'), ('free', '回到套房，我直接问他：你是那四个骗子之一吗？')], 'jasper': [('option', 'A')]}[LINE]
+STEPS = {'wes': [('option', 'A'), ('free', '回到套房，我直接问他：你是那四个骗子之一吗？')], 'jasper': [('option', 'A'), ('option', 'A'), ('option', 'B')]}[LINE]
 s = call('/api/session', {'mode': 'auto'}); sid = s['sid']; print(LINE, sid, flush=True)
 out = D / 'tests' / 'runs' / sid; out.mkdir(parents=True, exist_ok=True); rows = []
 for n, (kind, v) in enumerate(STEPS, 1):
