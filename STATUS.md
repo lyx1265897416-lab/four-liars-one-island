@@ -18,3 +18,7 @@
 
 ## 待做
 Vicky 人工测后复盘；时延（考虑默认 5+15）；嫌疑板页面、预制仪式和结局、每局抽真相；测试记录页、即兴剧场 APP。
+
+## 封面 V2（2026-11-03，Vicky：把最帅的男主放中间）
+- opening-v1/cover.py 出 3 张（Jasper 居中靠前、六人 V 字排在两侧、脸在上半、下半留给标题），选 COVER_2（最正中、七人都认得出）→ docs/media/poster.jpg（?v=2）；旧封面在 opening-v1/qa/rejected/poster-v1-lineup.jpg。
+- 飞书 8️⃣ 封面图同步换成 cover-v2.jpg（realtime-drama-test-log v/ila-pack/）。
