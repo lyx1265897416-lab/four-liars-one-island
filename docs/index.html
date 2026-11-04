@@ -159,7 +159,7 @@ let APIS = Object.assign({}, LOCAL_API), LINE = null, API = LOCAL_API.wes;
 const HE = {wes: 'Wes', jasper: 'Jasper'};
 const relayReady = PAGES ? fetch('relay.json?t=' + Date.now(), {cache: 'no-store'}).then(r => r.json()).then(j => { APIS = j; API = j.wes; }) : Promise.resolve();
 const useLine = l => { LINE = l; API = APIS[l]; $('brandHe').textContent = HE[l]; };
-const CDN = {"media/OPEN.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/b7c79cccba3a4a08aac9e28c555b765f/OPEN.mp4", "media/IDLE0.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/d2da982c075045569647a167c8c73611/IDLE0.mp4", "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/728f2ed3661e41009f91eb0a448b22f5/poster.jpg", "audio/WAIT.mp3": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/37d71df984094a42bdd9014882082ad3/WAIT.mp3"};
+const CDN = {"media/OPEN.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/b7c79cccba3a4a08aac9e28c555b765f/OPEN.mp4", "media/IDLE0.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/d2da982c075045569647a167c8c73611/IDLE0.mp4", "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/93d43a528d2b4862bd71e866cb5d08dd/poster.jpg", "audio/WAIT.mp3": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/37d71df984094a42bdd9014882082ad3/WAIT.mp3"};
 const SRC = p => PAGES && CDN[p] ? CDN[p] : p;
 const PICK = {cue: {zh: '午夜到了，Mei 请她选出今晚的搭档。', en: "Midnight. Mei asks her to pick tonight's partner."}, A: {zh: '我选 Wes。', en: 'I pick Wes.'}, B: {zh: '我选 Jasper。', en: 'I pick Jasper.'}, pick: true};
 const PREVIEW_NEXT = PICK;
@@ -188,7 +188,7 @@ applyLang(); $('modeMeta').textContent = MODE === 'auto' ? 'Auto length' : MODE.
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 const setMode = m => { document.body.classList.remove('start', 'choosing', 'playing', 'waiting'); document.body.classList.add(m); };
 setMode('start');
-$('stage').style.background = '#000 url(media/poster.jpg?v=1) center/cover';
+$('stage').style.background = '#000 url(media/poster.jpg?v=2) center/cover';
 const chip = $('liveChip'); const setChip = h => { chip.innerHTML = h; chip.hidden = !h; };
 function toast(t){ const el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 2200); }
 const subs = $('subs');
