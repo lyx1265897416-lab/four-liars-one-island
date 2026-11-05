@@ -206,11 +206,11 @@ def prepare_frame(s, rid, seg2_url):
                 U.urlretrieve(fixed, FR / f'{rid}_last_scene.jpg'); url = fixed; qa['scene_fixed'] = fixed
                 jpg.write_bytes((FR / f'{rid}_last_scene.jpg').read_bytes())
             except Exception as e: qa['scene_fix_err'] = str(e)[:200]; log('SCENEFIXFAIL', rid, e)
-        s['frame_serious'] = bool(kinds(qa, 'people'))
+        s['frame_serious'] = bool(kinds(qa, 'people', 'outfit', 'state'))  # V3.10：男主换装、脱袍（人鱼王子 S232959810 第 4、5 轮）也等回正好的末帧，不把错的服装带进下一轮
         if s.get('frame_pending') == rid and not scene_bad: s['frame_raw'] = url  # V2.2：不再因为质检挡下一轮，赶不上修好的图就用原图
         issues = [i['text'] for i in qa.get('issues', []) if isinstance(i, dict) and i.get('level') == 'high']
         try:  # V2.2 每轮回正末帧：第 1 段只有首帧没有身份参考，脸、发型、肤色、肌肉、戒指一轮轮累积（第 12 轮起头发变卷，第 15–17 轮脸上一片黑点、晒黑、肌肉越来越夸张）。观众看视频时后台做，不增加等待
-            aj = FR / f'{rid}_anchor.jpg'; st_a = '；'.join(x for x in (st_now, ('姿态：' + s['posture']) if s.get('posture') and '姿态：' not in (st_now or '') else '') if x); qa['anchor_via'] = qa_guard.key_frame(L.anchor_prompt(st_a, issues, s.get('wardrobe'), s.get('holding') or '', bool(L.VEH.search(str(s.get('posture') or '') + str(s.get('holding') or '')))), [url, *[u or h for u, h in zip(L.key_people(s.get('wardrobe'), (s.get('she_looks') or {}).get((s.get('wardrobe') or {}).get('she') or '')), (qa_guard.HE_HEAD, qa_guard.HER_HEAD))]], aj, hedge=1)  # V2.4：站着、坐着也写进去；close-up 看不到下半身时，第 13 轮把坐着回正成站着
+            aj = FR / f'{rid}_anchor.jpg'; st_a = '；'.join(x for x in (st_now, ('姿态：' + s['posture']) if s.get('posture') and '姿态：' not in (st_now or '') else '') if x); qa['anchor_via'] = qa_guard.key_frame(L.anchor_prompt(st_a, issues, s.get('wardrobe'), s.get('holding') or '', bool(L.VEH.search(str(s.get('posture') or '') + str(s.get('holding') or '')))), [url, *[u or h for u, h in zip(L.key_people(s.get('wardrobe'), (s.get('she_looks') or {}).get((s.get('wardrobe') or {}).get('she') or '')), (qa_guard.HE_HEAD, qa_guard.HER_HEAD))]], aj, hedge=1, waku_ok=100)  # V3.10：OpenRouter 403 时改走 Waku，回正不再整轮失效  # V2.4：站着、坐着也写进去；close-up 看不到下半身时，第 13 轮把坐着回正成站着
             diff = qa_guard.scene_diff(jpg, aj); qa['anchor_diff'] = diff
             if diff <= (qa_guard.ANCHOR_DIFF_BOTH if qa.get('her', True) and qa.get('face', True) and not s.get('frame_serious') else qa_guard.ANCHOR_DIFF_MAX): url = c.upload(aj)['url']; qa['anchored'] = True; high = []
             else: log('ANCHOR', rid, 'rejected: scene changed', diff)

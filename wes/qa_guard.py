@@ -43,6 +43,24 @@ SCENE_DIFF_MAX = 20  # 修图前后画面四周（背景）的平均灰度差，
 SIDE_RULE = '15. 站位（这一刻两人并排坐着）：两人应并排坐、身体侧过来朝向对方，Wes 在左、她在右。是不是变成面对面坐、或者两人都正对镜头像证件照？是就算问题（kind=staging）。\n'
 
 
+VLM_FALLBACK = 'qwen/qwen3-vl-235b-a22b-instruct'  # V3.10：OpenRouter 对这个账户的 Anthropic/OpenAI/Google 一律 403（2026-11-04 19:20 起）时视觉质检全部失效（人鱼王子 S232959810 五轮 HARDCHECK/SEGQA/FRAMEQA 全是 403，换装、脱袍、长鳞都没拦下）；这时这一次改用它，主模型恢复后自动回到主模型
+
+FALLBACK_KINDS = {'people', 'her', 'outfit', 'state', 'scene', 'staging', 'framing', 'text'}
+
+
+def _post(body, timeout):
+    """V3.10：发一次 OpenRouter 请求；主模型 403 就换 VLM_FALLBACK 再发一次（去掉它不认的 reasoning）。"""
+    import urllib.error
+    def go(b):
+        req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(b).encode(), headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
+        with U.urlopen(req, timeout=timeout) as r: return json.loads(r.read())
+    try: return go(body)
+    except urllib.error.HTTPError as e:
+        if e.code != 403 or body.get('model') == VLM_FALLBACK: raise
+        b = {k: v for k, v in body.items() if k != 'reasoning'}; b['model'] = VLM_FALLBACK
+        return go(b)
+
+
 def check(jpg, timeout=60, cast=(), side=False, worn=(), state=''):
     b64 = base64.b64encode(open(jpg, 'rb').read()).decode()
     body = {'model': VLM, 'max_tokens': 1200, 'reasoning': {'effort': 'low'},
@@ -51,19 +69,20 @@ def check(jpg, timeout=60, cast=(), side=False, worn=(), state=''):
                                                       {'type': 'image_url', 'image_url': {'url': FACE_URL}},
                                                       {'type': 'image_url', 'image_url': {'url': HER_URL}}]}]}
     t0 = time.time()
-    req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(),
-                    headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
-    with U.urlopen(req, timeout=timeout) as r: j = json.loads(r.read())
+    j = _post(body, timeout)
     txt = j['choices'][0]['message'].get('content') or ''
     m = re.search(r'\{.*\}', txt, re.S)
     res = json.loads(m.group(0)) if m else {'ok': True, 'issues': [], 'raw': txt[:200]}
     res['sec'] = round(time.time() - t0, 1)
+    if VLM_FALLBACK in str(j.get('model')):  # V3.10：兜底模型瞳色、道具、耳环、肤质误报多（R05 末帧 8 条里 4 条是误报），只留会一路传下去的大问题
+        res['model'] = j.get('model'); res['dropped'] = [i for i in res.get('issues', []) if isinstance(i, dict) and i.get('kind') not in FALLBACK_KINDS]
+        res['issues'] = [i for i in res.get('issues', []) if not isinstance(i, dict) or i.get('kind') in FALLBACK_KINDS]
     return res
 
 
-def _edit(prompt, images, timeout):
+def _edit(prompt, images, timeout, model='google/nano-banana-pro/edit'):
     params = {'prompt': prompt, 'images': images, 'aspect_ratio': '9:16', 'resolution': '1k', 'output_format': 'jpeg'}
-    r = subprocess.run(['waku', 'gen', 'run', 'google/nano-banana-pro/edit', '--capability', 'multimodal.generate.image', '--params', json.dumps(params)],
+    r = subprocess.run(['waku', 'gen', 'run', model, '--capability', 'multimodal.generate.image', '--params', json.dumps(params)],
                        capture_output=True, text=True, timeout=timeout)
     m = re.search(r'\{.*\}', r.stdout, re.S)
     j = json.loads(m.group(0)) if m else {}
@@ -74,6 +93,7 @@ def _edit(prompt, images, timeout):
     return j['asset_url']
 
 
+KEY_WAKU = 'google/nano-banana-2.1/edit'  # V3.10：OpenRouter 403 时末帧回正走 Waku（人鱼王子 R05 末帧实测 45 秒，披袍和胸针回来了）
 KEY_ALT = 'google/gemini-2.5-flash-image'  # 2026-11-02 实测 20 秒、$0.039
 KEY_MODEL = 'google/gemini-3.1-flash-lite-image'  # 2026-11-01 实测：同一条指令 22.8 秒、约 $0.035；Waku 通道排队时 65–120 秒，等不起
 
@@ -82,7 +102,7 @@ ANCHOR_DIFF_BOTH = 50  # V2.4：两人都在画面里时回正不该改构图；
 ANCHOR_DIFF_MAX = 120  # 回正可以改构图（末帧是吻戏近景时回正会拉远，第 11–14 轮差 86–98 被拒，长相衣服又漂了），差到这个程度才是换了地点
 
 
-def key_frame(prompt, images, out, timeout=45, hedge=3):
+def key_frame(prompt, images, out, timeout=45, hedge=3, waku_ok=0):
     """V2.0：状态关键帧（第 2 段第一张画面），写到本地文件 out。V2.2：同时发两个请求，先回来的用（单次 13–56 秒，抖动大），不再退回 Waku（曾一次等 195 秒）；都失败就抛错，这一轮按没有关键帧走。"""
     from concurrent.futures import ThreadPoolExecutor, as_completed
     def one(i):
@@ -103,6 +123,14 @@ def key_frame(prompt, images, out, timeout=45, hedge=3):
             except Exception as e: err = e
     except Exception as e: err = e
     finally: ex.shutdown(wait=False)
+    if waku_ok and '403' in str(err):  # V3.10：OpenRouter 出图模型只有 Google/OpenAI，403 时改走 Waku（nano-banana 2.1 edit，实测约 45 秒），只给不卡开播的末帧回正用
+        try:
+            import io
+            from PIL import Image
+            u = _edit(prompt, images, waku_ok, KEY_WAKU)
+            with U.urlopen(u, timeout=60) as r: Image.open(io.BytesIO(r.read())).convert('RGB').save(out, 'JPEG', quality=93)
+            return 'waku'
+        except Exception as e: err = e
     raise RuntimeError('关键帧失败：' + str(err)[:160])
 
 
@@ -198,10 +226,12 @@ def hard_check(mp4, people, wear='', timeout=20):
     t0 = time.time(); content = [{'type': 'text', 'text': HARD_CHECK.format(n=len(fr), people=people, wear=(f'- clothes：男主、女主这时应该穿着：{wear}。画面里的其他人（配角）穿的是他们自己的衣服，和女主不一样是正常的，不按男主女主的衣服查他们。一眼就能看出的颜色错误才报，比如灰色 T 恤变成白色、一条裙子变了颜色。深浅差一点、款式细节、光线造成的差异都不报；纹身、项链、皮肤和发型不是衣服，不报。\n' if wear else '衣服颜色和款式也不报。'))}] + [{'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + b}} for b in fr]
     def ask(model):
         body = {'model': model, 'max_tokens': 600, 'messages': [{'role': 'user', 'content': content}]}
-        req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(), headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
-        with U.urlopen(req, timeout=timeout) as r: j = json.loads(r.read())
+        j = _post(body, timeout)
         txt = j['choices'][0]['message'].get('content') or ''
-        return dict(json.JSONDecoder().raw_decode(txt[txt.find('{'):])[0], sec=round(time.time() - t0, 1), model=model)
+        v = dict(json.JSONDecoder().raw_decode(txt[txt.find('{'):])[0], sec=round(time.time() - t0, 1), model=j.get('model') or model)
+        if VLM_FALLBACK in str(v['model']) and set(v.get('kinds') or []) - {'people', 'motion'}:  # V3.10：兜底模型把她的衬衫款式报成换装（S232959810 R03 第 2 段 2/2 误报）、把男主定装的单肩披袍报成裸露（S235951ace 第 1 轮两段都报），重生成两次后整轮报错；兜底时只按人数和动态拦，衣服、裸露只记录，换装靠导演层兜底和末帧回正
+            v['logged'] = {'kinds': [k for k in v['kinds'] if k not in ('people', 'motion')], 'why': v.get('why')}; v['kinds'] = [k for k in v['kinds'] if k in ('people', 'motion')]; v['bad'] = bool(v['kinds'])
+        return v
     from concurrent.futures import ThreadPoolExecutor, as_completed
     ex = ThreadPoolExecutor(3)  # 主模型同发两个，先回来的用（平时 5–10 秒，偶尔 15 秒以上）；20 秒还没有就用便宜模型的结论（它什么都拦得住，但误报约三成）
     main = [ex.submit(ask, HARD_MODEL) for _ in range(2)]; lite = ex.submit(ask, HARD_LITE)
@@ -281,8 +311,7 @@ def seg_state(mp4, state, timeout=40):
     t = (f'这张图是一段视频按时间顺序等间隔抽的 {n} 帧。这一段全程的状态应该是：{state}。逐格看有没有和它明确矛盾：已经脱掉的衣服穿在身上、该穿着的衣服不见了、该躺着却站着、该在车上却不在。'
          '只看大状态：看不到、无法确认的都不算；手放在哪、搂得紧不紧、半躺还是全躺、手表和裤子看不看得到都不算；空镜、只拍到脸看不出来的格子不算。只输出 JSON：{"bad": true 或 false, "why": "哪一格、什么问题，没有写空"}')
     body = {'model': VLM, 'max_tokens': 400, 'reasoning': {'effort': 'low'}, 'messages': [{'role': 'user', 'content': [{'type': 'text', 'text': t}, {'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + b64}}]}]}
-    req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(), headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
-    with U.urlopen(req, timeout=timeout) as r: j = json.loads(r.read())
+    j = _post(body, timeout)
     txt = j['choices'][0]['message'].get('content') or ''; g.unlink(missing_ok=True)
     i = txt.find('{')
     return json.JSONDecoder().raw_decode(txt[i:])[0] if i >= 0 else {'bad': False, 'why': 'no json'}
@@ -305,9 +334,7 @@ def seg_check(mp4, cast=(), timeout=60, props=()):
                                                       {'type': 'image_url', 'image_url': {'url': FACE_URL}},
                                                       {'type': 'image_url', 'image_url': {'url': HER_URL}}]}]}
     t0 = time.time()
-    req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(),
-                    headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
-    with U.urlopen(req, timeout=timeout) as r: j = json.loads(r.read())
+    j = _post(body, timeout)
     txt = j['choices'][0]['message'].get('content') or ''
     m = re.search(r'\{.*\}', txt, re.S)
     v = json.loads(m.group(0)) if m else {}

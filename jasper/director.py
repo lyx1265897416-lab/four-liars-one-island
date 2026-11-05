@@ -553,7 +553,7 @@ def direct(history, state, text, kind, mode, timeout=60, place=None, place_round
     settle_ride(sp, cont, set_now); settle_walk(sp, set_now)
     ensure_empty_shot(sp); ensure_cast(sp); clean_empty_shots(sp); empty_first(sp, set_now); cast_out_of_seg1(sp); seg1_wide(sp)
     dedupe_lines(sp, history)
-    settle_wardrobe(sp, wardrobe, text, set_now, cont.get('posture') or '', cont.get('outfits') or ()); settle_state(sp, cont, wardrobe, text); clean_zh(sp)
+    settle_wardrobe(sp, wardrobe, text, set_now, cont.get('posture') or '', cont.get('outfits') or ()); tidy_beats(sp, text); settle_state(sp, cont, wardrobe, text); clean_zh(sp)
     ctx = dict(ask_text=text, he_now=(wardrobe or {}).get('he', ''), she_now=(wardrobe or {}).get('she', ''), must_scene=must_scene, must_card=must_card, kind=kind, done=list(done), seen=seen, place_rounds=place_rounds, must_kiss=must_kiss, n=n, prev_opts=(history[-1].get('opts') if history else None), set_now=set_now, lead=lead, stall=stall, her_said=' '.join([h.get('input') or '' for h in history] + [text or '']), items=cont.get('items') or [], left=cont.get('left') or {}, holding=cont.get('holding') or '', looks=list(cont.get('looks') or []), posture=cont.get('posture') or '')
     sp['lint_left'] = lint(sp, m, ctx)  # V1.5：修完还剩的问题只记录，不再为选项单独调一次导演层
     sp['lint_first'] = first_bad
@@ -1252,6 +1252,39 @@ def redress(sp, start, text, set_now, posture=''):
     sp['hold'] = sp['hold'].rstrip('。') + '，两人的衣服都已穿回身上'
     sp['redressed'] = True
     return True
+
+
+UNDRESS = re.compile('(取下|摘下|解下|解开|松开|扯下|拉下|脱下|脱掉|褪下|扯开|敞开)[^，。；]{0,8}(胸针|披袍|长袍|袍子|外套|衬衫|上衣|衣服|衣襟|领口|西装)|(披袍|长袍|袍子|外套|衬衫|上衣|衣服)[^，。；]{0,6}(滑落|滑下|落下|敞开|褪到|搭上|搭在|挂在|丢在|扔在)|(滑落|脱下|解下)的(披袍|长袍|外套|衬衫|上衣)')
+
+
+def tidy_beats(sp, asked=''):
+    """V3.10 分镜定稿前的代码兜底（人鱼王子 S232959810 复盘）：
+    1. 穿着没变、她也没要求时，不演脱衣、解胸针、衣服滑落（第 4 轮 wardrobe 写“不变”，却演他取下胸针、披袍滑落搭在桌上，赤裸上身 8 秒后披袍又凭空回来）：按小句删掉，整拍只剩这个动作就改成看着对方。
+    2. 配角只出声的那拍（seg1 全部，或动作写了画外、声音），镜头栏里不写配角站在哪（第 5 轮 seg1 镜头写“维萨在画面左后方”，没带母版，画成另一个黑发女人）。
+    3. 按这部剧的 L.BEAT_FIX 改写会画走样的说法（人鱼王子的“锁骨细鳞亮起”被画成整条手臂长鳞）。"""
+    fix = getattr(L, 'BEAT_FIX', {}) or {}
+    def fixed(t):
+        for k, v in fix.items(): t = t.replace(k, v)
+        return t
+    keep = bool(re.search('脱|解|衣|袍|外套|胸针|换|穿', asked or '')) or sp.get('wardrobe_end') != sp.get('wardrobe_start')
+    cut = []
+    for k in ('seg1', 'seg2'):
+        for b in sp.get(k) or []:
+            if not isinstance(b, list) or not b: continue
+            t = fixed(str(b[0])); b[0] = t
+            if len(b) > 2:
+                b[2] = fixed(str(b[2]))
+                if (k == 'seg1' or re.search('画外|声音', t)) and any(c in b[2] for c in L.CAST):
+                    b[2] = ''.join(x for x in re.split('(?<=[，；])', b[2]) if not any(c in x for c in L.CAST)).strip('，；') or '双人中景，固定'; cut.append('cast:' + k)
+            if keep or not UNDRESS.search(t): continue
+            new = ''.join(x for x in re.split('(?<=[，；])', t) if not UNDRESS.search(x)).strip('，；')
+            cut.append(t[:30]); b[0] = new or '他看着她'
+    for k in ('hold', 'key', 'posture'):
+        if not sp.get(k): continue
+        t = fixed(str(sp[k]))
+        if not keep and UNDRESS.search(t): t = ''.join(x for x in re.split('(?<=[，；。])', t) if not UNDRESS.search(x)).strip('，；'); cut.append(k)
+        sp[k] = t
+    if cut: sp['tidy_cut'] = cut
 
 
 def settle_wardrobe(sp, prev, asked='', set_now=None, posture='', outfits=()):
