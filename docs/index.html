@@ -146,7 +146,7 @@ body.lang-en .zh{display:none!important}
   </section>
   <div id="toast" hidden></div>
 </div>
-<script src="rt-player.js?v=4"></script>
+<script src="rt-player.js?v=5"></script>
 <script>
 (() => {
 const $ = id => document.getElementById(id);
@@ -210,7 +210,7 @@ function pick(v, s){ return s.url ? (v.dataset.started ? v.dataset.src : s.url) 
 // 后台慢放（11-05）：浏览器只把暂停的视频缓冲到 13 秒左右就停（networkState 1），开播后才续传，续传慢就卡。
 // 等着的时候让这一段静音、0.0625 倍速在后台“播”，浏览器就一直下到结尾；真开播时退回 0 秒、恢复正常速度和声音。
 function warm(v){ if (!v.src || v.dataset.started || !v.paused || v.readyState < 1) return; const b = v.buffered; if (v.duration > 0 && b.length && b.end(b.length - 1) >= v.duration - 0.3) return;
-  v.muted = true; try { v.playbackRate = 0.0625; } catch (e) {} v.play().catch(() => {}); }
+  v.dataset.warm = '1'; v.muted = true; try { v.playbackRate = 0.0625; } catch (e) {} v.play().catch(() => {}); }
 function enough(v, need, wait){ const b = v.buffered, end = b.length ? b.end(b.length - 1) : 0;
   if (v.duration > 0 && end >= Math.min(v.duration - 0.3, v.currentTime + need)) return true;
   if (v.readyState >= 3){ const now = Date.now(); if (!v._r3 || v._r3src !== v.src){ v._r3 = now; v._r3src = v.src; } return now - v._r3 >= (wait || 10000); } return false; }
@@ -349,7 +349,7 @@ async function liveRound(kind, choice, said){
   }
   function subsFor(i, v){ const f = subLine(i, v); v.ontimeupdate = f; }
   function play(i){ return new Promise(res => {
-    const v = V[i]; v.dataset.started = rid; v.pause(); try { v.playbackRate = 1; } catch (e) {}
+    const v = V[i]; v.dataset.started = rid; v.pause(); delete v.dataset.warm; try { v.playbackRate = v.defaultPlaybackRate || 1; } catch (e) {}  // 用回播放器选的倍速
     v.currentTime = 0; v.muted = false; v.loop = false; let done = false;
     const end = () => { if (done) return; done = true; v.ontimeupdate = null; showSub(null); res(); };
     const sub1 = subLine(i, v);
