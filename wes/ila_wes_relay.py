@@ -169,7 +169,9 @@ def prepare_frame(s, rid, seg2_url):
         # 普通的必修问题仍然只多查一帧（每查一帧 10–20 秒）
         side = s.get('staging') == 'side'
         cands = []
-        for back in (0.15, 1.5, 3.0, 4.5):
+        if s2.get('stand_in'):  # V3.11：第 2 段是男配角顶替男主的戏，末帧里没有男主：不按男主的脸找帧、不回正（会把配角修成男主），原样接给下一轮
+            subprocess.run([L.FFMPEG, '-v', 'error', '-y', '-sseof', '-0.15', '-i', str(mp4), '-frames:v', '1', '-q:v', '2', str(jpg)], check=True); cands.append((0.15, {}, jpg.read_bytes(), False, False)); log('FRAMEQA', rid, 'stand-in', s2['stand_in'], 'keep last frame')
+        for back in (() if s2.get('stand_in') else (0.15, 1.5, 3.0, 4.5)):
             subprocess.run([L.FFMPEG, '-v', 'error', '-y', '-sseof', f'-{back}', '-i', str(mp4), '-frames:v', '1', '-q:v', '2', str(jpg)], check=True)
             try: qa = qa_guard.check(jpg, cast=s.get('cast_last') or [], side=side, state=st_now)
             except Exception as e: qa = {'err': str(e)[:200]}; log('FRAMEQAFAIL', rid, e); break
@@ -178,6 +180,7 @@ def prepare_frame(s, rid, seg2_url):
             if qa.get('her', True) is False: log('FRAMEQA', rid, 'she is not in frame at', -back, 'try earlier'); cands.append((back, qa, jpg.read_bytes(), True, bool(must_fix(qa)))); continue
             frame_bad = too_close(qa) or kinds(qa, 'scene', 'staging', 'framing')
             cands.append((back, qa, jpg.read_bytes(), bool(frame_bad), bool(must_fix(qa))))
+            if qa_guard.VLM_FALLBACK in str(qa.get('model')): break  # V3.10：兜底模型一帧要 17–25 秒，不再往前找（S000208e15 找 4 帧 80 秒，回正赶不上下一轮）；有错交给回正
             if not frame_bad and not must_fix(qa): break
             if not frame_bad and back >= 1.5: break
             log('FRAMEQA', rid, 'reframe' if frame_bad else 'issues', 'at', -back, 'try earlier', qa.get('face_box'), [i.get('kind') for i in qa.get('issues', []) if isinstance(i, dict)])
@@ -206,6 +209,7 @@ def prepare_frame(s, rid, seg2_url):
                 U.urlretrieve(fixed, FR / f'{rid}_last_scene.jpg'); url = fixed; qa['scene_fixed'] = fixed
                 jpg.write_bytes((FR / f'{rid}_last_scene.jpg').read_bytes())
             except Exception as e: qa['scene_fix_err'] = str(e)[:200]; log('SCENEFIXFAIL', rid, e)
+        s['frame_slow'] = qa_guard.VLM_FALLBACK in str(qa.get('model'))
         s['frame_serious'] = bool(kinds(qa, 'people', 'outfit', 'state'))  # V3.10：男主换装、脱袍（人鱼王子 S232959810 第 4、5 轮）也等回正好的末帧，不把错的服装带进下一轮
         if s.get('frame_pending') == rid and not scene_bad: s['frame_raw'] = url  # V2.2：不再因为质检挡下一轮，赶不上修好的图就用原图
         issues = [i['text'] for i in qa.get('issues', []) if isinstance(i, dict) and i.get('level') == 'high']
@@ -280,7 +284,8 @@ def seg_eta(r, i):
 def outfit_ref(rid):
     """V3.5（S034241cf8 第 5、6 轮他赤裸上身，第 2 段还带着穿夹克的服装母版，他的脸变年轻、变成另一种画风）：他没穿上衣时，服装母版换成他的头像，只锁脸。"""
     he = str((((R[rid].get('spec') or {}).get('wardrobe_end')) or {}).get('he', ''))
-    return qa_guard.HE_HEAD if re.search('赤裸|光着|裸着|没穿上衣', he) else qa_guard.OUTFIT_URL
+    if re.search('赤裸|光着|裸着|没穿上衣|人鱼|长尾', he): return L.TU.get('outfit_off') or qa_guard.HE_HEAD  # V3.10：有“没穿上衣 / 另一种形态”的定装就用它（人鱼王子的人鱼形态 lib-RIA-sea），没有才只锁脸
+    return qa_guard.OUTFIT_URL
 
 
 def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=False):
@@ -296,6 +301,9 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
     elif (R[rid].get('spec') or {}).get('wardrobe_changed'): kw['ref_images'] = [frame_url, qa_guard.HE_HEAD, qa_guard.HER_HEAD] + list(extra)[:2] + L.swatch(R[rid]['spec'].get('wardrobe_end'))  # V2.0 只带头像；V1.8：穿着变了不带服装母版和站位母版（它们会把衣服穿回去），穿着看上一刻的画面
     elif no_scene: kw['ref_images'] = [L.plate_for(R[rid]['spec']) or STAGING_URL, face_url, outfit_ref(rid), HER_URL] + list(extra)[:1]  # V3.0：有这个地点的固定空景就用它，不用灰底站位图（不然会漂回上一个地点）  # 换场的第 2 段不带旧地点的画面：带了模型会在最后一拍切回旧地点（v0.15 第 3 轮）
     else: kw['ref_images'] = [frame_url, face_url, outfit_ref(rid), HER_URL] + list(extra)[:1] + ([L.plate_for(R[rid]['spec']) if not (i == 0 and (R[rid].get('spec') or {}).get('scene_changed')) else L.plate_for({'location': R[rid].get('place_before') or ''})] if not extra and (L.plate_for(R[rid]['spec']) if not (i == 0 and (R[rid].get('spec') or {}).get('scene_changed')) else L.plate_for({'location': R[rid].get('place_before') or ''})) else [])  # V3.4：换场那一轮第 1 段还在旧地点，带旧地点（place_before）的空景，不带新地点的（人鱼王子 11-04：会客厅那段带了潮门空景漂成别的大厅；什么都不带又漂成水下）  # V3.0：没有配角时第 5 张带上这个地点的空景  # Vivix 最多 5 张  # 有配角出镜时仍用参考图带上她的身份母版
+    si = (R[rid].get('spec') or {}).get(f'stand_in{i + 1}') if hasattr(L, 'stand_in') else None
+    if si and si in L.CAST and 'ref_images' in kw:  # V3.11：这一段男主不在画面、男配角顶替站位：男主的脸和服装母版换成这位配角的（提示词里写的是“图片2和图片3都是他的身份母版”）
+        he_refs = {face_url, outfit_ref(rid), qa_guard.HE_HEAD}; kw['ref_images'] = [L.CAST[si][1] if u in he_refs else u for u in kw['ref_images']]; s['stand_in'] = si
     if i == 1 and L.TU.get('vehicle') and 'ref_images' in kw and len(kw['ref_images']) < 5 and any(L.RIDE_ON.search(str(b[0])) for b in (R[rid].get('spec') or {}).get('seg2') or []): kw['ref_images'] = kw['ref_images'] + [L.TU['vehicle']]  # V2.3：摩托每轮款式都在变
     def gen(body):
         cli = C2 if (i == 1 and C2) else c; sub = W1Client(api_key=os.environ['VIVIX_API_KEY_2'], max_retries=0) if cli is C2 else W1Client(max_retries=0); job = None  # V3.1：第 2 段走第二个工作区
@@ -336,7 +344,7 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
     try:
         job = gen(c.build(**kw)); s['gen_ready_at'] = now()
         sp_hc = R[rid].get('spec') or {}; looks = lambda txt, n: re.sub(r'^[^：]{0,12}：', '', str(txt or ''))[:n]  # V3.0：每个人带一句外形，检查模型才分得清谁是女主、谁是配角（三真四假 S2351533a4 把 Sloane 的蓝裙子当成女主的裙子变色）
-        names = [f'男主（{looks(L.HE_LOOK, 50)}）', f'女主（{looks(L.HER, 90)}）'] + [f'{c}（{looks(L.CAST[c][0], 110)}）' if c in L.CAST else c for c in (sp_hc.get('cast') or []) if not (c in L.CAST and hasattr(L, 'on_screen') and not any(L.on_screen(c, b) for b in (sp_hc.get(f'seg{i + 1}') or [])))] + [x['name'] for x in (sp_hc.get('extras') or []) if isinstance(x, dict) and x.get('name')]  # V3.3：只按这一段画面里的配角查（只出声的不算，出现就是多人）；V2.7：每一轮每一段都查，不合格重新生成，最多三次，都不合格就拦下
+        names = ([] if s.get('stand_in') else [f'男主（{looks(L.HE_LOOK, 50)}）']) + [f'女主（{looks(L.HER, 90)}）'] + [f'{c}（{looks(L.CAST[c][0], 110)}）' if c in L.CAST else c for c in (sp_hc.get('cast') or []) if not (c in L.CAST and hasattr(L, 'on_screen') and not any(L.on_screen(c, b) for b in (sp_hc.get(f'seg{i + 1}') or [])))] + [x['name'] for x in (sp_hc.get('extras') or []) if isinstance(x, dict) and x.get('name')]  # V3.3：只按这一段画面里的配角查（只出声的不算，出现就是多人）；V2.7：每一轮每一段都查，不合格重新生成，最多三次，都不合格就拦下
         people = f"{len(names)} 个人：{'；'.join(names)}" + ('；背景远处的路人不算' if re.search('酒吧|餐厅|夜宵|摊|街|人群|派对', str(sp_hc.get('set') or '')) else '') + ('；这一段他会变身成狼，不算错误' if sp_hc.get('wolf') else '')
         w_hc = sp_hc.get('wardrobe_end') or {}; w0_hc = sp_hc.get('wardrobe_start') or {}
         wear = f"男主：{w_hc.get('he') or L.HE_DEFAULT}；女主：{w_hc.get('she') or L.SHE_DEFAULT}" if i == 1 else '；'.join(x for x in ((f"男主：{w0_hc.get('he') or L.HE_DEFAULT}" if w0_hc.get('he') == w_hc.get('he') else ''), (f"女主：{w0_hc.get('she') or L.SHE_DEFAULT}" if w0_hc.get('she') == w_hc.get('she') else '')) if x)  # V3.4：第 1 段也查，只查这一轮没换装的人（Rafael 11-04 第 4 轮第 1 段他的牛仔裤变成黑裤）
@@ -354,11 +362,12 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
         for tn in range(3):
             hcf = FR / f'{rid}_{i + 1}_hc.mp4'
             s['side_of'] = job['video_url']; s.pop('side', None); s.pop('flip', None)
-            try: fetch(job['video_url'], hcf); threading.Thread(target=bg_side, args=(job['video_url'],), daemon=True).start(); hc = qa_guard.hard_check(hcf, people, wear)
+            try: fetch(job['video_url'], hcf); (None if s.get('stand_in') else threading.Thread(target=bg_side, args=(job['video_url'],), daemon=True).start()); hc = qa_guard.hard_check(hcf, people, wear)  # V3.11：顶替段不查男主左右
             except Exception as e: hc = {'bad': False, 'kinds': [], 'err': str(e)[:120]}
             hcf.unlink(missing_ok=True); s.setdefault('hard_check', []).append(hc); log('HARDCHECK', rid, i + 1, tn, json.dumps(hc, ensure_ascii=False)[:200])
             kinds = set(hc.get('kinds') or []) or ({'people'} if hc.get('bad') else set())
             if magic: kinds.discard('motion')  # 她自己要飞、要魔法时不算
+            if kinds == {'people'} and sp_hc.get('cast') and re.search('服装|衣着|衣服|颜色|穿', str(hc.get('why'))) and not re.search('多|重复|两个|一样的|额外|陌生|路人|分身|重影', str(hc.get('why'))): kinds = {'clothes'}; s['cast_clothes_as_people'] = s.get('cast_clothes_as_people', 0) + 1  # V3.11：兜底的 qwen 把配角衣服深浅（橄榄绿 vs 鼠尾草绿）判成 people，连拦三次报错（S020429353 第 3 轮）
             if kinds == {'clothes'} and sp_hc.get('cast'): s['clothes_cast_ignored'] = s.get('clothes_cast_ignored', 0) + 1; kinds = set()  # V3.1：有配角在画面里时，只报衣服颜色的不重生成、只记录（S231920f01、S00530299f 都是把 Sloane 的蓝裙当成女主裙子变色，每次多等约 25 秒）
             if i == 0 and kinds and hc.get('frames') and set(hc['frames']) <= {1}: s['first_frame_issue'] = hc.get('why'); kinds = set()  # V3.3：第 1 段第 1 帧就是上一轮末帧，重生成改不掉（S0209398d1 第 3 轮“第 1 帧边缘多一只手”连拦两次后报错），只记录
             if not kinds: break
@@ -456,7 +465,7 @@ def _worker(rid):
         for _ in range(48):  # V2.4：至少等到质检做完（回归 R5：抽出来的末帧里多了一个她，质检已经会往前换一帧，但这轮直接用了没查过的）
             if s.get('frame_raw') or s['frame_ready'].is_set(): break
             time.sleep(0.25)
-        if s.get('frame_serious'): s['frame_ready'].wait(25)  # 末帧多了人：等修好
+        if s.get('frame_serious'): s['frame_ready'].wait(60 if s.get('frame_slow') else 25)  # 末帧多了人：等修好。V3.10：兜底时回正走 Waku 要 45 秒左右，多等一会儿（S000208e15 六轮只有一轮等到回正帧）
     if s['frame_ready'].is_set(): frame_url = s.get('frame_url'); r['frame_pick'] = 'ready'
     elif s.get('frame_raw'): frame_url = s['frame_raw']; r['frame_pick'] = 'checked raw'
     else:
@@ -482,10 +491,11 @@ def _worker(rid):
     sp['use_key'] = None
     sp['she_look_url'] = (s.get('she_looks') or {}).get(w1.get('she') or '')  # V2.6
     plain_move = moved_now and not w0 and not w1 and director._pose(sp.get('posture_end')) in ('站', '坐')  # V2.2：穿着默认、站着或坐着的普通换场不画关键帧（17 轮里 6 轮，每次多等 15–31 秒），用站位母版和服装母版
-    if r['mode'] not in L.SEG1_LOCK and sp.get('key') and not plain_move and (moved_now or w0 != w1 or sp.get('posture_changed')):
+    si2 = L.stand_in(sp.get('seg2') or []) if hasattr(L, 'stand_in') else None  # V3.11：第 2 段是男配角顶替男主的戏时不画状态关键帧（关键帧按男主和她画，S025216e83 泳池边找 Ravi，画面里坐着的成了 Jasper），用空景和配角母版
+    if r['mode'] not in L.SEG1_LOCK and sp.get('key') and not plain_move and not si2 and (moved_now or w0 != w1 or sp.get('posture_changed')):
         tk = now(); r['status'] = 'keyframe'; r['mode'] = r['mode']; save(rid)
         try:
-            kj = FR / f'{rid}_key.jpg'; r['key_via'] = qa_guard.key_frame(L.key_prompt(sp, moved_now), [frame_url, L.key_people(w1, sp['she_look_url'])[0] or qa_guard.HE_HEAD, L.key_people(w1, sp['she_look_url'])[1] or qa_guard.HER_HEAD] + ([L.TU['vehicle']] if L.TU.get('vehicle') and re.search('骑|摩托', str(sp.get('posture_end'))) else []), kj)
+            kj = FR / f'{rid}_key.jpg'; r['key_via'] = qa_guard.key_frame(L.key_prompt(sp, moved_now), [frame_url, L.key_people(w1, sp['she_look_url'])[0] or qa_guard.HE_HEAD, L.key_people(w1, sp['she_look_url'])[1] or qa_guard.HER_HEAD] + ([L.TU['vehicle']] if L.TU.get('vehicle') and re.search('骑|摩托', str(sp.get('posture_end'))) else []), kj, waku_ok=90)  # V3.10：OpenRouter 出图 403 时走 Waku（多等约 45 秒，只在换装、换形态、换场且要画关键帧的轮次）；人鱼王子 S002531fbf 下水、上岸两轮关键帧都 403，第 1 段没锁到换好的样子，上岸画成腿上带鳞、蕾丝外套
             r['key_url'] = c.upload(kj)['url']  # 传到 Vivix 再用，比外部地址稳
             if w1.get('she') and not L.is_base(w1['she']) and w1['she'] not in (s.get('she_looks') or {}):  # V2.7：这条裙子第一次画出来的样子，只留她那半边（带两个人的图当参考会多画人），之后的关键帧和回正照它
                 def keep_look(src=kj, name=w1['she']):

@@ -1,0 +1,98 @@
+
+### R1 [option] 我选 Jasper。 | 55.0s model=z-ai/glm-5.3-prime loc=配对套房 cards=['K02'] surprise=False
+  pending {"who": "Jasper", "goal": "看她知道他“没钱”后还留不留", "move": "承认自己是四个之一，反问“还选我吗”，抱着枕头站在沙发边等她答", "needs": "她留他还是反将他"}
+  closed 
+  he_move 他不争不抢地接下配对，回套房主动把枕头抱去日床沙发，把床留给她 | persona 被选中时毫不惊喜，只问一句她还选不选，把答案的代价丢回给她
+    1 | 她把手里的酒杯放到火塘边的坐垫上，抬手指向他 | Him. I'm choosing him. | 她
+    1 | Jasper 眉梢动了一下，没笑，视线从她脸上扫到她指他的手，又回到她眼睛 | You sure about that? | Jasper
+    1 | 画外传来 Mei 的声音，火光在她脸上跳动，她点头 | Midnight pairing confirmed: Sofia and Jasper. | 画外:Mei
+    1 | 画外传来 Sloane 的声音，Jasper 和她同时转头看向画外 | Guess I'm taken. | 画外:Sloane
+    2 | 切到配对套房的空镜：暖黄台灯亮着，落地窗外是夜里的海，房门轻响 | You heard her. Let's go. | Jasper
+    2 | 套房里，Jasper 从大床上拿起枕头抱在臂弯，回头看站在门口的她 | Bed's yours. I take the couch. | Jasper
+    2 | 她走近两步，站到房间中央，直直看着他，下颌绷着 |  | 她
+    2 | 他停下脚步，枕头抱在胸前，火光换成台灯的暖光落在两人脸上，他先开口 | Ask it. | Jasper
+    2 | 她深吸一口气问出口，他一秒都没犹豫，答完仍看着她，指节在枕头上收紧 |  | 她
+  cue 套房里，他抱着枕头承认自己是四个骗子之一，问她还选不选。
+  A 我说了留就留，但天亮前你得给我一个不骗我的理由 
+  B 把他的手翻过来看掌心和茧
+  lint_left ['道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“酒杯”标的是地点里本来就有：set 里要写到它（放在哪）', 'seg1「她把手里的酒杯放到火塘边的坐垫上，抬手指」：近景里去碰离身体远的东西，会被拉成全身。把碰门', '出现了“转头”：眼神扫过即可，不转头']
+
+### R2 [free] 嗯 | 58.3s model=z-ai/glm-5.3-prime loc=白沙海滩 cards=['K03'] surprise=False
+  pending {"who": "Jasper", "goal": "看她会不会为别人停下、能不能赢给自己", "move": "指着前方的红旗说别回头，旗是你的", "needs": "她冲去拔旗，还是回头扶Sloane"}
+  closed 他不再等今晚的答案：这一声嗯他收下，改用明早的赌约接住
+  he_move 把她的含糊收下不追问，用赌约把两人约到天亮，赛场上让她自己赢 | persona 不逼她答还选不选我，只留一句明早赌约，把判断还给她
+    1 | 他看着她，嘴角动了一下，把枕头换到另一只手上 | Good enough for tonight. | Jasper
+    1 | 他把枕头丢到日床沙发上 | Sunrise. Beach. Loser answers one question. | Jasper
+    1 | 她挑了下眉，视线从他脸上移到沙发上的枕头 |  | 
+    1 | 他躺上沙发枕着手臂闭眼，她站在床边半臂外看着他 | Light's yours, Sofia. | Jasper
+    2 | 切到白沙海滩的空镜：这个地点的环境和光线，画面里没有人 | Flags at the far end— | 画外:Mei
+    2 | Mei站在起跑线旁举着素面卡片，从容地扫视众人 | Winner gets a private date. | Mei
+    2 | 她和Jasper并排站在起跑线上，她微微屈膝预备，Sloane在她身后弯腰整理鞋带 | Go! | 画外:Mei
+    2 | 她冲出去跑在最前面，Jasper跟在她半步后，两人都在跑 |  | 
+    2 | Sloane扑倒在沙里双手抱住脚踝，表情痛苦，眼睛却抬起来偷看她的方向 | My ankle! Help me! | Sloane
+    2 | 她慢了半步回头，两人都停在沙上 | Don't. The flag's yours. | Jasper
+  cue 沙滩上Sloane扑倒抱着脚踝喊疼，倒地时偷看她一眼；Jasper指着红旗让她别回头，她要拔旗还是回头。
+  A 我不回头，冲过去拔下红旗，赢下私人约会 
+  B 我回头扶起 Sloane，当众问她这伤装给谁看
+  lint_left ['道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“红旗”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“素面卡片”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R3 [option] 我不回头，冲过去拔下红旗，赢下私人约会 | 73.6s model=z-ai/glm-5.3-prime loc=白沙海滩 cards=['K04'] surprise=False
+  pending {"who": "Jasper", "goal": "想让她带着他的问题去看清别人，再回到他这里", "move": "认赌服输欠她一个问题，条件是今晚赴完Wes的约会再来问", "needs": "她接不接这个条件、什么时候用掉这个问题"}
+  closed 赌约兑现：他输了，欠她一个必答的问题
+  he_move 认输兑现赌约，把问题变成她的筹码，让她带着问题去赴Wes的约会 | persona 输了不辩解，只把旗杆在她面前掂了掂，把主动权做成一个条件还给她
+    1 | 喘着气回头 |  | 
+    1 | Jasper走近，站在她面前，嘴角没绷住笑了一下 | Fast. I'd have caught you. Eventually. | Jasper
+    1 | 松开，退开半步 | A deal's a deal. I owe you one. | Jasper
+    1 | 抬着下巴看他 | Then I'll think about how to spend it. | 她
+    1 | 他挑了下眉，收住笑 | Take your time. I'm patient—allegedly. | Jasper
+    2 | 她转回身朝前全力冲刺，Sloane的喊声落在身后 | Sofia, wait—! | 画外:Sloane
+    2 | Mei从棕榈树那头走来，手里拿着素面奶油色卡片，笑着站到两人侧面 | Sofia. The flag is yours—and so is a date. | Mei
+    2 | Mei翻开卡片念，她的表情从得意变成意外 | Tonight, ladies, you date someone new. Sofia—you're with Wes. | Mei
+    2 | Jasper的下颌绷了一下，动作很稳 |  | 
+    2 | 他回身面对她，声音不高，眼神没离开她 | Ask Wes anything you want. | Jasper
+    2 | 他抬手指了指自己胸口，又指了指她，收手 | Your question stays with me. After. | Jasper
+  cue 她赢了旗和约会，但今晚的约会对象是Wes；Jasper欠她一个问题，条件是赴完约再来问。
+  A 我赴完Wes的约会，夜里篝火投票前定下我投谁 
+  B 我偏要现在就问，逼Jasper当着Mei的面说出答案
+  lint_left ['出现了“旗”：不写旗帜（会画出带标志的旗）']
+
+### R4 [free] 我去找 Ravi，让他帮我读读 Jasper 是不是在骗我 | 53.5s model=z-ai/glm-5.3-prime loc=无边泳池边 cards=[] surprise=False
+  pending {"who": "Ravi", "goal": "想在淘汰仪式上活下来", "move": "给出读人结论，开条件：仪式上她的票别投他，他再教她怎么验 Jasper", "needs": "她换不换这条交易"}
+  closed Ravi 的判断落地：Jasper 在撒谎——撒谎说自己是骗子
+  he_move Jasper 没拦她，接过她手里的红旗插进沙里，只丢下一句让她看清 Ravi 本人 | persona 被她丢下去找别的男人，他不追不拦，嘴上不在乎，手里把她的红旗插稳在沙里
+    1 | 他伸手接过 |  | 
+    1 | 她朝别墅方向抬手指了指，三分之四侧面 | Going to find Ravi. | 她
+    1 | 他看着她的背影，下颌绷了一下，随即松开 | Ravi reads people. Fine. Ask him who taught him. | Jasper
+    1 | 她停下回头，他已经直起身 | And watch his hands, not his mouth. | Jasper
+    1 | 她笑了一下，继续朝泳池方向走，画面留在原地 | Bring back something useful. | Jasper
+    2 | 切到白天的无边泳池边的空镜：白色躺椅和遮阳伞，青绿色池水，远处是海，画外传来泳池那边的隐约人声 |  | 
+    2 | Ravi 半躺在画面左侧的白色躺椅上，墨镜推在头顶，手里转着一片棕榈叶，侧身看向走过来的她，她站到躺椅旁画面右侧 | You won the flag. Everyone's talking about it. | Ravi
+    2 | 双臂放松，直视他，开门见山 |  | 她
+    2 | Ravi 嘴角一挑，把棕榈叶丢到躺椅上，坐直了些 | Let me guess. Tall. Barely talks. Took the couch. | Ravi
+    2 | 她点头，他抬眼看着她，笑意收了，说得很慢 | He's lying. He's lying about being a liar. | Ravi
+    2 | 她愣了一下，眉头收紧，他竖起一根手指 | Watch his hands when wine is poured. Then come back. | Ravi
+    2 | 他重新靠回躺椅，摘下头顶的墨镜捏在手里转，提出条件，她看着他没答 |  | Ravi
+  cue 泳池边，Ravi 开价：她的票换他的读人，还要她倒酒时看 Jasper 的手。
+  A 我答应 Ravi 的交易，晚上篝火仪式把票投给 Brody，看 Mei 念出全场的结果 
+  B 我不答应，直接回沙滩把 Ravi 那句话砸到 Jasper 脸上
+  lint_left []
+
+### R5 [option] 我答应 Ravi 的交易，晚上篝火仪式把票投给 Brody，看 Mei 念出全场的结果 | 51.9s model=z-ai/glm-5.3-prime loc=篝火露台 cards=['K05'] surprise=False
+  pending {"who": "Jasper", "goal": "看她的怀疑会落到谁头上", "move": "低声告诉她真富豪只剩两个、其中一个在撒谎，问她是不是已经有答案", "needs": "她认不认为那个装假的人是他"}
+  closed Ravi 的交易谈成：她答应投 Brody，Ravi 收下这个条件
+  he_move 他带红旗回来，提醒她今晚的票会被当众念出，把选择留给她 | persona 不吃醋不拦她做交易，只冷冷点破 Ravi 卖的不是真相，考她敢不敢认账
+    1 | 她站在泳池边躺椅旁，朝画外的 Ravi 点头，语气干脆 | Deal. My vote goes to Brody. | 她
+    1 | 她听着，嘴角一点冷笑，视线没动 | Smart girl. Tonight, watch the wine. | 画外:Ravi
+    1 | Jasper 站在泳池边，看着她 | Heard that. Ravi sells answers, not truth. | Jasper
+    1 | 她挑眉看他，没退 |  | 她
+    1 | 他没接这句，只看着火塘方向，下颌绷了一下 | Your vote gets read out loud tonight. Still sure? | Jasper
+    2 | 切到午夜的篝火露台的空镜：火塘燃着火，坐垫上虚化的人群，无人说话 | Sofia votes... Brody. | 画外:Mei
+    2 | 两人并排坐在火塘边坐垫上，身体侧向对方，她的手在膝上收紧，他看着火 |  | 
+    2 | Mei 举着素面卡片站在火塘边，从容地环视人群 | Tonight, the island says goodbye to Ethan. | Mei
+    2 | Ethan 走过她身边停下，俯身凑近她耳边，紧张地笑了一下又收住 | One of the real ones is playing fake. | Ethan
+    2 | Mei 把卡片收下，看向被送走的方向 | Ethan was one of our three millionaires. | Mei
+    2 | 她愣住看向 Ethan 离开的方向，Jasper 的视线落在她脸上，低声开口 | Two left. One's lying. You already know which. | Jasper
+  cue 篝火边，Ethan 走了，真富豪只剩两个，Jasper 低声问她是不是已经有答案；今晚还悬着 Wes 的约会和他欠她的一个问题。
+  A 我今晚就去吧台找他，用他欠我的问题，盯着侍者倒酒时他的手 
+  B 我先赴和 Wes 的约会
+  lint_left ['她在推自己的情节，钩子却用了资料包里的「Ethan」打断：钩子从她的情节里长出来（她做的事带来的后果', '【必改】有 2 拍只有表情没有台词和动作（她挑眉看他，没退；两人并排坐在火塘边坐垫上，身体侧向对方，']

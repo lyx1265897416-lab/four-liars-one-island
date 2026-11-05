@@ -1,0 +1,1433 @@
+[
+ {
+  "n": 1,
+  "text": "我选 Jasper。",
+  "kind": "option",
+  "sec": 55.0,
+  "sp": {
+   "dur_mode": "15+15",
+   "bgm": "none",
+   "song": null,
+   "intimacy": 1,
+   "wardrobe": {
+    "he": "不变",
+    "she": "不变"
+   },
+   "intent": "篝火边她当众说出选 Jasper，配对成立，Sloane 挽走 Wes，两人回套房，他拿枕头去日床沙发，她当面问他是不是骗子，他答“是”",
+   "posture": "套房里两人面对面站着，相距半臂，他手里拿着枕头",
+   "holding": "无",
+   "items": [
+    {
+     "name": "枕头",
+     "n": 1,
+     "at": "Jasper 手里"
+    },
+    {
+     "name": "插青柠的淡色鸡尾酒",
+     "n": 1,
+     "at": "篝火露台的坐垫上（放下）"
+    }
+   ],
+   "key": "双人中景，配对套房夜里，暖黄台灯和窗外月光，Jasper 在画面左侧手抱枕头站在日床沙发旁，她在右侧，藏蓝衬衫与香槟金吊带裙，两人对视",
+   "input_type": "direction",
+   "ask": "午夜配对，她选 Jasper",
+   "delivered": true,
+   "did": "她当众选了 Jasper，Sloane 挽走 Wes，两人回套房，他去睡日床沙发，她问他是不是那四个之一，他说“是，还选我吗”",
+   "hook_type": "揭示",
+   "staging": "face",
+   "structure": {
+    "seg1": "对话潜台词",
+    "seg2": "匹配转场 / 换场"
+   },
+   "props": [
+    {
+     "name": "枕头",
+     "look": "白色亚麻枕套的软枕头",
+     "source": "scene",
+     "how": "套房床上本来就有，他伸手拿起抱在臂弯，最后仍在手里"
+    },
+    {
+     "name": "插青柠的淡色鸡尾酒",
+     "look": "高脚杯淡色鸡尾酒，杯口插一片青柠",
+     "source": "carried",
+     "how": "她原来端着，第1段放在火塘边坐垫上，留在露台"
+    },
+    {
+     "name": "酒杯",
+     "source": "scene",
+     "how": "本来就在两人手边"
+    }
+   ],
+   "kiss": false,
+   "cast": [
+    "Mei",
+    "Sloane",
+    "Wes"
+   ],
+   "extras": [],
+   "set": "他们的配对套房，夜里：白色灰泥墙（没有壁纸、没有挂画），浅色木地板，白色亚麻大床（房间里只有一张床），窗边一张白色日床沙发，整面落地窗挂着白色薄纱窗帘，窗外是夜里的海和月光，床头一盏暖黄台灯，房门是浅色木门；天空是全黑的深蓝夜色，没有晚霞、没有夕阳（V3.0）",
+   "route": "follow",
+   "target": "K02",
+   "cards_done": [
+    "K02"
+   ],
+   "progress": 3,
+   "news": [
+    "她当众选了 Jasper 做搭档",
+    "Sloane 立刻挽走了 Wes",
+    "Jasper 自称是四个骗子之一"
+   ],
+   "he_move": "他不争不抢地接下配对，回套房主动把枕头抱去日床沙发，把床留给她",
+   "persona_beat": "被选中时毫不惊喜，只问一句她还选不选，把答案的代价丢回给她",
+   "surprise": false,
+   "pending_move": {
+    "who": "Jasper",
+    "goal": "看她知道他“没钱”后还留不留",
+    "move": "承认自己是四个之一，反问“还选我吗”，抱着枕头站在沙发边等她答",
+    "needs": "她留他还是反将他"
+   },
+   "closed": "",
+   "three_q": {
+    "conflict": "她要真的人，他刚自称骗子",
+    "suspense": "知道他“没钱”，她还留吗",
+    "image": "他抱着枕头站在沙发边，等她一句话",
+    "turn": "她以为他会否认或炫耀，他直接认了",
+    "subtext": "嘴上说自己是骗子，眼睛却一直看着她",
+    "stakes": "选错人，最后就得跟他回家",
+    "knows": "追查",
+    "choice": "无"
+   },
+   "seg1": [
+    [
+     "她把手里的酒杯放到火塘边的坐垫上，抬手指向他",
+     "Him. I'm choosing him.",
+     "双人中近景，固定",
+     "她"
+    ],
+    [
+     "Jasper 眉梢动了一下，没笑，视线从她脸上扫到她指他的手，又回到她眼睛",
+     "You sure about that?",
+     "双人近景，固定",
+     "Jasper"
+    ],
+    [
+     "画外传来 Mei 的声音，火光在她脸上跳动，她点头",
+     "Midnight pairing confirmed: Sofia and Jasper.",
+     "双人中景，缓推",
+     "画外:Mei"
+    ],
+    [
+     "画外传来 Sloane 的声音，Jasper 和她同时转头看向画外",
+     "Guess I'm taken.",
+     "双人中景，固定",
+     "画外:Sloane"
+    ]
+   ],
+   "hold": "双人中景，篝火露台，Jasper 在画面左侧、她在右侧相距一臂面对面，火光映在两人侧脸上，她刚点头",
+   "seg2": [
+    [
+     "切到配对套房的空镜：暖黄台灯亮着，落地窗外是夜里的海，房门轻响",
+     "You heard her. Let's go.",
+     "空镜，固定",
+     "Jasper"
+    ],
+    [
+     "套房里，Jasper 从大床上拿起枕头抱在臂弯，回头看站在门口的她",
+     "Bed's yours. I take the couch.",
+     "双人中景，固定",
+     "Jasper"
+    ],
+    [
+     "她走近两步，站到房间中央，直直看着他，下颌绷着",
+     "",
+     "双人中近景，固定",
+     "她"
+    ],
+    [
+     "他停下脚步，枕头抱在胸前，火光换成台灯的暖光落在两人脸上，他先开口",
+     "Ask it.",
+     "单人近景，固定",
+     "Jasper"
+    ],
+    [
+     "她深吸一口气问出口，他一秒都没犹豫，答完仍看着她，指节在枕头上收紧",
+     "",
+     "双人中景，固定",
+     "她"
+    ]
+   ],
+   "zh": {
+    "seg1": [
+     "我选他。",
+     "你确定？",
+     "Sofia 和 Jasper。",
+     "看来我有主了。"
+    ],
+    "seg2": [
+     "你听见她说的了。走吧。",
+     "床归你。我睡沙发。",
+     "",
+     "问吧。",
+     ""
+    ]
+   },
+   "her_hands": "她：在画面右侧",
+   "amb": "火塘木柴的噼啪声、棕榈叶的风声、远处海浪声",
+   "location": "配对套房",
+   "scene_changed": true,
+   "next": {
+    "cue": {
+     "zh": "套房里，他抱着枕头承认自己是四个骗子之一，问她还选不选。",
+     "en": "In the suite, he admits he's one of the four liars — and asks if she still wants him."
+    },
+    "A": {
+     "zh": "我说了留就留，但天亮前你得给我一个不骗我的理由",
+     "en": "I stay. But give me one honest reason before sunrise.",
+     "leads_to": "K03：天亮后沙滩夺旗赛，她带着没兑现的理由上场",
+     "trimmed": true
+    },
+    "B": {
+     "zh": "把他的手翻过来看掌心和茧",
+     "en": "Turn his hand over and demand what made those calluses.",
+     "leads_to": "K03：他给半个答案，天亮后夺旗赛上她替他赢下约会卡",
+     "trimmed": true
+    }
+   },
+   "state": "深夜的配对套房，两人相距半臂面对面，他抱着枕头站在日床沙发边；她知道他自称四个骗子之一，还没决定信不信；他知道她当众选了他、也看见她没被吓退；悬着的是他还站在原地等她的答案。",
+   "dur_want": "15+15",
+   "lint_trimmed": [
+    "分镜里出现了道具“酒杯”，但 props 没写它从哪来：写进 props（scene=地点里本来就有并写进 set；offscreen=手伸出画外再收回、或人走出画面再走回来带进来；carried=之前就带着）",
+    "分镜里出现了道具“酒杯”，但 props 没写它从哪来：写进 props（scene=地点里本来就有并写进 set；offscreen=手伸出画外再收回、或人走出画面再走回来带进来；carried=之前就带着）",
+    "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "seg1「她把手里的酒杯放到火塘边的坐垫上，转身面」：近景里去碰离身体远的东西，会被拉成全身。把碰门、碰扶手这一下单独写成【插入特写】（只拍手和物件，不说台词）",
+    "出现了“转身”：不写转身（会拍成背影）",
+    "配角只能出现在 seg2，seg1 里最多是画外声音（说话人写“画外:Mei”这种）",
+    "她每轮最多说一句（现在 3 句）",
+    "她的台词太长（最多 8 个词）：Are you one of the four? — Yes. Still want me?"
+   ],
+   "autofixed": [
+    "禁用词:转身",
+    "她多说的一句",
+    "她多说的一句",
+    "道具来源:酒杯",
+    "道具来源:酒杯",
+    "道具来源:枕头"
+   ],
+   "cast_autofix": true,
+   "cast_voiced": 1,
+   "wardrobe_start": {},
+   "wardrobe_end": {},
+   "wardrobe_changed": false,
+   "posture_start": "",
+   "posture_end": "套房里两人面对面站着，相距半臂，他手里拿着枕头",
+   "posture_changed": false,
+   "holding_start": "",
+   "holding_end": "枕头 × 1（Jasper 手里）；插青柠的淡色鸡尾酒 × 1（篝火露台的坐垫上（放下））",
+   "looks": {
+    "枕头": "白色亚麻枕套的软枕头",
+    "插青柠的淡色鸡尾酒": "高脚杯淡色鸡尾酒，杯口插一片青柠"
+   },
+   "items_end": [
+    {
+     "name": "枕头",
+     "n": 1,
+     "at": "Jasper 手里"
+    },
+    {
+     "name": "插青柠的淡色鸡尾酒",
+     "n": 1,
+     "at": "篝火露台的坐垫上（放下）"
+    }
+   ],
+   "left_end": {},
+   "lint_left": [
+    "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“酒杯”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "seg1「她把手里的酒杯放到火塘边的坐垫上，抬手指」：近景里去碰离身体远的东西，会被拉成全身。把碰门、碰扶手这一下单独写成【插入特写】（只拍手和物件，不说台词）",
+    "出现了“转头”：眼神扫过即可，不转头"
+   ],
+   "lint_first": [
+    "分镜里出现了道具“酒杯”，但 props 没写它从哪来：写进 props（scene=地点里本来就有并写进 set；offscreen=手伸出画外再收回、或人走出画面再走回来带进来；carried=之前就带着）",
+    "分镜里出现了道具“酒杯”，但 props 没写它从哪来：写进 props（scene=地点里本来就有并写进 set；offscreen=手伸出画外再收回、或人走出画面再走回来带进来；carried=之前就带着）",
+    "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "seg1「她把手里的酒杯放到火塘边的坐垫上，转身面」：近景里去碰离身体远的东西，会被拉成全身。把碰门、碰扶手这一下单独写成【插入特写】（只拍手和物件，不说台词）",
+    "出现了“转身”：不写转身（会拍成背影）",
+    "配角只能出现在 seg2，seg1 里最多是画外声音（说话人写“画外:Mei”这种）",
+    "她每轮最多说一句（现在 3 句）",
+    "她的台词太长（最多 8 个词）：Are you one of the four? — Yes. Still want me?"
+   ],
+   "director_attempts": 1,
+   "roles": {
+    "seg1": [
+     "回应她的话",
+     "演绎"
+    ],
+    "seg2": [
+     "后果和新变数",
+     "引出钩子"
+    ]
+   },
+   "director_model": "z-ai/glm-5.3-prime",
+   "usage": {
+    "prompt_tokens": 27978,
+    "completion_tokens": 1962,
+    "total_tokens": 29940,
+    "cost": 0.03481936,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 27136,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.03481936,
+     "upstream_inference_prompt_cost": 0.01755376,
+     "upstream_inference_completions_cost": 0.0172656
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 226,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "model": "z-ai/glm-5.3-prime"
+   }
+  }
+ },
+ {
+  "n": 2,
+  "text": "嗯",
+  "kind": "free",
+  "sec": 58.3,
+  "sp": {
+   "dur_mode": "15+15",
+   "bgm": "none",
+   "song": null,
+   "intimacy": 0,
+   "wardrobe": {
+    "he": "不变",
+    "she": "不变"
+   },
+   "intent": "她只回了一声嗯，没给答案；他不再等，把这一晚收尾，天亮把她带到沙滩的起跑线上",
+   "posture": "并排站在沙滩起跑线附近，相距半步，面朝红旗方向",
+   "holding": "无",
+   "items": [
+    {
+     "name": "枕头",
+     "n": 1,
+     "at": "配对套房的日床沙发上"
+    }
+   ],
+   "key": "空镜：上午的白沙海滩，平整白沙，沙上一道起跑线，二十米外一排红旗，青绿色浅海和棕榈树，明亮阳光，无人",
+   "input_type": "vague",
+   "ask": "",
+   "delivered": true,
+   "did": "他把她的嗯收下不追问，开明早赌约；天亮沙滩Mei宣布夺旗赛，她跑在最前，Sloane扑倒装伤，Jasper让她别回头",
+   "hook_type": "挑战",
+   "staging": "face",
+   "structure": {
+    "seg1": "对话潜台词",
+    "seg2": "赶时间"
+   },
+   "props": [
+    {
+     "name": "枕头",
+     "look": "白色软枕",
+     "source": "scene",
+     "how": "他抱在手里，丢到日床沙发上，之后留在沙发上"
+    },
+    {
+     "name": "红旗",
+     "n": 6,
+     "look": "插在沙里的红色小旗",
+     "source": "scene",
+     "how": "一直插在沙滩终点"
+    },
+    {
+     "name": "素面卡片",
+     "look": "奶油色素面卡片，没有可读文字",
+     "source": "scene",
+     "how": "Mei举在手里宣布规则，之后收起"
+    }
+   ],
+   "kiss": false,
+   "cast": [
+    "Mei",
+    "Sloane"
+   ],
+   "extras": [],
+   "set": "上午的白沙海滩：平整的白沙，起跑线是沙上画的一道线，青绿色的浅海和棕榈树，明亮的阳光",
+   "route": "fallback",
+   "target": "K03",
+   "cards_done": [
+    "K03"
+   ],
+   "progress": 3,
+   "news": [
+    "他不再等她的答案，改开明早赌约",
+    "Mei宣布夺旗赛，赢家得私人约会",
+    "Sloane跑到一半扑倒抱脚踝，倒地时偷看她一眼"
+   ],
+   "he_move": "把她的含糊收下不追问，用赌约把两人约到天亮，赛场上让她自己赢",
+   "persona_beat": "不逼她答还选不选我，只留一句明早赌约，把判断还给她",
+   "surprise": false,
+   "pending_move": {
+    "who": "Jasper",
+    "goal": "看她会不会为别人停下、能不能赢给自己",
+    "move": "指着前方的红旗说别回头，旗是你的",
+    "needs": "她冲去拔旗，还是回头扶Sloane"
+   },
+   "closed": "他不再等今晚的答案：这一声嗯他收下，改用明早的赌约接住",
+   "three_q": {
+    "conflict": "她没答，他不等了，改开赌约",
+    "suspense": "她会为红旗停下还是回头扶Sloane",
+    "image": "Sloane扑倒时偷看她一眼",
+    "turn": "她以为他会追问，他却直接躺下收尾",
+    "subtext": "嘴上说今晚够了，动作上留了明早的约",
+    "stakes": "私人约会归属和他赌的一个问题",
+    "knows": "担心",
+    "choice": "A赢约会但丢下喊疼的Sloane落人口实；B回头扶人可能被骗输掉约会"
+   },
+   "seg1": [
+    [
+     "他看着她，嘴角动了一下，把枕头换到另一只手上",
+     "Good enough for tonight.",
+     "双人中近景，固定",
+     "Jasper"
+    ],
+    [
+     "他把枕头丢到日床沙发上",
+     "Sunrise. Beach. Loser answers one question.",
+     "双人中景，固定",
+     "Jasper"
+    ],
+    [
+     "她挑了下眉，视线从他脸上移到沙发上的枕头",
+     "",
+     "双人中近景，固定",
+     ""
+    ],
+    [
+     "他躺上沙发枕着手臂闭眼，她站在床边半臂外看着他",
+     "Light's yours, Sofia.",
+     "双人中景，固定",
+     "Jasper"
+    ]
+   ],
+   "hold": "双人中景，深夜套房暖黄台灯下，他躺在日床沙发上枕着手闭着眼，她站在床边半臂外，枕头在他头侧",
+   "seg2": [
+    [
+     "切到白沙海滩的空镜：这个地点的环境和光线，画面里没有人",
+     "Flags at the far end—",
+     "空镜，固定",
+     "画外:Mei"
+    ],
+    [
+     "Mei站在起跑线旁举着素面卡片，从容地扫视众人",
+     "Winner gets a private date.",
+     "单人近景，固定",
+     "Mei"
+    ],
+    [
+     "她和Jasper并排站在起跑线上，她微微屈膝预备，Sloane在她身后弯腰整理鞋带",
+     "Go!",
+     "双人全景，固定",
+     "画外:Mei"
+    ],
+    [
+     "她冲出去跑在最前面，Jasper跟在她半步后，两人都在跑",
+     "",
+     "双人中景，短跟随",
+     ""
+    ],
+    [
+     "Sloane扑倒在沙里双手抱住脚踝，表情痛苦，眼睛却抬起来偷看她的方向",
+     "My ankle! Help me!",
+     "单人近景，固定",
+     "Sloane"
+    ],
+    [
+     "她慢了半步回头，两人都停在沙上",
+     "Don't. The flag's yours.",
+     "双人中景，固定",
+     "Jasper"
+    ]
+   ],
+   "zh": {
+    "seg1": [
+     "今晚这样就够了。",
+     "日出，沙滩。输的人回答一个问题。",
+     "",
+     "灯留给你，Sofia。"
+    ],
+    "seg2": [
+     "终点拔旗——",
+     "赢的人得一次私人约会。",
+     "跑！",
+     "",
+     "别回头。旗是你的。",
+     ""
+    ]
+   },
+   "her_hands": "她：在画面右侧",
+   "amb": "海浪拍沙声、棕榈叶的风声、远处模糊的人声",
+   "location": "白沙海滩",
+   "scene_changed": true,
+   "next": {
+    "cue": {
+     "zh": "沙滩上Sloane扑倒抱着脚踝喊疼，倒地时偷看她一眼；Jasper指着红旗让她别回头，她要拔旗还是回头。",
+     "en": "Sloane is down on the sand, crying ankle, sneaking a glance; Jasper points at the flag. Her call."
+    },
+    "A": {
+     "zh": "我不回头，冲过去拔下红旗，赢下私人约会",
+     "en": "I don't look back. I sprint and take the flag.",
+     "leads_to": "K04：Mei 宣布换搭档约会，今晚她和 Wes 在吧台单独约会",
+     "trimmed": true
+    },
+    "B": {
+     "zh": "我回头扶起 Sloane，当众问她这伤装给谁看",
+     "en": "I turn back, help Sloane up, and ask who that ankle is for.",
+     "leads_to": "Sloane 被当众拆穿装伤，反咬她冷血拉票，Jasper 替她说话",
+     "trimmed": true
+    }
+   },
+   "state": "白沙海滩起跑线附近，两人相距半步都停在沙上，她跑在最前刚回头；她知道他自称四个之一、天亮后不再追问；他看见她没被吓退也没给答案；悬着的是红旗在前、Sloane在身后喊疼，等她选。",
+   "dur_want": "15+15",
+   "lint_trimmed": [
+    "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“红旗”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“素面卡片”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）"
+   ],
+   "autofixed": [
+    "禁用词:旗",
+    "禁用词:旗",
+    "set:旗",
+    "道具来源:枕头",
+    "道具来源:红旗",
+    "道具来源:素面卡片"
+   ],
+   "empty_vehicle_cut": true,
+   "seg1_widened": 1,
+   "wardrobe_start": {},
+   "wardrobe_end": {},
+   "wardrobe_changed": false,
+   "tidy_cut": [
+    "他把枕头丢到日床沙发上，解开衬衫袖口"
+   ],
+   "posture_start": "",
+   "posture_end": "并排站在沙滩起跑线附近，相距半步，面朝红旗方向",
+   "posture_changed": false,
+   "holding_start": "",
+   "holding_end": "枕头 × 1（配对套房的日床沙发上）",
+   "looks": {
+    "枕头": "白色软枕",
+    "红旗": "插在沙里的红色小旗",
+    "素面卡片": "奶油色素面卡片，没有可读文字"
+   },
+   "items_end": [
+    {
+     "name": "枕头",
+     "n": 1,
+     "at": "配对套房的日床沙发上"
+    }
+   ],
+   "left_end": {},
+   "lint_left": [
+    "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“红旗”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“素面卡片”标的是地点里本来就有：set 里要写到它（放在哪）"
+   ],
+   "lint_first": [
+    "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“红旗”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "道具“素面卡片”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）"
+   ],
+   "director_attempts": 1,
+   "roles": {
+    "seg1": [
+     "回应她的话",
+     "演绎"
+    ],
+    "seg2": [
+     "后果和新变数",
+     "引出钩子"
+    ]
+   },
+   "director_model": "z-ai/glm-5.3-prime",
+   "usage": {
+    "prompt_tokens": 28278,
+    "completion_tokens": 4129,
+    "total_tokens": 32407,
+    "cost": 0.0553024,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 26880,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0553024,
+     "upstream_inference_prompt_cost": 0.0189672,
+     "upstream_inference_completions_cost": 0.0363352
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 2442,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "model": "z-ai/glm-5.3-prime"
+   }
+  }
+ },
+ {
+  "n": 3,
+  "text": "我不回头，冲过去拔下红旗，赢下私人约会",
+  "kind": "option",
+  "sec": 73.6,
+  "sp": {
+   "dur_mode": "15+15",
+   "bgm": "none",
+   "song": null,
+   "intimacy": 0,
+   "wardrobe": {
+    "he": "不变",
+    "she": "不变"
+   },
+   "intent": "她在沙滩上转身朝前全力冲刺，第一个冲到旗前拔下红旗举起来，观众看到她赢下比赛",
+   "posture": "两人站在沙滩上面对面，相距半步，她手里举着红旗",
+   "holding": "她右手举着红旗",
+   "items": [
+    {
+     "name": "红旗",
+     "n": 1,
+     "at": "她右手"
+    }
+   ],
+   "key": "",
+   "input_type": "direction",
+   "ask": "不回头，冲过去拔下红旗，赢下私人约会",
+   "delivered": true,
+   "did": "她冲刺拔旗赢下比赛，Jasper认赌服输欠她一个问题，Mei宣布今晚她和Wes单独约会，他要她把问题留到约会之后",
+   "hook_type": "Mei 的广播",
+   "staging": "face",
+   "structure": {
+    "seg1": "赶时间：目标与距离→行动→结果",
+    "seg2": "对话潜台词：关系位置→说话者→话尾压在听者脸上→落成动作"
+   },
+   "props": [
+    {
+     "name": "红旗",
+     "look": "小红旗，红色布面，细木杆",
+     "source": "scene",
+     "how": "插在二十米外沙上的终点旗，她跑到后拔起，一直握在右手"
+    },
+    {
+     "name": "卡片",
+     "source": "scene",
+     "how": "本来就在两人手边"
+    }
+   ],
+   "kiss": false,
+   "cast": [
+    "Mei",
+    "Sloane"
+   ],
+   "extras": [],
+   "set": "上午的白沙海滩：平整的白沙，起跑线是沙上画的一道线，青绿色的浅海和棕榈树，明亮的阳光；卡片就在两人手边；红旗就在两人手边",
+   "route": "follow",
+   "target": "K04",
+   "cards_done": [
+    "K04"
+   ],
+   "progress": 3,
+   "news": [
+    "她赢下夺旗赛，得到私人约会",
+    "Mei宣布今晚她和Wes单独约会",
+    "Jasper认赌服输欠她一个问题，但要她留到约会后"
+   ],
+   "he_move": "认输兑现赌约，把问题变成她的筹码，让她带着问题去赴Wes的约会",
+   "persona_beat": "输了不辩解，只把旗杆在她面前掂了掂，把主动权做成一个条件还给她",
+   "surprise": false,
+   "pending_move": {
+    "who": "Jasper",
+    "goal": "想让她带着他的问题去看清别人，再回到他这里",
+    "move": "认赌服输欠她一个问题，条件是今晚赴完Wes的约会再来问",
+    "needs": "她接不接这个条件、什么时候用掉这个问题"
+   },
+   "closed": "赌约兑现：他输了，欠她一个必答的问题",
+   "three_q": {
+    "conflict": "她赢了比赛，但约会对象不是他",
+    "suspense": "她会把那个问题用在谁身上",
+    "image": "她举旗，他把旗杆掂了掂再还给她",
+    "turn": "她以为他会不情愿，他直接认输还加码",
+    "subtext": "嘴上说去问Wes，手把旗杆握得很紧",
+    "stakes": "那个必答的问题，用掉一次就没了",
+    "knows": "追查",
+    "choice": "A先赴约拿到Wes的料再回套房问；B先逼Jasper当场回答，问题可能问不出最深的"
+   },
+   "seg1": [
+    [
+     "喘着气回头",
+     "",
+     "双人中近景，略仰",
+     ""
+    ],
+    [
+     "Jasper走近，站在她面前，嘴角没绷住笑了一下",
+     "Fast. I'd have caught you. Eventually.",
+     "双人中近景，固定",
+     "Jasper"
+    ],
+    [
+     "松开，退开半步",
+     "A deal's a deal. I owe you one.",
+     "双人中景，固定",
+     "Jasper"
+    ],
+    [
+     "抬着下巴看他",
+     "Then I'll think about how to spend it.",
+     "双人中近景，固定",
+     "她"
+    ],
+    [
+     "他挑了下眉，收住笑",
+     "Take your time. I'm patient—allegedly.",
+     "双人近景，固定",
+     "Jasper"
+    ]
+   ],
+   "hold": "双人近景，白沙海滩，上午阳光，Jasper在左，她在右，两人面对面",
+   "seg2": [
+    [
+     "她转回身朝前全力冲刺，Sloane的喊声落在身后",
+     "Sofia, wait—!",
+     "双人全景，侧面短跟随",
+     "画外:Sloane"
+    ],
+    [
+     "Mei从棕榈树那头走来，手里拿着素面奶油色卡片，笑着站到两人侧面",
+     "Sofia. The flag is yours—and so is a date.",
+     "双人中景，缓推，Mei在两人侧前方",
+     "Mei"
+    ],
+    [
+     "Mei翻开卡片念，她的表情从得意变成意外",
+     "Tonight, ladies, you date someone new. Sofia—you're with Wes.",
+     "Mei单人近景，固定",
+     "Mei"
+    ],
+    [
+     "Jasper的下颌绷了一下，动作很稳",
+     "",
+     "双人中景，固定",
+     ""
+    ],
+    [
+     "他回身面对她，声音不高，眼神没离开她",
+     "Ask Wes anything you want.",
+     "双人中近景，固定",
+     "Jasper"
+    ],
+    [
+     "他抬手指了指自己胸口，又指了指她，收手",
+     "Your question stays with me. After.",
+     "双人中景，固定",
+     "Jasper"
+    ]
+   ],
+   "zh": {
+    "seg1": [
+     "",
+     "跑得挺快。我本来能追上你的……迟早。",
+     "说好的。我欠你一个答案。",
+     "那我要好好想想怎么用它。",
+     "慢慢想。我很有耐心——据说。"
+    ],
+    "seg2": [
+     "Sofia，等等——！",
+     "Sofia，旗是你的——约会也是你的。",
+     "今晚，女士们，你们要和别人约会。Sofia——你跟 Wes 一组。",
+     "",
+     "想问 Wes 什么都可以。",
+     "你的那个问题，留在我这。约会之后。"
+    ]
+   },
+   "her_hands": "她：在画面右侧",
+   "amb": "海浪拍沙声、棕榈叶的风声、远处隐约的人声",
+   "location": "白沙海滩",
+   "scene_changed": false,
+   "next": {
+    "cue": {
+     "zh": "她赢了旗和约会，但今晚的约会对象是Wes；Jasper欠她一个问题，条件是赴完约再来问。",
+     "en": "She won the flag and a date—but tonight it's with Wes. Jasper owes her one question, after the date."
+    },
+    "A": {
+     "zh": "我赴完Wes的约会，夜里篝火投票前定下我投谁",
+     "en": "I go on the Wes date, then decide my vote before the fire.",
+     "leads_to": "K05：第一次淘汰仪式，Mei当众念出她的票，全场送走Ethan",
+     "trimmed": true
+    },
+    "B": {
+     "zh": "我偏要现在就问，逼Jasper当着Mei的面说出答案",
+     "en": "I ask my question right now, in front of Mei.",
+     "leads_to": "她在沙滩上当场用掉那个问题，Jasper被逼到只能给一半答案，约会和仪式照旧",
+     "trimmed": true
+    }
+   },
+   "state": "白沙海滩上午，两人面对面半步，她举着刚赢的红旗；她知道他自称四个之一、认赌欠她一个问题；他看到她没被吓退还赢了；悬着的是今晚和Wes的约会、那个要留到约会后的问题，和淘汰仪式上她的票。",
+   "dur_want": "15+15",
+   "lint_trimmed": [
+    "分镜里出现了道具“卡片”，但 props 没写它从哪来：写进 props（scene=地点里本来就有并写进 set；offscreen=手伸出画外再收回、或人走出画面再走回来带进来；carried=之前就带着）",
+    "道具“红旗”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）",
+    "出现了“转身”：不写转身（会拍成背影）",
+    "配角只能出现在 seg2，seg1 里最多是画外声音（说话人写“画外:Mei”这种）"
+   ],
+   "autofixed": [
+    "禁用词:旗",
+    "禁用词:旗",
+    "禁用词:旗",
+    "禁用词:旗",
+    "禁用词:旗",
+    "禁用词:转身",
+    "hold:旗",
+    "道具来源:卡片",
+    "道具来源:红旗"
+   ],
+   "cast_autofix": true,
+   "cast_moved": [
+    "她转回身朝前全力冲刺，Sloane的喊声"
+   ],
+   "seg1_widened": 1,
+   "wardrobe_start": {},
+   "wardrobe_end": {},
+   "wardrobe_changed": false,
+   "posture_start": "",
+   "posture_end": "两人站在沙滩上面对面，相距半步，她手里举着红旗",
+   "posture_changed": false,
+   "holding_start": "",
+   "holding_end": "红旗 × 1（她右手）",
+   "looks": {
+    "红旗": "小红旗，红色布面，细木杆"
+   },
+   "items_end": [
+    {
+     "name": "红旗",
+     "n": 1,
+     "at": "她右手"
+    }
+   ],
+   "left_end": {},
+   "lint_left": [
+    "出现了“旗”：不写旗帜（会画出带标志的旗）"
+   ],
+   "lint_first": [
+    "【必改】下一轮该演关键片段 K05（第一次淘汰仪式：Mei 先公开念出她投了谁；不管她投谁，全场票送走 Ethan；）：两个选项里至少一个通向它，leads_to 写上 K05",
+    "【必改】seg1 是 15 秒，只有 2 句台词：15 秒的段 3–5 句（所有人合计），一句接一句把事情推进（V3.0）",
+    "分镜里出现了道具“卡片”，但 props 没写它从哪来：写进 props（scene=地点里本来就有并写进 set；offscreen=手伸出画外再收回、或人走出画面再走回来带进来；carried=之前就带着）",
+    "道具“红旗”标的是地点里本来就有：set 里要写到它（放在哪）",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）",
+    "出现了“转身”：不写转身（会拍成背影）",
+    "配角只能出现在 seg2，seg1 里最多是画外声音（说话人写“画外:Mei”这种）"
+   ],
+   "director_attempts": 2,
+   "roles": {
+    "seg1": [
+     "回应她的话",
+     "演绎"
+    ],
+    "seg2": [
+     "后果和新变数",
+     "引出钩子"
+    ]
+   },
+   "director_model": "z-ai/glm-5.3-prime",
+   "usage": {
+    "prompt_tokens": 30493,
+    "completion_tokens": 1741,
+    "total_tokens": 32234,
+    "cost": 0.03647592,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 28672,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.03647592,
+     "upstream_inference_prompt_cost": 0.02115512,
+     "upstream_inference_completions_cost": 0.0153208
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 45,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "model": "z-ai/glm-5.3-prime"
+   }
+  }
+ },
+ {
+  "n": 4,
+  "text": "我去找 Ravi，让他帮我读读 Jasper 是不是在骗我",
+  "kind": "free",
+  "sec": 53.5,
+  "sp": {
+   "dur_mode": "15+15",
+   "bgm": "none",
+   "song": null,
+   "intimacy": 0,
+   "wardrobe": {
+    "he": "不变",
+    "she": "不变"
+   },
+   "intent": "她离开 Jasper，去泳池边找 Ravi，让他读 Jasper 是不是在骗她，观众看到 Ravi 给出他的判断",
+   "posture": "她站在泳池边 Ravi 的躺椅旁，Ravi 半躺着侧身朝她",
+   "holding": "无",
+   "items": [
+    {
+     "name": "红旗",
+     "n": 1,
+     "at": "插在白沙海滩的沙上"
+    }
+   ],
+   "key": "双人中景，白天的无边泳池边，Ravi 半躺在画面左侧的白色躺椅上侧身朝她，她穿香槟金吊带裙站在画面右侧，阳光明亮，远处是海",
+   "input_type": "direction",
+   "ask": "她要去找 Ravi，让 Ravi 帮她读 Jasper 是不是在骗她",
+   "delivered": true,
+   "did": "她把红旗交给 Jasper 去找 Ravi，Ravi 给出判断：Jasper 在撒谎说自己是骗子，并要拿这条读人换她仪式上的票",
+   "hook_type": "线索",
+   "staging": "face",
+   "structure": {
+    "seg1": "对话潜台词",
+    "seg2": "发现与认出"
+   },
+   "props": [
+    {
+     "name": "红旗",
+     "look": "红色小旗，插在一根细木杆上，无文字",
+     "source": "carried",
+     "how": "上一轮她从终点拔下赢来的，此刻在她手里举着；这一轮第 1 拍她把它递给 Jasper，Jasper 接过插进脚边的沙里，旗杆立稳，之后一直留在白沙海滩的沙上"
+    }
+   ],
+   "kiss": false,
+   "cast": [
+    "Ravi"
+   ],
+   "extras": [],
+   "set": "白天的无边泳池边：白色躺椅和遮阳伞，青绿色池水，远处是海，别墅白墙，阳光",
+   "route": "follow",
+   "target": "",
+   "cards_done": [],
+   "progress": 3,
+   "news": [
+    "她主动去找 Ravi 读人",
+    "Ravi 判断：Jasper 在撒谎说自己是骗子",
+    "Ravi 想用这条判断换她的票"
+   ],
+   "he_move": "Jasper 没拦她，接过她手里的红旗插进沙里，只丢下一句让她看清 Ravi 本人",
+   "persona_beat": "被她丢下去找别的男人，他不追不拦，嘴上不在乎，手里把她的红旗插稳在沙里",
+   "surprise": false,
+   "pending_move": {
+    "who": "Ravi",
+    "goal": "想在淘汰仪式上活下来",
+    "move": "给出读人结论，开条件：仪式上她的票别投他，他再教她怎么验 Jasper",
+    "needs": "她换不换这条交易"
+   },
+   "closed": "Ravi 的判断落地：Jasper 在撒谎——撒谎说自己是骗子",
+   "three_q": {
+    "conflict": "她要真相，Ravi 要她的票",
+    "suspense": "Ravi 的读人准不准、他为什么肯帮她",
+    "image": "Ravi 半躺抬眼说出那句判断",
+    "turn": "她以为要套他半天，他一句话就摊开",
+    "subtext": "他说读人不收钱，条件却先摆上桌",
+    "stakes": "她的票投谁，全场都会听见",
+    "knows": "追查",
+    "choice": "A 拿到 Ravi 的验法但票被绑定；B 当面拆穿 Jasper 但可能翻脸"
+   },
+   "seg1": [
+    [
+     "他伸手接过",
+     "",
+     "双人中景，固定",
+     ""
+    ],
+    [
+     "她朝别墅方向抬手指了指，三分之四侧面",
+     "Going to find Ravi.",
+     "她的双人中近景，固定",
+     "她"
+    ],
+    [
+     "他看着她的背影，下颌绷了一下，随即松开",
+     "Ravi reads people. Fine. Ask him who taught him.",
+     "双人近景，固定，他看向画面右侧",
+     "Jasper"
+    ],
+    [
+     "她停下回头，他已经直起身",
+     "And watch his hands, not his mouth.",
+     "双人中景，固定",
+     "Jasper"
+    ],
+    [
+     "她笑了一下，继续朝泳池方向走，画面留在原地",
+     "Bring back something useful.",
+     "双人中景，固定",
+     "Jasper"
+    ]
+   ],
+   "hold": "双人中景，上午的白沙海滩，她已走出画面，阳光明亮",
+   "seg2": [
+    [
+     "切到白天的无边泳池边的空镜：白色躺椅和遮阳伞，青绿色池水，远处是海，画外传来泳池那边的隐约人声",
+     "",
+     "空镜，固定",
+     ""
+    ],
+    [
+     "Ravi 半躺在画面左侧的白色躺椅上，墨镜推在头顶，手里转着一片棕榈叶，侧身看向走过来的她，她站到躺椅旁画面右侧",
+     "You won the flag. Everyone's talking about it.",
+     "双人中景，固定",
+     "Ravi"
+    ],
+    [
+     "双臂放松，直视他，开门见山",
+     "",
+     "双人中近景，固定",
+     "她"
+    ],
+    [
+     "Ravi 嘴角一挑，把棕榈叶丢到躺椅上，坐直了些",
+     "Let me guess. Tall. Barely talks. Took the couch.",
+     "单人近景，固定",
+     "Ravi"
+    ],
+    [
+     "她点头，他抬眼看着她，笑意收了，说得很慢",
+     "He's lying. He's lying about being a liar.",
+     "单人近景，缓推",
+     "Ravi"
+    ],
+    [
+     "她愣了一下，眉头收紧，他竖起一根手指",
+     "Watch his hands when wine is poured. Then come back.",
+     "双人中近景，固定",
+     "Ravi"
+    ],
+    [
+     "他重新靠回躺椅，摘下头顶的墨镜捏在手里转，提出条件，她看着他没答",
+     "",
+     "双人中景，固定",
+     "Ravi"
+    ]
+   ],
+   "zh": {
+    "seg1": [
+     "",
+     "我去找 Ravi。",
+     "Ravi 会读人。行。问问他跟谁学的。",
+     "还有，看他的手，别听他的嘴。",
+     "带点有用的回来。"
+    ],
+    "seg2": [
+     "",
+     "你赢了旗子。大家都在说。",
+     "",
+     "猜猜看。高个子。话不多。睡了沙发。",
+     "他在撒谎。撒谎说他自己是骗子。",
+     "倒酒的时候看他的手。然后再回来找我。",
+     ""
+    ]
+   },
+   "her_hands": "她：在画面右侧",
+   "amb": "泳池水声、棕榈叶的风声、远处隐约的人声",
+   "location": "无边泳池边",
+   "scene_changed": true,
+   "next": {
+    "cue": {
+     "zh": "泳池边，Ravi 开价：她的票换他的读人，还要她倒酒时看 Jasper 的手。",
+     "en": "By the pool, Ravi names his price: her vote for his read, and a test for Jasper."
+    },
+    "A": {
+     "zh": "我答应 Ravi 的交易，晚上篝火仪式把票投给 Brody，看 Mei 念出全场的结果",
+     "en": "I take Ravi's deal and vote Brody at the fire ceremony tonight.",
+     "leads_to": "K05：第一次淘汰仪式，Mei 先念出她投了 Brody，全场票送走 Ethan，Ethan 是真富豪",
+     "trimmed": true
+    },
+    "B": {
+     "zh": "我不答应，直接回沙滩把 Ravi 那句话砸到 Jasper 脸上",
+     "en": "No deal. I take Ravi's words straight to Jasper and demand the truth.",
+     "leads_to": "她当面对质 Jasper：Ravi 说你在撒谎说自己是骗子，他不否认也不承认，只让她今晚自己看",
+     "trimmed": true
+    }
+   },
+   "state": "她站在泳池边 Ravi 的躺椅旁；她知道 Ravi 判断 Jasper 在装骗子、条件是她的票；Jasper 还在沙滩上，红旗插在他脚边的沙里，他知道她去找 Ravi 读他；悬着今晚 Wes 的约会、欠她的一个问题、淘汰仪式的票和 Ravi 的交易",
+   "dur_want": "15+15",
+   "lint_trimmed": [
+    "seg1「她把手里举着的红旗递向画面左侧的 Jas」：近景里去碰离身体远的东西，会被拉成全身。把碰门、碰扶手这一下单独写成【插入特写】（只拍手和物件，不说台词）",
+    "seg2 有 6 句台词，这一段最多 5 句（所有人合计）",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）",
+    "出现了“站定”：写站定会拍成全身站姿：近景只写脸和眼神",
+    "出现了“转身”：不写转身（会拍成背影）",
+    "她每轮最多说一句（现在 2 句）"
+   ],
+   "autofixed": [
+    "禁用词:旗",
+    "禁用词:转身",
+    "禁用词:旗",
+    "禁用词:旗",
+    "禁用词:旗",
+    "禁用词:站定",
+    "hold:旗",
+    "她多说的一句"
+   ],
+   "seg1_widened": 1,
+   "wardrobe_start": {},
+   "wardrobe_end": {},
+   "wardrobe_changed": false,
+   "posture_start": "",
+   "posture_end": "她站在泳池边 Ravi 的躺椅旁，Ravi 半躺着侧身朝她",
+   "posture_changed": false,
+   "holding_start": "",
+   "holding_end": "红旗 × 1（插在白沙海滩的沙上）",
+   "looks": {
+    "红旗": "红色小旗，插在一根细木杆上，无文字"
+   },
+   "items_end": [
+    {
+     "name": "红旗",
+     "n": 1,
+     "at": "插在白沙海滩的沙上"
+    }
+   ],
+   "left_end": {},
+   "lint_left": [],
+   "lint_first": [
+    "【必改】“红旗”是新出现的东西：写进 props 说明来源，并在分镜里交代它怎么来的",
+    "seg2 有 6 句台词，这一段最多 5 句（所有人合计）",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）",
+    "出现了“站定”：写站定会拍成全身站姿：近景只写脸和眼神",
+    "出现了“转身”：不写转身（会拍成背影）",
+    "她每轮最多说一句（现在 2 句）"
+   ],
+   "director_attempts": 2,
+   "roles": {
+    "seg1": [
+     "回应她的话",
+     "演绎"
+    ],
+    "seg2": [
+     "后果和新变数",
+     "引出钩子"
+    ]
+   },
+   "director_model": "z-ai/glm-5.3-prime",
+   "usage": {
+    "prompt_tokens": 30702,
+    "completion_tokens": 1977,
+    "total_tokens": 32679,
+    "cost": 0.03913792,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 28672,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.03913792,
+     "upstream_inference_prompt_cost": 0.02174032,
+     "upstream_inference_completions_cost": 0.0173976
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 63,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "model": "z-ai/glm-5.3-prime"
+   }
+  }
+ },
+ {
+  "n": 5,
+  "text": "我答应 Ravi 的交易，晚上篝火仪式把票投给 Brody，看 Mei 念出全场的结果",
+  "kind": "option",
+  "sec": 51.9,
+  "sp": {
+   "dur_mode": "15+15",
+   "bgm": "none",
+   "song": null,
+   "intimacy": 0,
+   "wardrobe": {
+    "he": "不变",
+    "she": "不变"
+   },
+   "intent": "她当面对 Ravi 答应交易、把票投给 Brody，随后在夜里篝火仪式上亲耳听到 Mei 念出她的票和全场结果，看到 Ethan 被送走",
+   "posture": "并排坐在篝火边的奶油色坐垫上，身体侧向对方",
+   "holding": "无",
+   "items": [
+    {
+     "name": "红旗",
+     "n": 1,
+     "at": "泳池边躺椅旁"
+    }
+   ],
+   "key": "双人中景，午夜的篝火露台，火塘的暖光，Jasper 坐在画面左侧、她坐在右侧，两人并排坐在奶油色坐垫上侧身相对，身后是虚化的人群，她愣住、他下颌绷紧",
+   "input_type": "direction",
+   "ask": "答应 Ravi 的交易，仪式上把票投给 Brody，亲眼看 Mei 念出全场结果",
+   "delivered": true,
+   "did": "她答应 Ravi 换票投 Brody，Jasper 带红旗回来提醒票会被当众念；夜里仪式 Mei 念出她的票、全场送走 Ethan 并揭晓他是真富豪，Ethan 临走留下一句警告",
+   "hook_type": "仪式",
+   "staging": "side",
+   "structure": {
+    "seg1": "对话潜台词",
+    "seg2": "发现与认出"
+   },
+   "props": [
+    {
+     "name": "红旗",
+     "look": "红色小旗，细杆",
+     "source": "carried",
+     "how": "Jasper 从沙滩带回来，靠在泳池边躺椅旁，留在原地"
+    },
+    {
+     "name": "Mei 的素面卡片",
+     "look": "素面奶油色卡片，没有可读文字",
+     "source": "carried",
+     "how": "Mei 手里拿着宣读，一直在她手里"
+    }
+   ],
+   "kiss": false,
+   "cast": [
+    "Mei",
+    "Ethan"
+   ],
+   "extras": [],
+   "set": "午夜的篝火露台：圆形下沉火塘燃着火，围着奶油色坐垫，四周火炬和头顶串灯的暖光，左边是发着青绿色光的无边泳池和棕榈树，远处月光下的海，夜色深蓝；天空是全黑的深蓝夜色，没有晚霞、没有夕阳（V3.0）",
+   "route": "follow",
+   "target": "K05",
+   "cards_done": [
+    "K05"
+   ],
+   "progress": 3,
+   "news": [
+    "她的票投 Brody 被 Mei 当众念出",
+    "全场票送走 Ethan，Mei 揭晓他是真富豪",
+    "Ethan 临走警告：真富豪里有一个在装骗子"
+   ],
+   "he_move": "他带红旗回来，提醒她今晚的票会被当众念出，把选择留给她",
+   "persona_beat": "不吃醋不拦她做交易，只冷冷点破 Ravi 卖的不是真相，考她敢不敢认账",
+   "surprise": false,
+   "pending_move": {
+    "who": "Jasper",
+    "goal": "看她的怀疑会落到谁头上",
+    "move": "低声告诉她真富豪只剩两个、其中一个在撒谎，问她是不是已经有答案",
+    "needs": "她认不认为那个装假的人是他"
+   },
+   "closed": "Ravi 的交易谈成：她答应投 Brody，Ravi 收下这个条件",
+   "three_q": {
+    "conflict": "她要验证 Jasper，仪式却先送走一个真的人",
+    "suspense": "装骗子的真富豪到底是谁",
+    "image": "Mei 举卡念票，Ethan 停在她耳边低语",
+    "turn": "她以为他会拦她和 Ravi 交易，他只提醒票是公开的",
+    "subtext": "嘴上说随她投，听到 Ethan 那句时下颌绷紧了",
+    "stakes": "她的票全场都知道，Ravi 和被投的人都记着",
+    "knows": "追查",
+    "choice": "A 得到验证他的机会、失去今晚的 Wes 约会；B 套到 Wes 的情报、把问题再拖一晚"
+   },
+   "seg1": [
+    [
+     "她站在泳池边躺椅旁，朝画外的 Ravi 点头，语气干脆",
+     "Deal. My vote goes to Brody.",
+     "双人中近景，固定，她在画面右侧",
+     "她"
+    ],
+    [
+     "她听着，嘴角一点冷笑，视线没动",
+     "Smart girl. Tonight, watch the wine.",
+     "双人中近景，固定，她在听画外的话",
+     "画外:Ravi"
+    ],
+    [
+     "Jasper 站在泳池边，看着她",
+     "Heard that. Ravi sells answers, not truth.",
+     "双人中景，固定，他在左她在右",
+     "Jasper"
+    ],
+    [
+     "她挑眉看他，没退",
+     "",
+     "双人中近景，固定",
+     "她"
+    ],
+    [
+     "他没接这句，只看着火塘方向，下颌绷了一下",
+     "Your vote gets read out loud tonight. Still sure?",
+     "双人中近景，固定",
+     "Jasper"
+    ]
+   ],
+   "hold": "双人中景，白天的无边泳池边，她站在右侧，两人对视，阳光",
+   "seg2": [
+    [
+     "切到午夜的篝火露台的空镜：火塘燃着火，坐垫上虚化的人群，无人说话",
+     "Sofia votes... Brody.",
+     "空镜，固定",
+     "画外:Mei"
+    ],
+    [
+     "两人并排坐在火塘边坐垫上，身体侧向对方，她的手在膝上收紧，他看着火",
+     "",
+     "双人中景，固定，男左女右",
+     ""
+    ],
+    [
+     "Mei 举着素面卡片站在火塘边，从容地环视人群",
+     "Tonight, the island says goodbye to Ethan.",
+     "Mei 单人近景，固定",
+     "Mei"
+    ],
+    [
+     "Ethan 走过她身边停下，俯身凑近她耳边，紧张地笑了一下又收住",
+     "One of the real ones is playing fake.",
+     "Ethan 单人中近景，固定，背景是火光",
+     "Ethan"
+    ],
+    [
+     "Mei 把卡片收下，看向被送走的方向",
+     "Ethan was one of our three millionaires.",
+     "Mei 单人近景，固定",
+     "Mei"
+    ],
+    [
+     "她愣住看向 Ethan 离开的方向，Jasper 的视线落在她脸上，低声开口",
+     "Two left. One's lying. You already know which.",
+     "双人中景，固定",
+     "Jasper"
+    ]
+   ],
+   "zh": {
+    "seg1": [
+     "成交。我的票投给 Brody。",
+     "聪明的姑娘。今晚，盯着那杯酒。",
+     "听见了。Ravi 卖的是答案，不是真相。",
+     "",
+     "今晚你的票会被当众念出来。还确定吗？"
+    ],
+    "seg2": [
+     "Sofia 投给……Brody。",
+     "",
+     "今晚，小岛送别 Ethan。",
+     "真富豪里，有一个在装骗子。",
+     "Ethan 是我们三位真富豪之一。",
+     "还剩两个。有一个在撒谎。你已经知道是谁了。"
+    ]
+   },
+   "her_hands": "她：在画面右侧",
+   "amb": "火塘燃烧的噼啪声、棕榈叶的风声、远处人群的低语",
+   "location": "篝火露台",
+   "scene_changed": true,
+   "next": {
+    "cue": {
+     "zh": "篝火边，Ethan 走了，真富豪只剩两个，Jasper 低声问她是不是已经有答案；今晚还悬着 Wes 的约会和他欠她的一个问题。",
+     "en": "By the fire, Ethan is gone and two millionaires remain; Jasper asks if she already has her answer."
+    },
+    "A": {
+     "zh": "我今晚就去吧台找他，用他欠我的问题，盯着侍者倒酒时他的手",
+     "en": "I go to the bar tonight, use the question he owes me, and watch his hands when the wine is poured.",
+     "leads_to": "K06：吧台私聊，她亲眼验证他一眼认出酒的年份，拿到合同那条线索",
+     "trimmed": true
+    },
+    "B": {
+     "zh": "我先赴和 Wes 的约会",
+     "en": "I keep the Wes date first and ask him what's off about Jasper.",
+     "leads_to": "换搭档约会：她从 Wes 口中套出关于 Jasper 的疑点，Ravi 的线索再悬一晚",
+     "trimmed": true
+    }
+   },
+   "dur_want": "15+15",
+   "lint_trimmed": [
+    "她在推自己的情节，钩子却用了资料包里的「Ethan」打断：钩子从她的情节里长出来（她做的事带来的后果、两人关系的下一步），资料包的人和事这一轮不出现",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）",
+    "她每轮最多说一句（现在 2 句）"
+   ],
+   "autofixed": [
+    "禁用词:旗",
+    "hold:旗",
+    "她多说的一句"
+   ],
+   "seg1_widened": 2,
+   "wardrobe_start": {},
+   "wardrobe_end": {},
+   "wardrobe_changed": false,
+   "posture_start": "",
+   "posture_end": "并排坐在篝火边的奶油色坐垫上，身体侧向对方",
+   "posture_changed": false,
+   "holding_start": "",
+   "holding_end": "红旗 × 1（泳池边躺椅旁）",
+   "looks": {
+    "红旗": "红色小旗，细杆",
+    "Mei 的素面卡片": "素面奶油色卡片，没有可读文字"
+   },
+   "items_end": [
+    {
+     "name": "红旗",
+     "n": 1,
+     "at": "泳池边躺椅旁"
+    }
+   ],
+   "left_end": {},
+   "lint_left": [
+    "她在推自己的情节，钩子却用了资料包里的「Ethan」打断：钩子从她的情节里长出来（她做的事带来的后果、两人关系的下一步），资料包的人和事这一轮不出现",
+    "【必改】有 2 拍只有表情没有台词和动作（她挑眉看他，没退；两人并排坐在火塘边坐垫上，身体侧向对方，）：整轮最多一拍，其余改成一句台词或一个推动剧情的动作（V3.0）"
+   ],
+   "lint_first": [
+    "她在推自己的情节，钩子却用了资料包里的「Ethan」打断：钩子从她的情节里长出来（她做的事带来的后果、两人关系的下一步），资料包的人和事这一轮不出现",
+    "出现了“旗”：不写旗帜（会画出带标志的旗）",
+    "她每轮最多说一句（现在 2 句）"
+   ],
+   "director_attempts": 1,
+   "roles": {
+    "seg1": [
+     "回应她的话",
+     "演绎"
+    ],
+    "seg2": [
+     "后果和新变数",
+     "引出钩子"
+    ]
+   },
+   "director_model": "z-ai/glm-5.3-prime",
+   "usage": {
+    "prompt_tokens": 29267,
+    "completion_tokens": 4276,
+    "total_tokens": 33543,
+    "cost": 0.05821832,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 27392,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.05821832,
+     "upstream_inference_prompt_cost": 0.02058952,
+     "upstream_inference_completions_cost": 0.0376288
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 2262,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "model": "z-ai/glm-5.3-prime"
+   }
+  }
+ }
+]

@@ -1,0 +1,100 @@
+
+### R1 [option] 我选 Wes。 | 79.2s model=z-ai/glm-5.3-prime loc=配对套房 cards=['K02'] surprise=False
+  pending {"who": "Wes", "goal": "想让她给自己一次被验证的机会", "move": "他伸出右手跟她打赌：明早她再问一次，他当场给答案", "needs": "她握不握这只手、接不接这个赌"}
+  closed 
+  he_move 他把枕头放到沙发、把床让给她，被问身份答得太快后主动伸手打赌，把验证权交到明早 | persona 他记得她怕被晾在一边，进门先替她把酒放好，把床让出来自己睡沙发
+    1 | 她放下酒杯，朝 Wes 伸出手指向他，表情干脆 | I choose Wes. | 她
+    1 | 画外传来 Mei 的声音，Wes 和她同时转头看向画外 | First couple of the season: Wes and Sofia. | 画外:Mei
+    1 | 画外传来 Sloane 的声音，Wes 和她同时转头看向画外 | Enjoy the couch. | 画外:Sloane
+    1 | Wes 笑出声，抬手朝套房方向做了个“请”的手势，她拿回酒杯 | Your room awaits, partner. | Wes
+    2 | 切到配对套房的空镜：暖黄台灯亮着，落地窗外月光下的海，画面里没有人 |  | 
+    2 | 他反手关门，她把酒杯放到日床沙发旁的小圆几上 | One bed. I saw. | Wes
+    2 | 他从白色大床上拿起枕头抱在手臂里，朝日床沙发扬了扬下巴，笑着 | Daybed's mine. You get the ocean view. | Wes
+    2 | 她站在床边不动，直直看着他，表情冷静 |  | 她
+    2 | 他手上的动作停了一拍，枕头被抱得更紧，随即笑了一下 | No. | Wes
+    2 | 他自己先愣了一下，耳根泛红，低头看了看怀里的枕头 | ...That came out fast, didn't it? | Wes
+    2 | 他把枕头放到沙发上，朝她伸出右手要握手，认真看着她 |  | Wes
+  cue 套房里，他答得太快后伸手跟她打赌：日出时再问一次，等她握不握这只手。
+  A 握他的手成交，日出时去沙滩再问一次，顺便赢下挑战 
+  B 不握手。今晚就翻他口袋，看看那张卡片是什么
+  lint_left ['道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '出现了“转头”：眼神扫过即可，不转头']
+
+### R2 [free] 嗯 | 47.4s model=z-ai/glm-5.3-prime loc=白沙海滩 cards=['K03'] surprise=False
+  pending {"who": "Sloane", "goal": "骗她回头，抢走私人约会", "move": "扑倒抱着脚踝大喊救命，求领跑的她回来扶", "needs": "她停下救她，还是冲向红旗"}
+  closed 赌约成没成：成了，他握住她的手定下明早给答案
+  he_move 他替她把悬着的赌约握成定局，赛场上在场边喊话推她去赢 | persona 睡前把床头的水递到她手里，顺手关小台灯，记得她怕被晾在一边
+    1 | 他握住她伸在半空的右手，干脆地摇了一下，两人相视 | Deal. No take-backs. | Wes
+    1 | 他从床头柜拿起水杯递到她手里，她接过，他抬手把台灯拧暗一档 | Water. You'll want it before sunrise. | Wes
+    1 | 他松开手退半步，朝日床沙发抬了抬下巴，自己躺下，她站在床边看着他 | Sleep fast. Morning me is very honest. | Wes
+    2 | 切到白沙海滩的空镜：画外传来 Mei 的声音，画面里没有人 | Today's challenge, ladies: the flag race. | 画外:Mei
+    2 | Mei 站在起跑线旁举着素面卡片，她和背景虚化的女嘉宾们站在起跑线上听 | Flags at the far end. Winner gets a private date. | Mei
+    2 | 哨声起，她光脚冲出起跑线跑在最前，沙子飞溅，Wes 在边线外看着 | Go, go! Don't look back! | Wes
+    2 | 手臂前伸 |  | 
+    2 | 身后的 Sloane 扑倒在沙上，抱着脚踝，脸皱成一团朝她大喊 | Wait—my ankle! Help me! | Sloane
+    2 | 回头望向倒地的 Sloane，Wes 在边线外朝她喊 | The flag, Sofia! It's right there! | Wes
+  cue 她停在红旗前，身后是装伤的 Sloane，边线外 Wes 在喊她去拔旗。
+  A 我头也不回冲过去拔下红旗，赢下私人约会卡 
+  B 我跑回去扶 Sloane，当场拆穿她装的脚伤
+  lint_left ['道具“水杯”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R3 [free] 我去泳池边找 Kian 聊聊 | 74.6s model=z-ai/glm-5.3-prime loc=无边泳池边 cards=[] surprise=False
+  pending {"who": "Kian", "goal": "公开追她，趁她搭档没跟来", "move": "直说想约她：日出、码头、他的船，来不来随她", "needs": "她去不去日出出海"}
+  closed 
+  he_move Wes 在边线替她把话说破：别回头，替她挡下 Sloane 的招 | persona Wes 没拦她去找别的男人，只喊一句玩笑式真话，藏住吃醋
+    1 | 画外传来 Sloane 的声音，Wes 和她同时转头看向画外 | The flag, Sofia! Come on! | 画外:Sloane
+    1 | Wes 大步到边线上，冲她喊，嘴角绷着没笑出来 | Don't look back. Flag's yours anyway. | Wes
+    1 | 继续朝画面右方走，Wes 的手在身侧收拢了一下 | Go find Kian. I'll babysit the ankle. | Wes
+    1 | 她回头笑了一下，丢下一句再往前走，Wes 愣了半拍 | Jealous already? | 她
+    1 | 画外传来 Sloane 的声音，Wes 和她同时转头看向画外 | Me? I'm the honest one, remember? | 画外:Sloane
+    1 | 她笑着摇头，走出画面，Wes 站在原地目送，手插回裤兜 |  | Wes
+    2 | 切到无边泳池边的空镜：白色躺椅和遮阳伞，青绿色池水，阳光，远处海面反光，画外隐约传来 Mei 的广播声 |  | 
+    2 | 遮阳伞下，Kian 已经站着，双手插兜，两人面对面 | Sofia. The one who didn't look back. | Kian
+    2 | Kian 从容打量她，语气不催 | I like that. Cheap tricks don't work on you. | Kian
+    2 | 她不接恭维，直说想问的事，Kian 笑了 |  | 她
+    2 | Kian 说他明早在码头等，来不来随她 | Sunrise, the dock. My boat. Or don't. | Kian
+    2 | 她盯着他掂量，Kian 又补一句，眼神扫向远处别墅方向 | One thing—free. I know Jasper's boat. | Kian
+    2 | 两人面对面站着，池水在两人身后泛光，她没答应也没拒绝 |  | Kian
+  cue 泳池边，Kian 的日出之约悬着；今晚节目还有安排没揭晓
+  A 先回吧台找 Wes，把 Jasper 的船当筹码，换他昨晚赌约的答案 
+  B 日出准时到码头赴 Kian 的出海之约，当面掂量这个亮底牌的男人
+  lint_left ['她在推自己的情节，钩子却用了资料包里的「画外:Sloane」打断：钩子从她的情节里长出来（她做的事带', '出现了“转头”：眼神扫过即可，不转头']
+
+### R4 [option] 先回吧台找 Wes，把 Jasper 的船当筹码，换他昨晚赌约的答案 | 56.3s model=z-ai/glm-5.3-prime loc=傍晚的别墅户外吧台 cards=[] surprise=False
+  pending {"who": "Wes", "goal": "不输给 Kian，也想弄清 Jasper 的底", "move": "让她今晚约会时问 Jasper 一个只有真船主才答得上的问题，回来换他再说一件真话", "needs": "她答不答应替他问"}
+  closed 赌约的答案：他不能自曝身份，合同限制是真的，他承认了
+  he_move 当场兑现赌约给出答案，又出招让她今晚约会替他考 Jasper | persona 他在吧台给她调一杯只给她的无糖特调，听到 Kian 的名字手上停了一拍
+    1 | 画外传来 Kian 的声音，Wes 和她同时转头看向画外 | Sunrise depends on an answer. | 画外:Kian
+    1 | 画外传来 Kian 的声音，Wes 和她同时转头看向画外 | Fair. I don't chase. I wait. | 画外:Kian
+    1 | 画外传来 Kian 的声音，Wes 和她同时转头看向画外 | If I'm still standing here at sunrise— | 画外:Kian
+    1 | 她回头看他一眼，脚步没停 |  | 她
+    1 | 画外传来 Kian 的声音，Wes 和她同时转头看向画外 | Noted. | 画外:Kian
+    2 | 切到傍晚户外吧台的空镜：木吧台、酒瓶、串灯亮起，Wes 一人在吧台后摇酒 | Your favorite. Zero sugar, remember? | Wes
+    2 | 把筹码拍在吧台上 |  | 她
+    2 | 他手里的摇酒壶停了一拍，放下，隔着吧台正视她，耳根泛红 | Deal. Here it is: my contract says I can't say. | Wes
+    2 | 他拿起她那杯酒往前推近一寸，自己撑在吧台上 | That's the honest answer. Ask me anything else—anything. | Wes
+    2 | 串灯下的两人同时抬头听向画外，她看向他，他抿了一下嘴 | Ladies, tonight you date someone else. Sofia—Jasper. The bar, nine. | 画外:Mei
+    2 | 他伸手在吧台上轻轻敲了两下，看着她的眼睛 |  | Wes
+  cue 傍晚的吧台，赌约已清，九点她要在同一个吧台和 Jasper 约会，Wes 让她替他问船名。
+  A 九点赴和 Jasper 的换搭档约会，考出他是不是真船主 
+  B 明早日出先去码头赴 Kian 的船约，回来再用船名跟 Wes 换那句真话
+  lint_left ['她在推自己的情节，钩子却用了资料包里的「画外:Mei」打断：钩子从她的情节里长出来（她做的事带来的后', '【必改】有 2 拍只有表情没有台词和动作（她回头看他一眼，脚步没停；他伸手在吧台上轻轻敲了两下，看着', '道具“只给她的那杯无糖鸡尾酒”标的是地点里本来就有：set 里要写到它（放在哪）', '出现了“转头”：眼神扫过即可，不转头']
+
+### R5 [free] 嗯 | 74.2s model=z-ai/glm-5.3-prime loc=傍晚的别墅户外吧台 cards=['K04'] surprise=False
+  pending {"who": "Jasper", "goal": "试探她是不是只看身份、还是看人", "move": "他答她一个问题，换她答他一个：为什么第一晚选 Wes", "needs": "她当着他的面说出选 Wes 的理由"}
+  closed 
+  he_move Wes 把赌做完：给她一个只有真船主答得上的问题，赌 Jasper 答不上就再给她一件真话 | persona 吃醋藏不住：叮嘱她九点整到，别被 Jasper 的笑话逗笑
+    1 | Wes 笑出声，一拍吧台，指着她，得意得耳根发红 | That sounded like a yes. | Wes
+    1 | 他俯身压低声音，像递暗号一样凑近半步 | Ask him one thing: his tender's name. | Wes
+    1 | 他竖起一根手指，笑容收了半分，认真起来 | If he stumbles, I owe you a truth. | Wes
+    1 | 他把她那杯无糖特调往她手边推近一寸，别开眼 | Nine sharp. Don't laugh at his jokes. | Wes
+    2 | 切到傍晚的别墅户外吧台的空镜：傍晚的别墅户外吧台：藤编高脚凳、木吧台、一排酒瓶和鸡尾酒杯（瓶身没有可读文字），吧台后串灯和棕榈，暖橙的傍晚天 |  | 
+    2 | 切到夜里的吧台空镜：串灯亮起，木吧台和藤编高脚凳，远处海面有月光，她已坐在画面右侧高脚凳上，Jasper 从画面左侧走出画外去取酒 | I'll get the drinks. | Jasper
+    2 | Jasper 从画外走回画面，一手一只拿着两只斟好的鸡尾酒杯，放到吧台上两人之间 | You're on time. He wasn't sure you would be. | Jasper
+    2 | 看着她，嘴角一点冷笑 | You came with a question. Not yours, though. | Jasper
+    2 | 他转着自己那杯酒，语气平淡，像在陈述天气 | Watch his hands sometime. He pours like staff. Ten years, that grip. | Jasper
+    2 | 她看着他，手指在杯沿停住，没有开口 |  | 
+    2 | Jasper 把自己那杯往她那边推了半寸，目光落在她脸上 | So. Ask me yours. Then I ask mine: why him? | Jasper
+  cue 夜里的吧台，Jasper 的线索悬在两人中间，他等她说出选 Wes 的理由。
+  A 我先反问 Jasper，他第一晚说想听实话上天台，到现在一句没给——再回套房把线索甩给 Wes，逼他说手上茧的来历 
+  B 我当场把 Wes 教的问题问出口，他的接驳艇叫什么名字，看 Jasper 接不接得住
+  lint_left ['道具“她的无糖特调杯”标的是地点里本来就有：set 里要写到它（放在哪）', '换场了，但 set 还是上一个地点的描述：set 写新地点（墙面、家具、主光源和色温）']
