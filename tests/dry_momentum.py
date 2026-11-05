@@ -1,5 +1,5 @@
 """V3.9 角色出招干跑（不花视频钱）：低输入为主的一串输入，看每轮结尾谁出招（pending_move）、有没有关闭疑问（closed）、选项是不是在回应那一招、配角有没有自己的目标。
-用法：python3 tests/dry_momentum.py <合成好的线目录（可以是隔离副本）> <输出 json>"""
+用法：python3 tests/dry_momentum.py <合成好的线目录（可以是隔离副本）> <输出 json> [输入序列，逗号分隔，A/B 是点选项]"""
 import json, sys, time
 from pathlib import Path
 D = Path(sys.argv[1]).resolve(); sys.path.insert(0, str(D))
@@ -8,9 +8,10 @@ src = next(D.glob('ila_*_relay.py')).read_text(encoding='utf-8'); OPEN_STATE = O
 exec(src[src.index('OPEN_STATE ='):src.index('OPEN_NEXT =')]); exec('OPEN_NEXT =' + src.split('OPEN_NEXT =', 1)[1].split('\n\n', 1)[0])
 s = dict(history=[], state=OPEN_STATE, place='篝火露台', place_rounds=0, cards=[], stall=0, set=director.OPEN_SET, wardrobe={})
 PLAN = [('A', 'option'), ('嗯', 'free'), ('嗯', 'free'), ('A', 'option'), ('为什么？', 'free'), ('好', 'free')]
+if len(sys.argv) > 3: PLAN = [(x, 'option' if x in ('A', 'B') else 'free') for x in sys.argv[3].split(',')]  # 例：A,嗯,A,A,B
 nx = OPEN_NEXT; out = []
 for n, (inp, kind) in enumerate(PLAN, 1):
-    text = (nx.get('A') or {}).get('zh') if inp == 'A' else inp
+    text = (nx.get(inp) or {}).get('zh') if inp in ('A', 'B') else inp
     sp, sec = director.direct(list(s['history']), s['state'], text, kind, 'auto', place=s['place'], place_rounds=s['place_rounds'], done=tuple(s['cards']), stall=s['stall'], set_now=s['set'], wardrobe=dict(s['wardrobe']), cont={'posture': '', 'holding': '', 'looks': {}, 'items': [], 'left': {}, 'outfits': []})
     print(f"\n### R{n} [{kind}] {text} | {sec}s model={sp.get('director_model')} loc={sp.get('location')} cards={sp.get('cards_done')} surprise={sp.get('surprise')}")
     print('  pending', json.dumps(sp.get('pending_move'), ensure_ascii=False)); print('  closed', sp.get('closed')); print('  he_move', sp.get('he_move'), '| persona', sp.get('persona_beat'))

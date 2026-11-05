@@ -1,0 +1,177 @@
+
+### R1 [option] 我选 Wes。 | 64.6s model=z-ai/glm-5.3-prime loc=配对套房 cards=['K02'] surprise=False
+  pending {"who": "Wes", "goal": "想让她今晚别再怀疑他", "move": "把真假押上明天的夺旗赛：他赢了她就信他一次，输了任她翻他口袋", "needs": "她接不接这个赌约"}
+  closed 
+  he_move 被选中后不邀功，搬枕头去睡日床沙发，把大床让给她，并主动把真假押上赌约 | persona 被选中后先笑到藏不住，又立刻把照顾她的动作做在前头，被逼问时用赌约接梗不冷场
+    1 | 她把酒杯放到坐垫上，上前一步走到 Wes 面前，把手搭上他的手臂 |  | 
+    1 | Wes 笑出来，抬手把自己的头发抓乱了一下 | Okay. Best call you'll make all week. | Wes
+    1 | 画外传来 Mei 的声音，两人一起看向火塘方向，Wes 的手覆在她搭着的手背上 | Sofia's choice... Wes. | 画外:Mei
+    1 | 画外传来 Sloane 的声音，Wes 和她同时转头看向画外 | Enjoy the couch, you two. | 画外:Sloane
+    2 | 切到配对套房的空镜：深夜的套房，暖黄床头灯亮着，落地窗外月光下的海，白色大床和窗边日床沙发，画外传来关门声 |  | 
+    2 | 两人在房门口，Wes 松开她的手，走到大床边拿起一只白色枕头 | Bed's yours. I take the couch. | Wes
+    2 | 他抱着枕头走到窗边日床沙发旁站住，她跟过来 |  | 
+    2 | 她看着他，问出那句话 | Are you one of the four? | 她
+    2 | 他答得太快，答完自己愣了一下，低头看了看怀里的枕头 | No. ...That came out fast, didn't it? | Wes
+    2 | 他抬起头，把枕头换到一只手臂里夹稳，朝她伸出另一只手的小指 | New bet. I win tomorrow's race, you trust me once.. | Wes
+  cue 深夜的套房里，他抱着枕头站在沙发旁，刚把真假押上明天的夺旗赛，小指还悬在她面前。
+  A 我跟他拉钩赌这一局，明早去沙滩赢下夺旗赛，赢了再逼他慢答一次 
+  B 赌约先接着，但现在就伸手翻他的衬衫口袋，看他说不是之前藏了什么
+  lint_left ['坐在沙发上时两人并排坐（staging=side），不是他一个人正面坐着', '出现了“转头”：眼神扫过即可，不转头']
+
+### R2 [option] 我跟他拉钩赌这一局，明早去沙滩赢下夺旗赛，赢了再逼他慢答一次 | 52.8s model=z-ai/glm-5.3-prime loc=上午的白沙海滩 cards=['K03'] surprise=False
+  pending {"who": "Mei", "goal": "想要最好看的一季", "move": "宣布她赢得今晚私人约会，对象由她当众指定任何一位男嘉宾", "needs": "她指定今晚和谁单独约会"}
+  closed 赌约已结算：他输了，按约慢答了一次，但答案里露出新破绽
+  he_move 赛前教她起跑一招，输掉赌约后守约慢答，露出一处对不上的真话 | persona 起跑前握住她的手教她压低重心抢第一步
+    1 | 她伸出小指勾住他抱着枕头的那只手的小指，两人拉钩，他挑眉笑了 | Deal. Deal. | Wes
+    1 | 他把枕头丢回日床沙发，双手虚握教她起跑的姿势，压低重心 | Tomorrow: low start. First three steps win it. | Wes
+    1 | 她学着他的姿势半蹲，两人隔着半步对视，他看着她的眼睛 | And if I lose? You get my pockets. Fair. | Wes
+    1 | 她半蹲着朝他咧嘴一笑，小指还勾着没松开，窗外月光落在两人之间 | Deal. Deal. | 她
+    2 | 切到上午的白沙海滩的空镜：海浪拍沙，画面里没有人 |  | 
+    2 | 起跑线旁 Mei 举着奶油色卡片宣布规则，她和 Wes 并肩站在起跑线后，她脱下凉鞋放在沙上 | Flags at the far end. Winner gets a private date. | Mei
+    2 | 她光脚冲出起跑线跑在最前面，身后 Sloane 扑倒在沙上抱着脚踝喊 | Wait—my ankle! Help me! | Sloane
+    2 | 她不停步冲到终点，回头望了一眼倒地的 Sloane |  | 
+    2 | Wes 跑到她面前，双手扶住她的肩大笑 |  | 她
+    2 | 他松开手站直，笑容慢慢收住，耳根发红，停了两秒才开口 | No. ...But I pour every drink myself. Owners don't. | Wes
+    2 | Mei 走到两人身旁举起卡片指向她，画面里只有他们三人 | Tonight, a private date. Winner picks any man she wants. | Mei
+    2 | 远处 Sloane 自己从沙上坐起来揉着脚踝，朝这边瞪了一眼 |  | 
+  cue 她赢了比赛和私人约会权，Mei 等她当众指定今晚的约会对象，Wes 的慢答里刚露出一处对不上的话。
+  A 我当众指定 Wes，晚上约会时翻他口袋 
+  B 我当众指定 Jasper，晚上从他的话里套出 Wes 上岛前签的另一份合同
+  lint_left ['道具“红色小旗”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“素面奶油色卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '坐在沙发上时两人并排坐（staging=side），不是他一个人正面坐着']
+
+### R3 [free] 嗯 | 53.7s model=z-ai/glm-5.3-prime loc=上午的白沙海滩 cards=['K04'] surprise=False
+  pending {"who": "Mei", "goal": "要最好看的一季", "move": "宣布今晚每位女嘉宾都要和别人约会，她被分给 Jasper", "needs": "她赴约还是另有打算"}
+  closed 悬着的约会对象已结算：她的默认成了 Wes，但 Mei 加码换搭档规则
+  he_move 抽走红旗插进胸袋，公开认领今晚的约会，逼她默认 | persona 太想被选中：她一个嗯，他当场替她做了选择
+    1 | 两人看着对方，他的目光落在她脸上 | I'll hold that. | Wes
+    1 | 两人看着对方，他的目光落在她脸上 | Winner keeps the trophy. House rules. | Wes
+    1 | 他看着她，笑得理所当然 | Heard that 'hmm'. That's a yes. | Wes
+    1 | 她垂下空了的右手，他朝她伸出手掌 | Tonight, the bar. You, me, one drink. | Wes
+    1 | 他收回手，指了指自己胸袋，挑眉看她 | Unless you want to take it back now? | Wes
+    2 | Mei 从画面左侧后方走近，看着两人 | Cute. Approved — tonight, the bar. | Mei
+    2 | Mei 站在两人左后方，她仍在右侧 | But one date isn't a season. Tonight, every lady dates someone new. | Mei
+    2 | Mei 挑眉看着她 | Sofia... you're with Jasper. | Mei
+    2 | Wes 笑容停了半拍，手指收紧按住胸袋 | Jasper? He doesn't even drink. | Wes
+    2 | Mei 笑着退出画面，Wes 转回来看她，抬了抬下巴 | The bar's mine tonight. Watch who pours. | Wes
+    2 | 他朝她伸出右手，掌心向上 |  | Wes
+  cue Mei 刚宣布今晚全员换搭档约会，她被分给 Jasper，Wes 的红旗还插在胸袋里。
+  A 今晚如约和 Jasper 在吧台单独约会，从他口中套出 Wes 的破绽 
+  B 约会前先拉 Wes 去吧台，要他亲手调那杯只给她的酒，趁机翻他胸袋
+  lint_left []
+
+### R4 [option] 今晚如约和 Jasper 在吧台单独约会，从他口中套出 Wes 的破绽 | 64.6s model=z-ai/glm-5.3-prime loc=午夜的篝火露台 cards=['K05'] surprise=False
+  pending {"who": "Wes", "goal": "想解释后台那份合同的事", "move": "仪式散场后低声约她留一下，说欠她一个答案", "needs": "她留不留、信不信他"}
+  closed 第一次仪式结束：Ethan 是真富豪，被全场票送走
+  he_move 他占下吧台亲自调酒盯完整场约会，仪式上坐到她身边，听到合同那句时攥紧了坐垫 | persona 记得她不喝加糖的，约会中途端上只给她的那一杯
+    1 | 上午的沙滩，她看着他开口 | I'll go tonight. Jasper. | 她
+    1 | 塞进她手里，攥了一下才松开 | Keep the flag. Bring it back. | Wes
+    1 | 他松开手，退开半步，抬了抬下巴 | Ask him everything. Count his pauses. | Wes
+    2 | 切到夜里的户外吧台空镜：木吧台、一排酒瓶、串灯暖光，杯盏轻碰声 |  | 
+    2 | 她和 Jasper 并排坐在高脚凳上，Wes 在吧台后擦着杯子 | Backstage, before the boat. He signed a thicker stack. | Jasper
+    2 | 她看着 Jasper 没接话；吧台后 Wes 摇酒的手停了一拍又继续，随后把无糖的那杯放到她手边 | No sugar. Like you like. | Wes
+    2 | 切到午夜的篝火露台空镜：下沉火塘燃着火，四周坐垫上虚化的人影，画外 Mei 的声音 | Sofia's vote... Brody. | 画外:Mei
+    2 | Mei 站在火塘边举着素面卡片，Ethan 从虚化的人群里起身，腼腆地朝大家挥手 | Ethan, pack your bag. And before you go — he. | Mei
+    2 | 她怔住看向 Ethan 离开的方向，Wes 在她身侧坐下来 | Two millionaires left. Four liars. | Wes
+    2 | 火光里他侧过脸，压低声音，手攥着坐垫边 |  | Wes
+  cue Ethan 被送走、真富豪少了一个，Wes 在火光里开口求她留一下，说欠她一个答案。
+  A 留下来，逼他说清后台那份更厚的合同 
+  B 不留，转身去找 Jasper 对质他怎么知道后台的事
+  lint_left ['道具“无糖鸡尾酒杯”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“素面卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“杯子”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“酒瓶”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R5 [option] 留下来，逼他说清后台那份更厚的合同 | 48.8s model=z-ai/glm-5.3-prime loc=午夜的篝火露台 cards=['K06'] surprise=False
+  pending {"who": "Wes", "goal": "换回提示卡并留住她的信任", "move": "让她留着卡片，换她明天问他一个问题、他直答", "needs": "她接不接这个交易、明天问什么"}
+  closed 关闭一层：他承认合同是真的，合同禁止他谈钱
+  he_move 承认合同存在、不抢掉出的卡片，提出用明天一个直答换她手里的卡 | persona 不夺回卡片反而让她留着，赌一次半透明
+    1 | 散场人声渐远，她坐回坐垫没走，抬手指向他 | The thicker stack. Talk. | 她
+    1 | 他挠了挠后颈，火光映在脸上，笑得不太稳 | Everyone signed one. Mine's just... wordy. | Wes
+    1 | 她追问，他抬手比了个厚度 |  | 她
+    1 | 他放下手，火光里看了她一眼 | Enough that lawyers got paid more than me. | Wes
+    1 | 他弯腰用木棍拨了拨火，一张奶油色卡片从胸袋滑出落在坐垫边 | My contract says I can't talk money. Ask me anything else. | Wes
+    1 | 她伸手把卡片从坐垫上捡起，捏在指间看 |  | 
+    2 | 她把卡片举到火光下，指尖捻着，念出手写字迹 |  | 她
+    2 | 他耳根泛红，苦笑一下，坐直了 | Okay. That looks bad. | Wes
+    2 | 他没有伸手去抢，双手摊开搁在膝上 | Keep it. Tomorrow — one question, any question. Straight answer. | Wes
+    2 | 火塘的火苗跳了一下，两人对视，她攥着卡片，他等她 | Deal or no deal, Sofia? | Wes
+  cue 她手里攥着那张提示卡，他把明天的一个直答押在桌上，等她接。
+  A 我收下交易，上岛前你到底是谁 
+  B 我不接交易，明早当众把卡片还给节目组，看谁先慌
+  lint_left []
+
+### R6 [option] 我收下交易，上岛前你到底是谁 | 56.9s model=z-ai/glm-5.3-prime loc=火塘另一侧 cards=['K07'] surprise=False
+  pending {"who": "Sloane", "goal": "拆掉这对搭档，把 Wes 抢到自己这边", "move": "当众谎称她跟女生们说早就腻了 Wes，等她当众表态", "needs": "她当众站 Wes 还是装冷淡"}
+  closed 关闭一层：上岛前他是圣地亚哥一家冲浪酒吧的调酒师，老板叫 Manny
+  he_move 当场兑现直答，交出一个具体名字和六年调酒师身份 | persona 答完立刻用玩笑接住耳根发红，把烫手的问题变成两人之间的小赌注
+    1 | 她把提示卡在指间立起来，侧过头看他，开口 | Deal. Now — who were you? | 她
+    1 | 他笑了一下，往火塘里拨了一下柴，坐直了一点 | Fine. Tonight counts double. | Wes
+    1 | 他望着火，语速慢下来，说圣地亚哥、六年、调酒 | San Diego. Six years pouring drinks at a surf bar. | Wes
+    1 | 他偏头看她，补上那个名字，耳根泛红 | Owner's a guy named Manny. I never said the bar was mine. | Wes
+    2 | 切到火塘另一侧的空镜：Sloane 抱着手臂站在火炬光里，笑着开口，画面里没有人 |  | 
+    2 | 切到火塘另一侧：Sloane 抱着手臂站在火炬光里，笑着开口 | Still playing house? She told the girls she's already bored of you. | Sloane
+    2 | Wes 笑了一下，手却把火钳攥紧，火钳在火塘里停住 | Bored. Of me. Bold fiction. | Wes
+    2 | Sloane 上前一步，视线越过他落在她身上，等她接话 | Ask her. Right here, in front of everyone. | Sloane
+    2 | 收起笑，把话让给她，手在膝上收紧 | Your line, Sofia. | Wes
+    2 | 三人在火塘边：Sloane 在左后方虚化处等着，两人并排坐在火光里，谁都没动 |  | 
+  cue Sloane 当众撒谎说她腻了 Wes，把话递到她嘴边，等她当众表态。
+  A 我当众拆穿 Sloane 的谎、站到 Wes 身边，再当着众人说出重新配对我留下他 
+  B 我冷着不接话，散场后拉他回套房
+  lint_left ['【必改】选项 A「我当众拆穿 Sloane 的谎、站到 Wes 身边，再当着众人说出重新配对我留下他', '道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R7 [option] 我当众拆穿 Sloane 的谎、站到 Wes 身边，再当着众人说出重新配对我留下他 | 57.8s model=z-ai/glm-5.3-prime loc=篝火露台 cards=['K08'] surprise=False
+  pending {"who": "Kian", "goal": "公开追她，不藏意图", "move": "当众邀她明早日出出海，只有他们两个人，让 Wes 听着", "needs": "她答应还是拒绝这次出海"}
+  closed 重新配对已结算：她当众宣布留下 Wes，不改选
+  he_move 他把她拉到身边替她挡下场面，仪式上她留下他后第一次没接梗、只认真说了一句谢 | persona 被她当众站队后耳根发红，把玩笑咽回去，换成当众替她把坐垫铺好、让她挨着火坐下
+    1 | Wes 站起来，把她往自己身侧一带，手落在她背后，耳根发红 | Six days in, and she fights for me. | Wes
+    1 | 他没接梗，低头看着她手里的卡片，认真了一拍 | You didn't have to. But I'm glad you did. | Wes
+    1 | 火塘对面传来 Mei 的声音，请各位女士上前，重新配对现在开始 | Ladies — recouple time. Stay, or switch. | 画外:Mei
+    2 | 她从坐垫上起身，抬手指向火光对面的 Sloane | I never said that. You made it up. | 她
+    2 | Sloane 笑容僵住，抱紧手臂 | Cute. Enjoy your… whatever this is. | Sloane
+    2 | Mei 走到火塘边，画面里只剩两人和火光 |  | 
+    2 | Mei 从串灯外走回火塘边，手里多了一张素面卡片，火光映在她脸上 | Sofia first. Stay, or switch? | Mei
+    2 | 她迎着火光开口，声音不大但全场听得清 |  | 她
+    2 | Wes 喉结动了一下，低头笑，把一句玩笑咽回去，只朝 Mei 点头 | Noted. No jokes tonight. | Wes
+    2 | Mei 合上卡片，画面里只剩并肩的两人 |  | 
+    2 | Kian 从火炬光里走出来，站到她面前三步远，Wes 的手在她背后收紧 | Sunrise sail, tomorrow. Just us two. | Kian
+    2 | Wes 往前半步站到她侧前，手仍搭在她背后，看着她等这句话落地，两人同框收在火光里 |  | 
+  cue 她当众留下 Wes，Kian 立刻当面约她明早日出出海，Wes 站在她侧前没说话。
+  A 我拒绝 Kian，转头问 Wes 明天的直答现在就要兑现 
+  B 我当众答应 Kian 明早出海，让 Wes 看着他安排
+  lint_left ['【必改】道具“Mei 的素面卡片”从画外拿进来：分镜要有两拍——先把手伸出画外（或人走出画面），再收', '【必改】上车下车、坐下站起、躺下都放进 seg1 或直接省掉，seg2 从第一拍起就已经是变化之后的']
+
+### R8 [free] 嗯 | 52.0s model=z-ai/glm-5.3-prime loc=夜里的天台 cards=['K10'] surprise=True
+  pending {"who": "Wes", "goal": "在 Kian 之前让她知道自己的心动是真的", "move": "说出 I'm falling for you，这一句不在任何合同里，等她表态", "needs": "她信不信这句话、接不接"}
+  closed Kian 的邀约已结算：她的含糊被当作答应，明早日出出海定下
+  he_move 吃醋后拉她溜上天台，说出心里话，把回应权交给她 | persona 被 Kian 抢走日出，他抢回今晚：招牌的天台星空
+    1 | 火塘边，他搭在她背后的手停了一拍，收回来，他看着火笑了一下；她右手仍捏着那张素面奶油色提示卡 | 画外:Kian: Sunrise it is, then. Dress warm. | 画外:Kian
+    1 | 他低头看她，笑着摇头，伸手牵起她的没拿卡的左手 | Wes: Enjoy your boat. I get the night shift. | Wes
+    1 | 她另一只手把卡片攥紧 | Wes: Come on. Trust me for one hour. | Wes
+    2 | 切到夜里的天台：木地板、铺白垫的大日床、串灯暖光，栏杆外星空和月光下的海，无人 | Wes: Best view on the island. Kian doesn't know it exists. | Wes
+    2 | 两人在天台日床边，他松开她的手，两人并肩坐到日床边缘，身体侧向对方，她把提示卡放在腿上 | Wes: He gets the sunrise. I'd rather have the night. | Wes
+    2 | 他伸手转动栏杆边的黄铜望远镜镜筒指向星空，回头看她 | Wes: Saturn's out. Want to see? | Wes
+    2 | 她没去看望远镜，看着他；他收回手，笑容慢慢收住 |  | 
+    2 | 他深吸一口气，耳根发红，看着她的眼睛 | Wes: I'm falling for you. That part was never in any contract. | Wes
+    2 | 他嘴上笑着，手却在搓裤缝，等着她；她伸手把腿上的提示卡拿回手里 | Wes: Say something. Or don't. I'll take either. | Wes
+  cue 天台星空下，Wes 刚说出喜欢上她，耳根发红地等她表态；明早日出出海还悬着。
+  A 明早赴 Kian 的日出出海，回来在第二次仪式上投票送走 Brody 
+  B 留在天台，捧住他的脸吻上去
+  lint_left ['道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R9 [option] 明早赴 Kian 的日出出海，回来在第二次仪式上投票送走 Brody | 67.1s model=z-ai/glm-5.3-prime loc=午夜的篝火露台 cards=['K09'] surprise=False
+  pending {"who": "Wes", "goal": "在 Kian 之后把选择权交回她手里", "move": "交出欠她的一个直答：现在问，什么都答", "needs": "她问不问、问什么，或干脆不问"}
+  closed 第二次仪式结算：Brody 是骗子被送走，还剩三个骗子、两个真富豪
+  he_move 仪式后主动交出欠她的直答，让她当场问任何问题 | persona 不拦她赴约，只说夜班，整夜没睡等她回来
+    1 | 天台日床上两人并排坐着，她望着海，把卡片捏紧了一下 | Sunrise sail. I'll go. | 她
+    1 | Wes 侧过头看她，愣了半拍，随即笑出来，耳根还红着 | Ouch. Okay. He gets a sunrise. | Wes
+    1 | 他仰头灌了口气，抬手指向星空，又收回来 | I get the night shift. Fair trade. | Wes
+    1 | 他站起来朝栏杆边的黄铜望远镜抬了抬下巴，让她自己看 | Look through it once. Then go count his yachts. | Wes
+    1 | 她凑到望远镜前，他退开一步让出位置，手插进裤袋 | Vote smart tonight, Sofia. | Wes
+    2 | 切到清晨海面的空镜：金色日出铺在平静的海上，一艘白色小帆船鼓着帆 | Sunrise keeps its promises. | 画外:Kian
+    2 | 两人在帆船甲板上并排坐着看日出，Kian 在画面左侧、她在右侧，金光洒在侧脸 | I don't perform. What you see is what I am. | Kian
+    2 | Kian 侧过身压低声音，朝岛的方向抬了抬下巴 | Saw your bartender at 2 a.m. — practicing how rich men talk. | Kian
+    2 | 切到夜里篝火露台的空镜：火塘燃着火，串灯暖光，远处月光下的海 | Second elimination. Votes are public. | 画外:Mei
+    2 | 火塘边众人围坐成虚化的圈，Wes 站在画面左侧、她站在右侧，Mei 站在火塘另一侧举着卡片念出名字 | Sofia's vote... Brody. | Mei
+    2 | 虚化人群里一个笑着的人影笑容慢慢僵住，低头收拾东西起身走出火光 |  | 画外:Mei
+    2 | Wes 转向她，火光下他眼下有没睡的青影，摊开一只手 |  | Wes
+  cue 篝火边只剩他们两人，Wes 眼下带着整夜没睡的影子，摊开手等她用掉那个直答。
+  A 不问了。我捧住他的脸，吻上去 
+  B 当场用掉直答，你是四个骗子之一吗
+  lint_left ['【必改】上车下车、坐下站起、躺下都放进 seg1 或直接省掉，seg2 从第一拍起就已经是变化之后的']

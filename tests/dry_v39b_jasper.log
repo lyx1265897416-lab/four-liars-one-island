@@ -1,0 +1,117 @@
+
+### R1 [option] 我选 Jasper。 | 29.5s model=z-ai/glm-5.3-prime loc=配对套房 cards=['K02'] surprise=False
+  pending {"who": "Jasper", "goal": "想知道她选他是为了什么", "move": "反问她为什么选他，等她当面回答", "needs": "她选他的真实理由"}
+  closed 
+  he_move 回套房后主动拿枕头去睡沙发，把床留给她，不解释 | persona 被选中毫不兴奋，只反问她为什么选他，把她的酒杯接过去放下
+    1 | 她朝画面左侧的 Jasper 举起手里的酒杯，当众说出选择 | I pick Jasper. | 她
+    1 | 画外传来 Mei 的声音，Jasper 和她同时转头看向画外 | Midnight match: Sofia and Jasper. | 画外:Mei
+    1 | 画外传来 Sloane 的声音，Jasper 和她同时转头看向画外 | Enjoy the quiet ones. | 画外:Sloane
+    1 | Jasper 走近一步，从她手里接下那杯酒，放在火塘边的坐垫上，看着她 | Interesting choice. | Jasper
+    1 | 他松开手，朝她抬了一下下巴 | So why me? | Jasper
+    2 | 切到配对套房的空镜：暖黄台灯亮着，白色大床、窗边日床沙发和落地窗外的月光 |  | 
+    2 | 两人已站在套房里，Jasper 走到大床边抱起枕头 | One bed. You take it. | Jasper
+    2 | 他把枕头放到窗边日床沙发上 |  | 
+    2 | 她上前半步，当面盯着他问 |  | 她
+    2 | 他看着她，停了一拍，嘴角有一点笑 | Would you believe me either way? | Jasper
+    2 | 他坐到日床沙发边上，手搭在膝盖上，等她 | Lights out in five. | Jasper
+  cue 套房里只剩他们，他反问她为什么选他，又把床让给了她——她还没回答。
+  A 我告诉他，我不看账户，我看人，先从你手上那些茧说起 
+  B 我收下床，关灯前说，明天你自己去赢，别指望我护你
+  lint_left ['道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“酒杯”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '坐在沙发上时两人并排坐（staging=side），不是他一个人正面坐着']
+
+### R2 [free] 嗯 | 39.8s model=z-ai/glm-5.3-prime loc=配对套房 cards=[] surprise=False
+  pending {"who": "Jasper", "goal": "想知道她选他的真实理由", "move": "立赌约：明早夺旗赛她赢了，他诚实回答她一个问题；她输了，说出选他的理由", "needs": "她明早应战，并想好要问什么"}
+  closed 
+  he_move 收回追问，改立赌约：她赢明早夺旗赛，他诚实回答一个问题 | persona 把她的右手翻过来看了一眼掌心再松开，考她是什么人
+    1 | 他把怀里的枕头放回床头，她抿着嘴没接话 | Not much of an answer. | Jasper
+    1 | 他伸手把她手里的鸡尾酒杯接过去，放到床头柜台灯旁 | You'll want both hands. | Jasper
+    1 | 他把她的右手翻过来，低头看了一眼掌心，随即松开 | No rings. Good start. | Jasper
+    1 | 他后退半步，抱起手臂看着她 | Tomorrow there's a race. Win it — I answer one. | Jasper
+    2 | 她看着他，他的嘴角有一点没藏住的笑 | And if you lose — you tell me why you picked me. | Jasper
+    2 | 他伸手关掉床头台灯，房间里只剩窗外的月光 | Deal? | Jasper
+    2 | 他躺上窗边的日床沙发，双手枕在脑后 |  | 
+    2 | 画外传来他的声音，她站在大床边看着他的方向 | Sleep on it. And Sofia — pick a good question. | 画外:Jasper
+    2 | 月光下他躺在日床沙发上，她站在床边，两人都在画面里，她伸手拨开肩上的长发 |  | 
+  cue 赌约已立：明早的夺旗赛上，赢的人拿走一个真话。她还没说要不要应战。
+  A 明早我去沙滩赢下夺旗赛，你到底是不是那四个之一 
+  B 明早我故意输给 Sloane，再把他要的那句理由当成玩笑说一半
+  lint_left []
+
+### R3 [option] 明早我去沙滩赢下夺旗赛，你到底是不是那四个之一 | 66.5s model=z-ai/glm-5.3-prime loc=白沙海滩 cards=['K03'] surprise=False
+  pending {"who": "Jasper", "goal": "把她的追问留到只有两人的约会", "move": "交易：合同挡住真假问题，今晚私人约会上她可以问任何别的问题，他保证真答", "needs": "她接不接这场约会、问什么"}
+  closed 他为什么不答真假：合同真的禁止，他当面承认，赌约改成一个任意问题
+  he_move 兑现赌约但用合同挡住真假问题，把任意一个问题押在今晚的私人约会上 | persona 赛前让她脱掉凉鞋光脚跑，考她的狠劲
+    1 | 清晨阳光透过白纱帘照进套房，Jasper 已在窗边做俯卧撑，她在床边坐起 |  | 
+    1 | 朝他说出今天的话 | Race today. Then you answer me. | 她
+    1 | 他起身，看一眼她脚上的细带凉鞋 | Barefoot. You'll run faster. | Jasper
+    1 | 她弯腰解开凉鞋带，光脚踩上地板，抬头看他 |  | 她
+    1 | 他点头，拿起门把手拉开浅色木门 | After you, champion. | Jasper
+    2 | 切到白沙海滩的空镜：画外传来 Mei 的宣布，画面里没有人 | Flags at the far end. Winner gets a private date. | 画外:Mei
+    2 | 起跑线旁，Mei 举着奶油色卡片，她在起点光脚站好，Jasper 站在她侧后方 |  | 
+    2 | 她光脚沿白沙全速冲刺，短跟随镜头，身后 Sloane 扑倒在沙里抱着脚踝 |  | 
+    2 | 两人看着对方，他的目光落在她脸上 |  | 
+    2 | 切到白沙海滩的空镜：上午的白沙海滩：平整的白沙，起跑线是沙上画的一道线，青绿色的浅海和棕榈树，明亮的阳光，画面里没有人 |  | 
+    2 | 切到 Sloane：她自己从沙里站起来，拍掉腿上的沙，跺了跺那只'扭了'的脚 |  | 
+    2 | 右手先伸出画外，收回时手里多了一张奶油色约会卡 | Your private date, tonight. | 画外:Mei
+    2 | 把问题当面问出 |  | 她
+    2 | 他看着她手里的卡，慢慢开口 | Contract eats that one. Ask me anything else — tonight, your date. | Jasper
+  cue 她赢了比赛拿着约会卡，他欠她一个任意问题，答案押在今晚。
+  A 先赴今晚的换搭档约会，从 Wes 嘴里套出 Jasper 的底，再回来用那个问题将他的军 
+  B 把私人约会定在天台星空，逼他别再只说一半
+  lint_left ['【必改】有 2 拍只有表情没有台词和动作（她弯腰解开凉鞋带，光脚踩上地板，抬头看他；两人看着对方，他', '道具“红色小旗”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）', 'seg1「他点头，拿起门把手拉开浅色木门」：近景里去碰离身体远的东西，会被拉成全身。把碰门、碰扶手这']
+
+### R4 [option] 先赴今晚的换搭档约会，从 Wes 嘴里套出 Jasper 的底，再回来用那个问题将他的军 | 39.8s model=z-ai/glm-5.3-prime loc=夜里的户外吧台 cards=['K04'] surprise=False
+  pending {"who": "Wes", "goal": "想在重新配对时抢到她", "move": "递出文件夹的线索，许诺还有更多，条件是她改选他", "needs": "她要不要为情报改选 Wes"}
+  closed 
+  he_move 他不拦她赴约，只教她怎么听谎话，最后亲自走到吧台守在她身边 | persona 吃醋不纠缠：放她去约会，只丢一句数细节的提醒，再自己走到现场
+    1 | 她在指间转了一下约会卡，点头 | I'll take the date. | 她
+    1 | Jasper 看着她，下颌绷了一下 | Wes talks. Doesn't mean it's true. | Jasper
+    1 | 他朝她走近半步，声音压低 | Count the details he gives you. | Jasper
+    1 | 画外响起 Mei 的广播，两人都抬头听，谁也没说话 | Ladies — tonight, you date someone new. | 画外:Mei
+    2 | 切到夜里的户外吧台：藤编高脚凳、木吧台、串灯暖光，没有台词 |  | 
+    2 | 她和 Wes 并排坐在高脚凳上，Wes 把一杯淡粉色鸡尾酒推到她面前 |  | 
+    2 | 她没碰酒杯，直视 Wes |  | 她
+    2 | Wes 笑了笑，凑近压低声音 | A lawyer met him. Plain folder. Only him. | Wes
+    2 | 她的手指在杯沿上停住；Wes 又凑近半寸 |  | 
+    2 | 吧台远处的阴影里，Jasper 站着看这一幕，眼神沉下来 |  | 
+    2 | Jasper 走到吧台边，站在她左侧，Wes 靠回自己的凳子上 | She still owes me a question. | Jasper
+  cue 她拿到了文件夹的线索，Wes 开价换选票，Jasper 站在她身边等她表态。
+  A 今晚仪式上我当众投 Wes，把拿情报换选票的事说破 
+  B 回套房甩出文件夹的事，用掉那个问题将他的军
+  lint_left ['【必改】seg2 是 15 秒，只有 2 句台词：15 秒的段 3–5 句（所有人合计），一句接一句', '道具“一杯”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R5 [option] 今晚仪式上我当众投 Wes，把拿情报换选票的事说破 | 35.2s model=z-ai/glm-5.3-prime loc=午夜的篝火露台 cards=['K05'] surprise=False
+  pending {"who": "Jasper", "goal": "想在她看清所有人之后仍选他", "move": "约她现在就上天台，单独用掉她赢来的那个问题", "needs": "她去不去天台、问什么"}
+  closed Ethan 被送走，Mei 揭晓他是三位真富豪之一，剩两真四假
+  he_move 仪式后主动约她上天台，把欠的那个问题当场还她 | persona 教她看 Wes 说谎时的手，替她把武器磨快，不替她出手
+    1 | 她坐在高脚凳上转向 Jasper，压低声音说出计划 | Tonight I vote Wes. Out loud. | 她
+    1 | Jasper 嘴角压不住地动了一下，端起自己的杯子 | Finally. Better than a question. | Jasper
+    1 | 他放下杯子，凑近半步，声音更低 | When he denies it — watch his hands. | Jasper
+    1 | 串灯下两人同时抬眼看向别墅方向，远处传来广播声 | All guests to the fire. Now. | 画外:Mei
+    2 | 切到午夜的篝火露台的空镜：下沉火塘燃着火，奶油色坐垫，虚化的人群低语，火炬和串灯的暖光 |  | 
+    2 | 两人站在火塘边，四周是虚化的宾客，Mei 从人群前走出来举着素面卡片 | First vote, read aloud — Sofia votes… Wes. | Mei
+    2 | 她上前半步，声音清楚，全场安静下来 |  | 她
+    2 | Wes 从虚化人群里走出来，笑着摆手，手指却在抠袖口 | That's a lie. | Wes
+    2 | Mei 看一眼卡片，抬眼看向人群另一侧，一个虚化的身影腼腆地挥手走向火炬外的暗处 | The island says Ethan. And Ethan — was one of our millionaires. | Mei
+    2 | Jasper 侧身挡在她和 Wes 之间半步，低头对她 | Spend it well. Rooftop — just us. Now. | Jasper
+  cue Ethan 被送走了，Wes 当众丢了脸；Jasper 等她上天台用掉那个问题
+  A 跟他上天台，用那个问题追问文件夹和手上的茧 
+  B 先追出去送别 Ethan
+  lint_left ['选项 A「跟他上天台，用那个问题追问文件夹和手上的茧」在原地拉扯：选项必须让下一件关键的事发生', '道具“素面奶油色卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“杯子”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R6 [free] 嗯 | 42.6s model=z-ai/glm-5.3-prime loc=夜里的户外吧台 cards=['K06'] surprise=False
+  pending {"who": "Jasper", "goal": "想让她在看清线索后仍选择问他、问他这个人", "move": "摊开茧之后正式递出欠她的一个任意问题，保证真答", "needs": "她问什么——问钱、问合同，还是问他"}
+  closed 他手上的茧是帆船缆绳磨的，他自己承认了
+  he_move 带她上夜台，主动亮出茧和合同的事，把欠的问题递给她 | persona 不等她问，他自己摊开掌心，把秘密的边角先亮出来
+    1 | Jasper 转向她，伸手轻轻握住她的手腕两秒又松开，朝楼梯方向偏头 | Rooftop. You've earned it. | Jasper
+    1 | 她没动，他先起身，回头看她，手朝她伸出一半 | Ask me anything. One truth. | Jasper
+    1 | 她也站起来，站到他身侧半臂距离，两人面对火塘 | Fine. I'll even go first. | Jasper
+    2 | 切到夜里的天台的空镜：木地板、铺白垫的大日床、串灯暖光，栏杆外月光下的海，画面里没有人 |  | 
+    2 | 两人在天台日床上并排坐着，Jasper 在左她在右，身体侧向对方，他抬起左手，掌心朝上摊在两人之间 | Sail rope. Sixteen years. | Jasper
+    2 | 她低头看他的掌心，视线停在厚茧上，手指收拢了一下 | So the folder, the wine — same story. | 她
+    2 | 他收回手，看着她，嘴角有一点藏不住的笑意 | Contract stops the money talk. Not this. | Jasper
+    2 | 他朝她正过身子，两手搭在膝上，身体前倾一点 | One question, Sofia. Make it count. | Jasper
+  cue 天台上他摊开了茧，把欠她的一个问题正式递到她面前，等她开口。
+  A 我把问题用在他身上：问他上这节目到底想找到什么，再追问那晚律师的文件夹里是什么 
+  B 我偏不问，把这个问题存着，拉他到栏杆边教我认一颗星，先看他会怎么哄我
+  lint_left ['选项 A「我把问题用在他身上：问他上这节目到底想找到什么，再追问那晚律师的文件夹里是什么」在原地拉扯', 'seg1「Jasper 转向她，伸手轻轻握住她的手」：近景里去碰离身体远的东西，会被拉成全身。把碰门']
