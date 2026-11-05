@@ -202,10 +202,11 @@ addEventListener('resize', placeSubs);
 function show(el){ const old = front; front = el; el.classList.add('on'); const retire = () => { if (old !== front){ old.classList.remove('on'); old.pause(); } }; requestAnimationFrame(retire); setTimeout(retire, 60); }
 function spare(){ return pool.find(v => v !== front && !v.dataset.keep) || pool.find(v => v !== front); }
 function load(el, src, loop){ el.loop = !!loop; el.muted = !!loop; el.preload = 'auto'; el.src = src; el.load(); }
-// 缓冲够了才开播（11-05 Vicky：网页播放特别卡）：浏览器判断能一口气播完（readyState 4），或已缓冲到前面 need 秒、到片尾；
+// 缓冲够了才开播（11-05 Vicky：网页播放特别卡）：真的缓冲到前面 need 秒或到片尾才算够。不信 readyState 4：Chrome 的“能播完”是估的，
+// 第 1 段、第 2 段和待机循环同时下载、抢一条带宽时，第 1 段没下完就开播，中途停 3 次共 8 秒（实测）。
 // 只到 readyState 3 的（iPhone 上暂停时不预载）等满 wait 秒也放行，免得一直不开播
-function enough(v, need, wait){ if (v.readyState >= 4) return true; const b = v.buffered, end = b.length ? b.end(b.length - 1) : 0;
-  if (end - v.currentTime >= need || (v.duration > 0 && end >= v.duration - 0.3)) return true;
+function enough(v, need, wait){ const b = v.buffered, end = b.length ? b.end(b.length - 1) : 0;
+  if (v.duration > 0 && end >= Math.min(v.duration - 0.3, v.currentTime + need)) return true;
   if (v.readyState >= 3){ const now = Date.now(); if (!v._r3 || v._r3src !== v.src){ v._r3 = now; v._r3src = v.src; } return now - v._r3 >= (wait || 10000); } return false; }
 
 let sid = null, next = null, round = 0, busy = false;
@@ -306,7 +307,7 @@ async function liveRound(kind, choice, said){
   // V1.5 提速：第 1 段不等第 2 段出片——按第 2 段的预计出片时间（中转给的 eta_left）倒推开播，第 1 段播完正好接上第 2 段
   const LOCAL = location.hostname === '127.0.0.1', M = LOCAL ? 1.5 : 3.0;  // 轮询、隧道延迟和第 2 段从 Vivix CDN 缓冲的余量（秒）
   const segErr = () => r && r.segs && r.segs.some(s => s.status === 'error');
-  const seg1Ok = () => r && r.segs && r.segs[0] && r.segs[0].url && V[0].dataset.src === r.segs[0].url && enough(V[0], 15);
+  const seg1Ok = () => r && r.segs && r.segs[0] && r.segs[0].url && V[0].dataset.src === r.segs[0].url && enough(V[0], 99, 25000);
   const seg2Soon = () => { const s2 = r.segs[1]; if (!s2 || s2.url) return true; const d1 = V[0].duration || r.segs[0].dur || 5; return s2.eta_left != null && s2.eta_left <= d1 - M - (s2.dur >= 15 ? 1.5 : 0); };
   await hold(null, () => (r && r.status === 'error') || segErr() || (seg1Ok() && seg2Soon()));
   if (my !== liveRun){ clearInterval(poll); return; }
@@ -316,7 +317,7 @@ async function liveRound(kind, choice, said){
     view.play_at = Date.now(); view.seg2_eta = r.segs[1] ? r.segs[1].eta_left : null;
     RT.begin({key: 'round:' + rid, mix: r.mix, parts: r.segs.map((x, i) => ({v: V[i], d: x.dur || x.seconds})), label: T(`Scene ${round + 1}`, `第 ${round + 1} 幕`)}); RT.part(0);
     await play(0); view.seg1_end = Date.now();
-    const ok2 = () => segErr() || (r.segs[1].url && V[1].dataset.src === r.segs[1].url && enough(V[1], 15, 6000));
+    const ok2 = () => segErr() || (r.segs[1].url && V[1].dataset.src === r.segs[1].url && enough(V[1], 99, 15000));
     if (!ok2()){ waitMusic(true); while (!ok2() && my === liveRun) await new Promise(res => setTimeout(res, 100)); waitMusic(false); }  // 第 2 段还没到：停在第 1 段最后一帧
     view.stall = (Date.now() - view.seg1_end) / 1000;
     if (my === liveRun && !segErr()){ RT.part(1); await play(1); RT.done('round:' + rid); }
