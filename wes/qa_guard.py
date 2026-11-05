@@ -16,7 +16,7 @@ HER_URL = _L.TU['her']  # 她：正面头像 + 全身正面 + 多角度合图
 
 CHECK = """图片1是一部观众第三视角互动剧的一帧画面：画面里应该同时有男主 Wes 和女主（她），Wes 在画面左侧、她在画面右侧。图片2是男主的身份母版，图片3是女主的身份母版（判断是不是同一个人以它们为准）。下一段视频会从这一帧接着生成，所以这一帧必须干净。请按下面的锁定项检查，只报你在画面上确实看到的问题：
 1. 画面里除了男主、女主{allowed}还有没有其他人（路人、背影、人影、半透明人头）？同一个人出现两次也算。
-2. 女主在不在画面里、脸能不能看清？女主长相和图片3比是不是明显换了人（脸型、五官、眼睛、年龄、变得幼态）？她应为：暖棕肤色、深棕色眼睛、很长的栗棕色中分直发、小金圈耳环；香槟金缎面细吊带垂坠领中长裙、裸色细带平底凉鞋。发色变成黑色、金黄或红色、头发变卷变短、吊带裙换了颜色款式、变成短裙或裤子，都算问题（kind=her）。
+2. 女主在不在画面里、脸能不能看清？女主长相和图片3比是不是明显换了人（脸型、五官、眼睛、年龄、变得幼态）？她应为：暖棕肤色、深棕色眼睛、很长的栗棕色中分直发、小金圈耳环；香槟金缎面细吊带垂坠领中长裙、裸色细带平底凉鞋。发色变成黑色、金黄或红色、头发变短变卷、吊带裙换了颜色款式、变成短裙或裤子，都算问题（kind=her）。
 3. 男主服装：应为浅天蓝亚麻衬衫（袖子卷起、领口敞开、不塞）、石米色亚麻长裤。换成别的衣服或颜色算问题。
 4. 男主配饰：只有左腕一条细棕皮绳手链；多出项链、手表、戒指、纹身算问题（kind=accessory）。
 5. 男主瞳色：应为灰绿色。变成金色、棕色、发光算问题。（看不到眼睛就不报）
@@ -195,7 +195,7 @@ def hard_check(mp4, people, wear='', timeout=20):
     with tempfile.TemporaryDirectory() as d:
         subprocess.run([L.FFMPEG, '-v', 'error', '-y', '-i', str(mp4), '-vf', 'fps=1.0,scale=320:-2', '-q:v', '5', d + '/%02d.jpg'], check=True)
         fr = [base64.b64encode(p.read_bytes()).decode() for p in sorted(Path(d).glob('*.jpg'))]
-    t0 = time.time(); content = [{'type': 'text', 'text': HARD_CHECK.format(n=len(fr), people=people, wear=(f'- clothes：男主、女主这时应该穿着：{wear}。画面里的其他人（配角）穿的是他们自己的衣服，和女主不一样是正常的，不按男主女主的衣服查他们。一眼就能看出的颜色错误才报，比如灰色 T 恤变成白色、一条裙子变了颜色。深浅差一点、款式细节、光线造成的差异都不报。\n' if wear else '衣服颜色和款式也不报。'))}] + [{'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + b}} for b in fr]
+    t0 = time.time(); content = [{'type': 'text', 'text': HARD_CHECK.format(n=len(fr), people=people, wear=(f'- clothes：男主、女主这时应该穿着：{wear}。画面里的其他人（配角）穿的是他们自己的衣服，和女主不一样是正常的，不按男主女主的衣服查他们。一眼就能看出的颜色错误才报，比如灰色 T 恤变成白色、一条裙子变了颜色。深浅差一点、款式细节、光线造成的差异都不报；纹身、项链、皮肤和发型不是衣服，不报。\n' if wear else '衣服颜色和款式也不报。'))}] + [{'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + b}} for b in fr]
     def ask(model):
         body = {'model': model, 'max_tokens': 600, 'messages': [{'role': 'user', 'content': content}]}
         req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(), headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
@@ -214,6 +214,64 @@ def hard_check(mp4, people, wear='', timeout=20):
     try: return lite.result(timeout=3)
     except Exception: pass
     return {'bad': False, 'kinds': [], 'why': 'check failed', 'err': True, 'sec': round(time.time() - t0, 1)}
+
+
+SIDE_MODELS = ('qwen/qwen3-vl-235b-a22b-instruct', 'meta-llama/llama-4-maverick')  # 2026-11-04 用 S0456238e8 等片段比过：两个都对就判对调，单个模型会把过肩镜头、拥抱当成对调；gemma-3、nova-pro 漏报或多报
+SIDE_CHECK = ('下面是同一段短视频按时间顺序每秒抽一张的 {n} 张独立画面。男主：{he}。女主：{she}。\n'
+              '逐张看两个人的脸（眼睛、鼻子、嘴能看到才算看得到脸；只露出后脑、肩膀、手臂、半边头发的算看不到）：he=男主的脸在画面的左边还是右边，she=女主的脸在画面的左边还是右边，看不到脸写 -。'
+              '只输出 JSON：{{"frames": [{{"he": "L/R/-", "she": "L/R/-"}}, ...]}}，正好 {n} 项。')
+
+
+def side_flips(mp4, he, she, timeout=60):
+    """V3.6 男女主左右对调（Vicky 11-04，meet S0456238e8 第 3 轮第 1 段：从中景切到双人中近景的两个镜头，两人整个换边，背景没变）。
+    每秒一帧，两个视觉模型各判一遍他和她的脸在左还是右，两个都说“他右她左”才算对调；按本地切点分镜头，除第一个镜头（接首帧）外，
+    一个镜头里有 2 帧以上对调、没有一帧两个模型都说正常，就把这个镜头标出来，播放页播到这几秒时水平镜像。返回 {flip: [[开始秒, 结束秒], ...], frames, cuts, sec}。"""
+    import tempfile
+    import dissolve
+    import live_common as L
+    from concurrent.futures import ThreadPoolExecutor
+    t0 = time.time()
+    with tempfile.TemporaryDirectory() as d:
+        subprocess.run([L.FFMPEG, '-v', 'error', '-y', '-i', str(mp4), '-vf', 'fps=1.0,scale=320:-2', '-q:v', '5', d + '/%02d.jpg'], check=True)
+        fr = [base64.b64encode(p.read_bytes()).decode() for p in sorted(Path(d).glob('*.jpg'))]
+    content = [{'type': 'text', 'text': SIDE_CHECK.format(n=len(fr), he=he, she=she)}] + [{'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + b}} for b in fr]
+    def ask(model):
+        body = {'model': model, 'max_tokens': 1200, 'temperature': 0, 'messages': [{'role': 'user', 'content': content}]}
+        req = U.Request('https://openrouter.ai/api/v1/chat/completions', data=json.dumps(body).encode(), headers={'Authorization': 'Bearer ' + director._key(), 'Content-Type': 'application/json'})
+        with U.urlopen(req, timeout=timeout) as r: j = json.loads(r.read())
+        txt = j['choices'][0]['message'].get('content') or ''
+        fs = json.JSONDecoder().raw_decode(txt[txt.find('{'):])[0]['frames']
+        return ''.join('R' if (x.get('he'), x.get('she')) == ('R', 'L') else 'L' if (x.get('he'), x.get('she')) == ('L', 'R') else '-' for x in fs if isinstance(x, dict))
+    def ask2(model):  # 偶尔 400 / 超时：重试一次，还不行这个模型就算全部看不清（只会少标、不会多标）
+        for k in range(2):
+            try: return ask(model)
+            except Exception as e: err = str(e)[:80]
+        errs.append(model + ' ' + err); return '-' * len(fr)
+    errs = []
+    with ThreadPoolExecutor(len(SIDE_MODELS)) as ex: res = list(ex.map(ask2, SIDE_MODELS))
+    both = ''.join('R' if all(r[k:k + 1] == 'R' for r in res) else 'L' if all(r[k:k + 1] == 'L' for r in res) else '.' for k in range(len(fr)))
+    import numpy as np
+    g = dissolve.frames(str(mp4)).mean(axis=3); dd = np.abs(g[1:] - g[:-1]).mean(axis=(1, 2))
+    cuts, cl = [], []
+    for k in [int(x) + 1 for x in np.where(dd > 18)[0]] + [10 ** 9]:  # 第 k 帧是新镜头第一帧（24 fps）
+        if cl and k - cl[-1] > 12:  # 0.5 秒内连着几个“切点”多半是快速运动：只留帧差明显最高、像真切镜的那一个（meet S2006574bd 第 1 段 6.04 秒切点前面有快速动作，整簇丢掉后把前一个近景也标成对调）
+            best = max(cl, key=lambda x: dd[x - 1]); rest = [dd[x - 1] for x in cl if x != best]
+            if not rest or (dd[best - 1] >= 40 and dd[best - 1] >= 2 * max(rest)): cuts.append(best / 24)
+            cl = []
+        cl.append(k)
+    shots = []
+    for a, b in zip([0.0] + cuts, cuts + [999.0]):
+        ks = [k for k in range(len(fr)) if a <= k < b]  # 第 k 张约在第 k 秒
+        nR = sum(both[k] == 'R' for k in ks); nL = sum(both[k] == 'L' for k in ks)
+        shots.append([a, b, a > 0 and nL == 0 and (nR >= 2 or nR == len(ks) == 1), nR + nL == 0])  # 第一个镜头接首帧（参考图），不动
+    for k in range(1, len(shots) - 1):  # 前后两个镜头都对调、中间是看不到脸的背影或空镜，一起镜像（Rafael S193728568 第 3 轮：对调—背影—对调）
+        if shots[k][3] and shots[k - 1][2] and shots[k + 1][2]: shots[k][2] = True
+    flip = []
+    for a, b, f, _ in shots:
+        if not f: continue
+        if flip and abs(flip[-1][1] - a) < 1e-6: flip[-1][1] = round(b, 3)
+        else: flip.append([round(a, 3), round(b, 3)])
+    return {'flip': flip, 'errs': errs, 'frames': res, 'both': both, 'cuts': [round(x, 2) for x in cuts], 'sec': round(time.time() - t0, 1)}
 
 
 def seg_state(mp4, state, timeout=40):

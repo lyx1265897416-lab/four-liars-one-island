@@ -1,0 +1,115 @@
+
+### R1 [option] 我选 Wes。 | 38.7s model=z-ai/glm-5.3-prime loc=配对套房 cards=['K02'] surprise=False
+  pending {"who": "Wes", "goal": "想被她信，又不能自曝身份", "move": "开赌约：明早夺旗赛他赢了她随便查他，他输了今晚的事一笔勾销", "needs": "她接不接这个赌约"}
+  closed 
+  he_move 主动让出大床、抱枕头睡日床沙发，并当场开出一个赌约让她验证他 | persona 会照顾人的那一面：不占便宜，先安排她睡好，自己抱枕头去沙发
+    1 | 她举起手里的鸡尾酒杯朝 Wes 一举，开口说出选择 | I choose Wes. | 她
+    1 | 画外传来 Mei 的声音，Wes 和她同时转头看向画外 | Coupled. Midnight seals it. | 画外:Mei
+    1 | 画外传来 Sloane 的声音，Wes 和她同时转头看向画外 | Enjoy the bartender. | 画外:Sloane
+    1 | Wes 笑出声，朝她伸出右手手心向上 | Bartender? I own the bar. | Wes
+    1 | 她把插青柠的酒杯放到火塘边沿上，把手搭上他的手心 |  | 她
+    2 | 切到配对套房的空镜：白色灰泥墙、落地窗白纱帘外月光海面，床头暖黄台灯亮着，浅色木门虚掩 | Wes(画外): After you. | 画外:Wes
+    2 | 套房里，Wes 已抱着从大床拿起的白色枕头站在日床沙发旁，朝沙发偏了下头 | Bed's yours. Couch is mine. | Wes
+    2 | 她站在原地不动，直直看着他，问出那句话 |  | 她
+    2 | 他抱着枕头，答得太快，说完自己愣了半拍，垂了下眼 | No. ...That came out fast, didn't it? | Wes
+    2 | 朝她竖起一根手指，开出一个赌约 | Morning race. I win, you smile at me. You win—ask me anything. | Wes
+  cue 他刚开出一个赌约：明早的比赛她赢了就能随便问，此刻等她表态接不接。
+  A 我接下赌约，明早在沙滩赢下夺旗赛，再逼他兑现承诺 
+  B 我接赌约但提条件，他赢了也得回答一个问题，明早沙滩见分晓
+  lint_left ['道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '出现了“转头”：眼神扫过即可，不转头']
+
+### R2 [free] 嗯 | 38.6s model=z-ai/glm-5.3-prime loc=上午的白沙海滩 cards=['K03'] surprise=False
+  pending {"who": "Mei", "goal": "把这一季做成最好看的一季", "move": "广播宣布今晚换搭档约会，她被安排和Jasper在吧台单独约会", "needs": "她去不去赴和Jasper的约会"}
+  closed 赌约成交，比赛她赢了，他欠她随便查一次
+  he_move 把她的含糊当成交握手续下赌约，输掉比赛欠她一次随便查 | persona 赛前握住她的手教她起跑蹬沙的窍门，光脚把裤脚卷了两折
+    1 | 他把怀里的枕头丢到日床沙发上，朝她伸出右手 |  | 
+    1 | 她把手放进他手里，他握住轻轻晃了一下 | Deal. No take-backs. | Wes
+    1 | 他松开手，弯腰把亚麻裤脚卷了两折，光脚踩上地板 | Loser makes breakfast too. | Wes
+    1 | 他伸手关掉床头台灯，房间只剩窗外的月光 | Sleep fast. Race is early. | Wes
+    2 | 切到上午的白沙海滩的空镜：明亮阳光，画外传来Mei的说话声，画面里没有人 | Flags at the far end. Winner gets a private date. | 画外:Mei
+    2 | 双人全景，起跑线后，Mei站在两人中间后方，Wes和她光脚压低身子预备 | No pulling hair. Please. | Mei
+    2 | 两人在沙上全速奔跑，她在前，Wes落后半个身位在追，沙子飞溅 |  | 
+    2 | 身后远处Sloane扑倒在沙里抱着脚踝喊，两人都没有停 | Wait—my ankle! Help me! | Sloane
+    2 | Wes在两步外弯腰撑膝喘气 | Okay. You win. Ask me anything. | Wes
+    2 | Mei走到她身边，右手先伸出画面外，收回时手里多了一张奶油色卡片，递到她右手里 | Private date. Tonight, sunset. | Mei
+    2 | Mei朝两人抬了抬下巴，Wes的笑容停了一拍，看着她手里的卡 |  | Mei
+  cue 她赢了赌约和一张私人约会卡，但今晚被安排和Jasper单独约会。
+  A 今晚去吧台赴Jasper的约，从他那套一套关于Wes的疑点 
+  B 把约会卡拍到Wes胸口，今晚我谁都不见，先兑现赌约查你
+  lint_left ['道具“红色小旗”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）', 'seg1「她把手放进他手里，他握住轻轻晃了一下」：近景里去碰离身体远的东西，会被拉成全身。把碰门、碰']
+
+### R3 [free] 嗯 | 56.1s model=z-ai/glm-5.3-prime loc=傍晚的户外吧台 cards=[] surprise=False
+  pending {"who": "Wes", "goal": "不想让 Jasper 先在她耳边种疑点", "move": "要她现在当面用掉赌约赢来的随便查，赶在今晚约会之前", "needs": "她是当场查他，还是留着问题去赴约"}
+  closed 
+  he_move 带她去吧台亲自调酒，并要她在赴约前用掉赢来的那个问题 | persona 吃醋不说破，用一杯只给她的无糖酒和一次抢先的坦白机会抢回主动权
+    1 | 她看着他，轻轻嗯了一声，算是答应了今晚的约会，右手的约会卡晃了一下 | Mm. | 她
+    1 | Wes 笑一下，笑容有点僵，耳根泛红，低头拍掉手上的沙 | Cool. Totally cool. | Wes
+    1 | 他抬头，伸手拉起她的左手，朝别墅方向抬了下巴；她右手的约会卡跟着收在身侧 | One drink first. Non-negotiable. | Wes
+    1 | 他把她的手举到两人之间晃了一下，像握手成交 | Loser's privileges. Come on. | Wes
+    2 | 切到傍晚的户外吧台空镜：木吧台、酒瓶、串灯刚亮起暖光，天边橙粉色日落，远处海面反着光 |  | 
+    2 | Wes 在吧台后抛起调酒器接住，连摇三下，动作快得像干了十年；她坐上吧台前的高脚凳，把右手的约会卡放在台面上 | House special. No sugar—I remember. | Wes
+    2 | 他把调好的淡粉色酒倒入杯中，推到她面前，杯底在台面上滑出半寸停住 |  | 
+    2 | 他撑着吧台，身体前倾，看着她，收起了玩笑的表情 | Use your question now. Before Jasper spins you. | Wes
+    2 | 他拿起她放在吧台上的约会卡，用两根手指推回她面前，松开手 | Ask me here, or ask him there. Your call. | Wes
+  cue 他把约会卡推回她面前，要她在赴约和当面查他之间选一个。
+  A 收起问题去赴约，我坐到Jasper对面，从他嘴里套出Wes上岛前的破绽 
+  B 当场用掉随便查，我绕进吧台翻他的衬衫口袋
+  lint_left ['道具“调酒器”标的是地点里本来就有：set 里要写到它（放在哪）', '【必改】上车下车、坐下站起、躺下都放进 seg1 或直接省掉，seg2 从第一拍起就已经是变化之后的']
+
+### R4 [option] 收起问题去赴约，我坐到Jasper对面，从他嘴里套出Wes上岛前的破绽 | 47.1s model=z-ai/glm-5.3-prime loc=吧台另一端 cards=['K04'] surprise=False
+  pending {"who": "Jasper", "goal": "想在重新配对时被她选中", "move": "透露一半情报后把剩下的一半和她换搭档的选择绑在一起", "needs": "她要不要用换搭档换他剩下的情报"}
+  closed Wes上岛方式的疑点落定：他坐的是剧组的工作船，不是嘉宾包机
+  he_move Wes放手让她赴约，只递上一杯不免费的酒和一句带醋意的话，退到吧台远端盯着 | persona 吃醋不拦人：给她的酒里留一句'记得谁给你调酒'，自己在远处擦杯子偷看
+    1 | 她把酒杯往吧台上一放，抬眼看他 | Why ask you? Jasper knows your before. | 她
+    1 | 他擦杯子的手停了半拍，随即咧嘴笑 | Cold. I respect it. | Wes
+    1 | 他拿起酒瓶，往她杯里又续了小半杯，推回她手边 | Refill. Still no sugar. | Wes
+    1 | 他撑在吧台上，压低半分声音 | If he talks trash—remember who mixes your drinks. | Wes
+    1 | 她拿起酒杯抿了一口，他直起身，朝吧台远端退开一步 | Go. Date the mystery man. | Wes
+    2 | 切到吧台另一端的空镜：远处Wes在吧台远端擦杯子，画面里没有人，画面里没有人 |  | 
+    2 | 切到吧台另一端：Jasper已经坐在她左侧的高脚凳上，串灯暖光落在两人之间，远处Wes在吧台远端擦杯子 | He actually let you come. Brave. | Jasper
+    2 | 她把酒杯在吧台上轻轻转了半圈，侧过身看他 |  | 她
+    2 | Jasper凑近半分，声音放低 | Guests flew in on private charters. Wes came on the crew boat. | Jasper
+    2 | 她的手指在杯壁上停住，视线没动 |  | 
+    2 | 切到吧台远端：Wes擦杯子的手停在半空，隔着串灯看向她这边 |  | 
+    2 | Jasper端起自己那杯，慢慢靠回凳背 | There's more. But I like winning—recoupling is soon. | Jasper
+  cue Jasper把剩下的情报和换搭档绑在一起，Wes在远处看着，她的酒还剩半杯。
+  A 现在起身走向吧台远端的Wes，把剧组船的事当面拍在他面前 
+  B 陪Jasper把这杯喝完，顺着他的话往下套，看他到底还攥着Wes什么料
+  lint_left ['道具“不加糖的特调酒”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R5 [free] 为什么？ | 47.7s model=z-ai/glm-5.3-prime loc=户外吧台 cards=[] surprise=False
+  pending {"who": "Wes", "goal": "不让她把随便查和信任卖给Jasper", "move": "表态：今晚日落当面接她的随便查，不躲不谈条件", "needs": "她肯不肯把问题留给他、今晚来问"}
+  closed 
+  he_move Wes坐过来截掉Jasper的交易，说漏一句后主动把随便查约到今晚 | persona 记得她不加糖，亲手推来第二杯，吃醋吃在动作上
+    1 | 她坐在高脚凳上侧向Jasper，微微皱眉开口 | Why trade it for me? | 她
+    1 | Jasper转着手里没喝的杯子，淡淡一笑 | Because I want to win too. | Jasper
+    1 | Jasper放下杯子，朝吧台远端的Wes抬了抬下巴 | He's not the only one playing. | Jasper
+    1 | Jasper从高脚凳上起身，她看着他的背影；吧台远端Wes已放下擦杯布，正端着两杯酒走过来 | Round two. On me. | Wes
+    2 | Wes已坐在她左侧的高脚凳上，把其中一杯酒往她面前推近，Jasper的空凳在两人身后 | No sugar. Still remember. | Wes
+    2 | Wes看着她，压低声音，手指在台面上敲了一下 | Whatever he's selling— | Wes
+    2 | Wes话说得太快，脱口而出，随即耳根泛红，抓起自己那杯喝了一口 | I've been broke. It's not fatal. Hypothetically. | Wes
+    2 | 她看着他，他把杯子放回台面，直视她，不再躲 | Spend your question tonight. Sunset. I won't dodge. | Wes
+    2 | 两人并排坐在高脚凳上，她端起那杯酒抿了一口，Wes看着她，嘴角刚扬起又绷住，手在台面上攥了一下又松开 |  | 
+  cue Wes说漏了“我穷过”，又当面把随便查约到今晚日落；Mei的淘汰仪式也快开始了。
+  A 先去今晚的淘汰仪式投票送走一个人，当众说理由，再决定把问题给谁 
+  B 日落就到吧台用掉随便查
+  lint_left ['她在推自己的情节，两个选项却都引回资料包的关键片段：A 顺着她的情节走到下一件事，B 是她情节里更大', '【必改】选项 B「日落就到吧台用掉随便查」是杂事或小指令，或者太短：每个选项是打开一段新剧情的 2–', '配角只能出现在 seg2，seg1 里最多是画外声音（说话人写“画外:Mei”这种）']
+
+### R6 [free] 好 | 69.7s model=z-ai/glm-5.3-prime loc=上午的白沙海滩 cards=[] surprise=False
+  pending {"who": "Mei", "goal": "开始她最想要的最有看点的一季", "move": "广播召集所有人去篝火，第一次淘汰仪式现在开始", "needs": "她去不去仪式、问题是现在问还是留到仪式后"}
+  closed 
+  he_move 带她到日落海滩兑现随便查，被仪式广播打断后仍承诺今晚答 | persona 亲手挑了日落最好的位置让她问，玩笑说审讯需要好光线
+    1 | Wes举起自己那杯，轻轻碰她手边的杯沿，笑着看她 | Deal. And look—sunset's already started. | Wes
+    1 | 他仰头一口喝完，杯子放回吧台，朝她伸出右手 | Beach. Better lighting for interrogations. | Wes
+    1 | 她从高脚凳上下来，理了一下吊带裙的裙摆，抬眼看他 | Lead the way, bartender. | 她
+    1 | 他笑着收回手，做了个请的手势朝向吧台外的沙滩方向 | Bartender? Ow. That one's going on the scoreboard. | Wes
+    1 | 他低头看了一眼她留在吧台上的那杯没喝的酒，又看看她，耳根有点红 | You're not finishing that? Fine. More for my ego. | Wes
+    2 | 切到傍晚的白沙海滩的空镜：橙粉色落日压在海平线上，白沙泛金，棕榈树剪影，远处篝火露台的火光刚升起，画面里没有人 | Slow down—sand's soft here. | 画外:Wes
+    2 | 两人在湿沙线边面对面站着，海风吹起她的长发，他双手插回裤袋，下巴朝落日扬了一下 | One question. Anything. I'm ready. Go. | Wes
+    2 | 她看着他，嘴唇动了动正要开口，眼神认真 |  | 
+    2 | 画外传来Mei的广播声，他抬头望向远处篝火的方向，收起笑容在听 | All guests to the fire pit. First elimination ceremony. Now. | 画外:Mei
+    2 | 他收回视线看她，退后半步让开朝别墅的方向，手还插在袋里 | After. You still get your straight answer—tonight. | Wes
+  cue 落日只剩一线，Mei的广播催两人去篝火，她的问题还攥在手里没问出口。
+  A 先问完再走，趁落日最后一线，当场用掉随便查 
+  B 跟他去篝火参加淘汰仪式，投票送走一个人，仪式后再问
+  lint_left ['道具“鸡尾酒杯”标的是地点里本来就有：set 里要写到它（放在哪）']

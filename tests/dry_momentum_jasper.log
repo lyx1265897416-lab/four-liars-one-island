@@ -1,0 +1,121 @@
+
+### R1 [option] 我选 Jasper。 | 25.1s model=z-ai/glm-5.3-prime loc=配对套房 cards=['K02'] surprise=False
+  pending {"who": "Jasper", "goal": "想知道她选他的真实理由", "move": "反问她怎么答都会不会信，接着要她说出为什么选他", "needs": "她要不要说出选他的理由"}
+  closed 
+  he_move 他接受配对，带她回套房，主动把枕头搬到日床沙发，把问题反问她 | persona 不睡那张床，先把自己放到最没嫌疑的位置，再反问她信不信
+    1 | 画外:Mei 的广播响起，她端着酒杯看向火塘对面的 Jasper，深呼吸 | Midnight, ladies. Choose your partner. | 画外:Mei
+    1 | 她举起酒杯朝他一点，干脆地说出选择 | Jasper. | 她
+    1 | Jasper 看了她两秒，嘴角动了一下，朝火塘外的方向偏了下头 | Bold. Let's go. | Jasper
+    1 | 画外传来 Sloane 的声音，Jasper 和她同时转头看向画外 | Enjoy the quiet one. Wes is mine. | 画外:Sloane
+    1 | 她放下酒杯，Jasper 已经朝露台出口的方向伸手指路，两人一前一后朝出口走两步 |  | 
+    2 | 切到配对套房的空镜：暖黄床头灯亮着，落地窗外是月光下的海，画面里没有人 |  | 
+    2 | 她把酒杯放在床头柜上，Jasper 从大床上拿起白色枕头，两步放到窗边的日床沙发上 | You take the bed. | Jasper
+    2 | Jasper 半躺进日床沙发，把枕头垫到脑后 | Contract says I sleep great anywhere. | Jasper
+    2 | 低头看着他，问出那个问题 |  | 她
+    2 | Jasper 转过头看她，停了一拍，反问 | Would you believe me either way? | Jasper
+    2 | 他坐起一点，手肘撑在沙发垫上，朝她抬了抬下巴 | Better question—why me? | Jasper
+  cue 套房深夜，他反问她为什么选自己，等她开口
+  A 我说实话，我选你，是因为你不像来赢钱的。现在轮到你，给我看一样不带钱的东西 
+  B 先不答你。今晚我坐在这张床上守着，天亮前你自己会说漏嘴
+  lint_left ['道具“酒杯”标的是地点里本来就有：set 里要写到它（放在哪）', '坐在沙发上时两人并排坐（staging=side），不是他一个人正面坐着', '出现了“转头”：眼神扫过即可，不转头']
+
+### R2 [free] 嗯 | 36.4s model=z-ai/glm-5.3-prime loc=上午的白沙海滩 cards=['K03'] surprise=False
+  pending {"who": "Sloane", "goal": "抢走胜利、淘汰对手", "move": "冲刺中扑倒抱着脚踝喊救命，拦在她和红旗之间", "needs": "她冲线拔旗还是回头扶人"}
+  closed 
+  he_move 翻看她的掌心自己下结论，比赛时一句 Don't look back 把选择推给她 | persona 把她翻着的手翻过来看掌心再放开，只说一半
+    1 | 他半躺在日床沙发上，坐直了看着站在床边的她 | Hmm. That's not an answer. | Jasper
+    1 | 他起身走到她面前，拿起她的右手，翻过来手心朝上 |  | 
+    1 | 他低头看了一眼她的掌心，把她的手放开 | No ring. Good start. | Jasper
+    1 | 他退半步坐回日床沙发，靠进垫子里看着她 | You'll tell me when it's true. | Jasper
+    2 | 切到上午的白沙海滩的空镜：这个地点的环境和光线，画面里没有人 | Flags at the far end, ladies. | 画外:Mei
+    2 | 她和 Jasper 光脚并排站在起跑线，Mei 举着卡片站在两人前方 | Winner gets a private date. | Mei
+    2 | Mei 笑着举起手 | On your marks. | Mei
+    2 | 她从起跑线冲出跑在最前面，Sloane 在她身后两步扑倒在沙上，抱着脚踝 | Wait—my ankle! Help me! | Sloane
+    2 | Jasper 站在起跑线，看着画面右侧奔跑的她 | Don't look back. | Jasper
+    2 | 她停在跑道中段回头望，Jasper 站到她左侧半步，Sloane 在远处沙上抱着脚踝 |  | 
+  cue Sloane 抱着脚踝在沙上喊救命，红旗就在二十米外，Jasper 站在她身边只说了一句别回头。
+  A 我光脚冲过终点拔下红旗，赢下私人约会 
+  B 我回头扶起 Sloane，看穿她是装的，当众拆穿她再继续跑
+  lint_left ['道具“香槟杯”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“红色小旗”标的是地点里本来就有：set 里要写到它（放在哪）', '道具“素面奶油色卡片”标的是地点里本来就有：set 里要写到它（放在哪）', '坐在沙发上时两人并排坐（staging=side），不是他一个人正面坐着']
+
+### R3 [free] 嗯 | 49.8s model=z-ai/glm-5.3-prime loc=上午的白沙海滩 cards=[] surprise=False
+  pending {"who": "Mei", "goal": "把这一季做成最好看的一季", "move": "宣布今晚换搭档约会，赢家的私人约会也不能选搭档", "needs": "她今晚约谁"}
+  closed Sloane 的脚踝是装的——Jasper 当众指出她换了脚，她松手认了
+  he_move 当众戳穿 Sloane 装伤，推她冲线赢下约会卡 | persona 一句话戳穿 Sloane 换脚的破绽，不解释、不看她反应
+    1 | Jasper 回头朝她抬了一下下颌 | Run. | Jasper
+    1 | Jasper 在原地看她跑 |  | 
+    1 | 举起来，Jasper 在十几米外 |  | 
+    2 | 她回头望着倒地的 Sloane，脚步停在沙上，Jasper 已经从她左侧走过去 |  | 
+    2 | Jasper 站到 Sloane 面前，低头看着她抱着的脚踝 | Wrong ankle, Sloane. You switched. | Jasper
+    2 | Sloane 抱着脚踝的手僵住，慢慢松开，甜笑挂不住 | That's—fine. It's fine. | Sloane
+    2 | Mei 穿着剪裁利落的米色套装从棕榈树那侧走近，手里举着素面奶油色卡片 | Our winner. One private date. | Mei
+    2 | Jasper 走到她左侧半步的位置停下，两人都看着 Mei |  | 
+    2 | 卡片转向她 | Tonight, ladies, you date someone else. | Mei
+    2 | Jasper 的下颌绷了一下，视线从卡片移到她脸上 | Anyone but your partner. | Mei
+    2 | Jasper 把手插进裤袋，朝她偏了一下头 | Careful what you wish for. | Jasper
+    2 | 远处 Sloane 从沙地上撑起身，拍着裙摆上的沙，盯着这边 |  | 
+    2 | Mei 举着卡片笑，Jasper 和她并肩站着 |  | 
+  cue 她拔旗赢了私人约会，Mei 却宣布今晚必须和别人约会；Jasper 站在她身侧，Sloane 在远处盯着。
+  A 今晚我赴 Wes 的吧台约会，从他嘴里套出他知道的关于 Jasper 的事 
+  B 我当众把私人约会卡递给 Jasper，赌 Mei 敢不敢让搭档约会
+  lint_left ['【必改】seg1 是 15 秒，只有 1 句台词：15 秒的段 3–5 句（所有人合计），一句接一句', '【必改】上车下车、坐下站起、躺下都放进 seg1 或直接省掉，seg2 从第一拍起就已经是变化之后的', 'seg2 有 6 句台词，这一段最多 5 句（所有人合计）', '出现了“旗”：不写旗帜（会画出带标志的旗）']
+
+### R4 [option] 今晚我赴 Wes 的吧台约会，从他嘴里套出他知道的关于 Jasper 的事 | 61.9s model=z-ai/glm-5.3-prime loc=夜里的户外吧台 cards=['K04'] surprise=False
+  pending {"who": "Wes", "goal": "重新配对时把她抢到自己身边", "move": "提出交易：换搭档到他那边，他就说出剩下的情报", "needs": "她要不要在重新配对时改选他"}
+  closed 
+  he_move 不拦她的约会，只留一句测 Wes 的话，然后远远盯着这场约会 | persona 她要去和别的男人约会，他不求她留下，反而给她一个观察任务
+    1 | 上午的白沙海滩，拍掉手上的沙，转向他 | Wes it is, then. Tonight. | 她
+    1 | Jasper 看着她，嘴角有一点笑，没有拦 | Good. Ask him why he's here. | Jasper
+    1 | 他往前半步，声音放低，像交代任务 | Then watch his hands when he answers. | Jasper
+    1 | 她点头，他退开半步让出方向，两人停在原地 |  | 
+    2 | 切到夜里的户外吧台空镜：串灯暖光，木吧台上一排酒瓶，棕榈在风里，远处海浪声 |  | 
+    2 | 两人在吧台高脚凳上并排坐，Wes 把一杯鸡尾酒递到她手里，她接住 | You actually came. I'm honored. | Wes
+    2 | 笑得阳光，手指在吧台上敲 | So. Ask me whatever you want. | Wes
+    2 | 她端起酒抿了一口，眼睛没离开他，在听 | Jasper, right? First night, dinner. | Wes
+    2 | Wes 凑近一点，压低声音 | He named the wine's year. Just like that. | Wes
+    2 | 切到吧台另一端：Jasper 独自靠在暗处，下颌绷紧，隔着距离看向他们，手里没有酒 |  | 
+    2 | Wes 顺着她的视线瞥了一眼远处，又转回来，手搭上吧台边缘 | Switch to me at the recoupling. I'll tell you the rest. | Wes
+  cue Wes 把剩下的情报押在换搭档上，Jasper 在远处看完了全程，今晚还有淘汰仪式
+  A 投票前当众问 Jasper 那晚的酒，看他当着所有人怎么答 
+  B 散场后先去堵 Wes，把他没说完的情报榨干净再进仪式
+  lint_left ['道具“一杯”标的是地点里本来就有：set 里要写到它（放在哪）']
+
+### R5 [free] 为什么？ | 58.0s model=z-ai/glm-5.3-prime loc=夜里的户外吧台 cards=[] surprise=False
+  pending {"who": "Jasper", "goal": "在投票前给她一个不靠情报判断他的机会", "move": "赌约：仪式前她可以问他一个问题，他答真话", "needs": "她问不问、问什么"}
+  closed Wes 换搭档交易的理由：他承认自己想赢、觉得 Jasper 难对付
+  he_move 走进吧台站到她身边，报出酒年份，再提出仪式前回答她一个问题的赌约 | persona 不问她和 Wes 聊了什么，只用一句报年份的话让她自己看出破绽
+    1 | 站到她左侧的空高脚凳旁，一只手搭上吧台沿 | He left? Good. I hate crowds. | Jasper
+    2 | 她坐在高脚凳上侧过头，直视 Wes，把酒杯放到吧台上 | Why? Why trade me? | 她
+    2 | Wes 收起笑，手指在木吧台上敲了两下，看向她 | Because I like winning. | Wes
+    2 | Wes 压低声音凑近半寸，又靠回凳背 | And Jasper never fights. That scares me. | Wes
+    2 | Wes 拿起自己的杯子，从高脚凳上起身走出画面 | Enjoy the rest of your night. | Wes
+    2 | 调酒师从酒架取下一瓶酒放到吧台上，Jasper 看一眼就抬手指向酒瓶 | Wrong shelf. That one's the 2016. | Jasper
+    2 | 特写：调酒师愣住看酒瓶，Jasper 已经转过脸看向她 |  | 
+    2 | 她握着酒杯看向他，他手仍搭在吧台沿上，面对她 | One question. Before the ceremony. I'll answer true. | Jasper
+    2 | 两人对视，他拿起吧台上的水杯喝了一口，喉结动了动 | Careful which one you waste it on. | Jasper
+    2 | 她低头转着手里的酒杯，又抬眼看他，嘴角压着一丝笑 |  | 她
+    2 | 他放下水杯，被逗得没绷住嘴角，别开脸看向串灯 | Maybe. Don't tell anyone. | Jasper
+  cue Jasper 赌约已出：仪式前她可以问他一个问题，Wes 的交易也还悬着，仪式马上开始
+  A 我把问题留给他，仪式前当众问 Jasper 手上缆绳茧的来历 
+  B 我追出去堵住 Wes，不然我当众拆穿你装伤
+  lint_left ['【必改】有 2 拍只有表情没有台词和动作（特写：调酒师愣住看酒瓶，Jasper 已；她低头转着手里的', '【必改】seg1 是 15 秒，只有 1 句台词：15 秒的段 3–5 句（所有人合计），一句接一句', '【必改】上车下车、坐下站起、躺下都放进 seg1 或直接省掉，seg2 从第一拍起就已经是变化之后的', 'seg2 有 8 句台词，这一段最多 5 句（所有人合计）']
+
+### R6 [free] 好 | 23.0s model=z-ai/glm-5.3-prime loc=篝火露台 cards=['K05'] surprise=False
+  pending {"who": "Jasper", "goal": "让她不靠情报、靠自己的判断决定信谁", "move": "仪式结束，赌约还在：她随时可以问那一个问题", "needs": "她问不问、问什么"}
+  closed 第一次淘汰结果：Ethan 被送走，Mei 揭晓他是真富豪
+  he_move 把她的一个问题压到仪式后，带她去篝火直面第一次淘汰 | persona 不催她问，反而替她把问题攥在手里：'省着用'
+    1 | 她坐在高脚凳上点头，Jasper 站在左侧看着她，手指在吧台面上敲了一下 | Good. Then keep it. | Jasper
+    1 | 他伸手把她面前的酒杯往她手边推近一寸，自己没喝 | Don't spend it here. | Jasper
+    1 | 远处传来主持人广播，两人都朝火光的方向看，她从高脚凳上下来 | Ceremony time, everyone. To the fire. | 画外:Mei
+    1 | 他侧头看她一眼，朝火塘方向抬了抬下巴，她点头 | After. Your question's still good. | Jasper
+    2 | 切到篝火露台的空镜：火塘燃着火，奶油色坐垫围着，虚化的人群剪影围着火塘站，火炬和串灯暖光 |  | 
+    2 | Jasper 在左她在右，Mei 站在火塘对面举着素面奶油色卡片 | First elimination. By everyone's votes—Ethan. | Mei
+    2 | Ethan 在人群剪影前愣了一下，腼腆地笑，朝大家挥手 | Guess that's me. Good luck, guys. | Ethan
+    2 | Ethan 走出火光，背影没入黑暗，她看着那个方向，Jasper 看着她 |  | 
+    2 | Mei 翻过手里的卡片，火光照亮她的脸 | Ethan was one of our three millionaires. | Mei
+    2 | 她转回脸看向身旁的 Jasper，他也正看着她，火光在两人脸上跳动 | Two millionaires left. Four liars. | Mei
+    2 | 他低声开口，眼睛没离开她的脸 | Still saving that question? | Jasper
+  cue 第一次仪式送走了真富豪 Ethan，她的问题还攥在手里。
+  A 我拉起他的手，对着火光看他掌心的茧，当场把问题用在这上面 
+  B 你上这个节目，是为了钱吗
+  lint_left ['道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）']
