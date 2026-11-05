@@ -1,0 +1,202 @@
+[
+ {
+  "text": "我选 Jasper。",
+  "sec": 146.9,
+  "model": "x-ai/grok-4.7",
+  "attempts": 2,
+  "lint_left": [],
+  "seg1": [
+   [
+    "她举起酒杯朝他一顿，目光不躲",
+    "I choose Jasper.",
+    "双人中近景，固定",
+    "她"
+   ],
+   [
+    "他眉心一蹙，指背把她杯沿拨低",
+    "Bold. Or just bored?",
+    "双人中景，缓推",
+    "Jasper"
+   ],
+   [
+    "下颌绷住，不笑",
+    "Sofia and Jasper. Sloane takes Wes.",
+    "双人中近景，固定",
+    "画外:Mei"
+   ],
+   [
+    "他看回她，嘴角动了又压平",
+    "Truth's not free.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "双手垂着",
+    "",
+    "双人中景，固定",
+    ""
+   ]
+  ],
+  "seg2": [
+   [
+    "切到配对套房的空镜：白墙、纱帘、暖黄台灯、夜海",
+    "",
+    "空镜，固定",
+    ""
+   ],
+   [
+    "他在左从床上拿起白枕头，她在右看着",
+    "Bed's yours.",
+    "双人全景，固定",
+    "Jasper"
+   ],
+   [
+    "他把枕头放到日床上，拍平一角",
+    "I'll take this.",
+    "双人中景，短跟随",
+    "Jasper"
+   ],
+   [
+    "他目光落到她杯沿青柠，眉心沉下不笑",
+    "Wes's lime. Still on you.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "他抬起右掌，茧在灯下，随即放下",
+    "I'm one of the four.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "他拿过她右手的酒杯，放到床头柜上",
+    "Still want me?",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "pending": {
+   "who": "Jasper",
+   "goal": "试她会不会因没钱离开",
+   "move": "拿走那杯酒，自称四个之一问她还要不要",
+   "needs": "她还选不选他"
+  },
+  "next": {
+   "cue": {
+    "zh": "套房里他拿走那杯酒，自称是四个骗子之一，问她还要不要他。",
+    "en": "In the suite he takes her drink, says he's one of the four, and asks if she still wants him."
+   },
+   "A": {
+    "zh": "我点头留下他，明早沙滩拔旗，赢下约会再验他。",
+    "en": "I keep him, win the beach flag, then test him.",
+    "leads_to": "K03：第二天上午沙滩夺旗赛，她冲刺拔旗赢私人约会",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我后退半步，说我改选Wes，明早找他当面拆穿。",
+    "en": "I step back, switch to Wes, and confront him tomorrow.",
+    "leads_to": "她改口改选Wes，沙滩上当面拆他的疑点",
+    "trimmed": true
+   }
+  },
+  "did": "她选定Jasper，Mei宣布配对，套房里他自称是四个之一"
+ },
+ {
+  "text": "嗯",
+  "sec": 201.5,
+  "model": "x-ai/grok-4.7",
+  "attempts": 2,
+  "lint_left": [
+   "【必改】有 2 拍只有表情没有台词和动作（Mei侧身，右手伸出画外，脸仍朝镜头，不；她重心停在前脚，侧脸看向左侧的他，他手垂）：整轮最多一拍，其余改成一句台词或一个推动剧情的动作（V3.0）"
+  ],
+  "seg1": [
+   [
+    "他看着她，没笑，下颌绷紧",
+    "Mm. That's not a no.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "他右手把日床枕头按平，视线不离她",
+    "You stayed. So did I.",
+    "双人中景，缓推",
+    "Jasper"
+   ],
+   [
+    "手收回身侧",
+    "Win it. Ask me one thing.",
+    "双人中近景，固定",
+    "Jasper"
+   ]
+  ],
+  "seg2": [
+   [
+    "切到白沙海滩的空镜：无人，画面里没有人",
+    "Winner gets a private date.",
+    "空镜，固定",
+    "画外:Mei"
+   ],
+   [
+    "Mei侧身，右手伸出画外，脸仍朝镜头，不笑",
+    "",
+    "固定",
+    "Mei"
+   ],
+   [
+    "她右手收回，手里多了素面卡片，举到胸前",
+    "",
+    "Mei单人近景，固定",
+    "Mei"
+   ],
+   [
+    "他在左盯着她，她在右站上起跑线，他没笑",
+    "Eyes front. Not on me.",
+    "双人中景，固定",
+    "Jasper"
+   ],
+   [
+    "她前脚蹬进沙里，身体前倾，眉心收紧",
+    "",
+    "她的单人中近景，短跟随",
+    "她"
+   ],
+   [
+    "Sloane扑倒在沙上，双手抱住脚踝，皱眉喊",
+    "My ankle! Help me!",
+    "Sloane单人中近景，固定",
+    "Sloane"
+   ],
+   [
+    "她重心停在前脚，侧脸看向左侧的他，他手垂着对上她",
+    "",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "pending": {
+   "who": "Sloane",
+   "goal": "抢走旗和私人约会",
+   "move": "扑倒装扭脚，喊她帮忙",
+   "needs": "她停不停下"
+  },
+  "next": {
+   "cue": {
+    "zh": "她刚蹬进沙里，Sloane倒在后面喊脚踝，他不替她选。",
+    "en": "She just pushed off. Sloane is down yelling. He will not choose."
+   },
+   "A": {
+    "zh": "我冲过终点拔下红旗，再把胜利拍给他看",
+    "en": "I grab the red flag and shove the win at him.",
+    "leads_to": "K04：Mei宣布换搭档约会，她被安排和Wes在吧台",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我回头扶起Sloane，把红旗和约会让出去",
+    "en": "I turn back, help Sloane, and give up the flag.",
+    "leads_to": "她输掉夺旗，Sloane拿走约会，他的考验落空",
+    "trimmed": true
+   }
+  },
+  "did": "他把嗯当成留下并押上夺旗；清晨Mei开赛，Sloane装扭脚"
+ }
+]

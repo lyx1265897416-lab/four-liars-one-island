@@ -292,7 +292,7 @@ async function liveRound(kind, choice, said){
   if (sw && K && !busy){
     const t = (said && (said.zh || said.en)) || '', mine = HE[LINE], re = isRecouple(t);
     const recap = re ? `现在是夜里篝火露台的重新配对仪式，她当着所有人决定改选 ${HE[sw]} 做搭档，${HE[sw]} 站在她面前。`
-                     : `Mei 安排了换搭档约会：她现在在吧台和 ${HE[sw]} 单独约会，了解他这个人；她名义上的搭档还是 ${mine}，${mine} 不在这场戏里。约会之后剧情照节目流程往下走。`;
+                     : `Mei 安排了换搭档约会：今晚她和 ${HE[sw]} 单独约会，了解他这个人；她名义上的搭档还是 ${mine}，${mine} 不在这场戏里。此刻是夜里，${HE[sw]} 在篝火露台等她碰头（这一轮第一张画面就是两人在篝火边），接着一起去户外吧台。约会之后剧情照节目流程往下走。`;  // V3.11：新线第 1 段从开场首帧（夜里篝火边、新男主和她）接着演，前情的起点要和它对上
     const cards = re ? lastCards : Array.from(new Set([...(lastCards || []), 'K04']));
     try { await openLine(sw, (lastState ? lastState + ' ' : '') + recap, cards); kind = 'free'; choice = null; said = {zh: (said.zh || said.en), en: (said.en || said.zh)}; toast(re ? T(`Switched partner to ${HE[sw]}`, `换搭档：${HE[sw]}`) : T(`Date with ${HE[sw]}`, `和 ${HE[sw]} 约会`)); }
     catch (e){ setChip('<b>Could not switch</b> · ' + esc(e.message)); }

@@ -348,6 +348,7 @@ def run_seg(rid, i, dur, prompt, first, frame_url, face_url, extra=(), no_scene=
         people = f"{len(names)} 个人：{'；'.join(names)}" + ('；背景远处的路人不算' if re.search('酒吧|餐厅|夜宵|摊|街|人群|派对', str(sp_hc.get('set') or '')) else '') + ('；这一段他会变身成狼，不算错误' if sp_hc.get('wolf') else '')
         w_hc = sp_hc.get('wardrobe_end') or {}; w0_hc = sp_hc.get('wardrobe_start') or {}
         wear = f"男主：{w_hc.get('he') or L.HE_DEFAULT}；女主：{w_hc.get('she') or L.SHE_DEFAULT}" if i == 1 else '；'.join(x for x in ((f"男主：{w0_hc.get('he') or L.HE_DEFAULT}" if w0_hc.get('he') == w_hc.get('he') else ''), (f"女主：{w0_hc.get('she') or L.SHE_DEFAULT}" if w0_hc.get('she') == w_hc.get('she') else '')) if x)  # V3.4：第 1 段也查，只查这一轮没换装的人（Rafael 11-04 第 4 轮第 1 段他的牛仔裤变成黑裤）
+        if s.get('stand_in'): wear = re.sub('男主：[^；]*；?', '', wear)  # V3.11：顶替段画面里没有男主，不按男主的衣服查（S032531823 泳池边 Kian 被判“男主应穿藏蓝衬衫”）
         magic = re.search('飞|魔法|悬浮|漂浮|超能力|变身|穿越', str(R[rid].get('input') or ''))
         def bg_side(u):  # V3.6：两人左右对调的镜头标出来（s['flip']），播放页播到那几秒水平镜像；和开播检查同时开始、不挡开播，只认最后通过检查的那一条
             mp4 = FR / f'{rid}_{i + 1}_side_{uuid.uuid5(uuid.NAMESPACE_URL, u).hex[:8]}.mp4'
@@ -449,7 +450,7 @@ def _worker(rid):
         sp = None
         if cache and cache['gen'] == s['gen']:
             try:
-                sp, dsec = cache['fut'].result(timeout=120)
+                sp, dsec = cache['fut'].result(timeout=240)  # V3.11：兜底 Kimi 一轮两次调用约 100 秒，原 120 秒会白白放弃预写重来
                 r['director'] = 'prefetched'; r['director_wait'] = round((now() - r['at']) / 1000, 1)
             except Exception as e: log('PREFETCHFAIL', rid, e)
         if sp is None:

@@ -1,0 +1,200 @@
+[
+ {
+  "text": "我选 Jasper。",
+  "sec": 38.2,
+  "model": "z-ai/glm-5.3-prime",
+  "attempts": 2,
+  "lint_left": [
+   "【必改】有 2 拍只有表情没有台词和动作（抬下巴看他；两人在台灯暖光里对视，白纱帘在两人身后被）：整轮最多一拍，其余改成一句台词或一个推动剧情的动作（V3.0）",
+   "出现了“转头”：眼神扫过即可，不转头"
+  ],
+  "seg1": [
+   [
+    "画外传来 Mei 的声音，Jasper 和她同时转头看向画外",
+    "Midnight, ladies. Choose your partner.",
+    "双人中景，固定，Jasper 画面左缘、她在右侧",
+    "画外:Mei"
+   ],
+   [
+    "抬下巴看他",
+    "",
+    "双人中近景，缓推",
+    ""
+   ],
+   [
+    "画外传来 Sloane 的声音，Jasper 和她同时转头看向画外",
+    "Enjoy the leftovers.",
+    "双人中近景，背景虚化",
+    "画外:Sloane"
+   ],
+   [
+    "画外传来 Mei 的声音，Jasper 和她同时转头看向画外",
+    "Sofia chooses Jasper. Suite four.",
+    "双人中景，固定",
+    "画外:Mei"
+   ]
+  ],
+  "seg2": [
+   [
+    "切到配对套房的空镜：暖黄台灯亮着，白色枕头已经放在窗边日床沙发上，落地窗外夜里的海，白纱帘轻晃，房门轻响",
+    "",
+    "空镜，固定",
+    ""
+   ],
+   [
+    "Jasper 站在日床沙发旁，回头看向刚进门的她，语气平静",
+    "Bed's yours.",
+    "双人中景，固定，他在左她在右",
+    "Jasper"
+   ],
+   [
+    "她走近一步，直视他的眼睛",
+    "Are you one of the four?",
+    "双人近景，固定，她脸看得清",
+    "她"
+   ],
+   [
+    "他没有躲开她的目光，停了一拍",
+    "Yes.",
+    "双人近景，固定",
+    "Jasper"
+   ],
+   [
+    "他微微偏头，反问，眼里没有玩笑",
+    "Still want me?",
+    "双人中近景，缓推",
+    "Jasper"
+   ],
+   [
+    "两人在台灯暖光里对视，白纱帘在两人身后被夜风轻轻吹动，她攥了一下裙侧的手慢慢松开",
+    "",
+    "双人中景，固定",
+    ""
+   ]
+  ],
+  "pending": {
+   "who": "Jasper",
+   "goal": "试她知道他'没钱'后还留不留",
+   "move": "承认自己是四个之一，反问'还选我吗'，等她表态",
+   "needs": "她信不信、留不留他"
+  },
+  "next": {
+   "cue": {
+    "zh": "套房里他刚承认自己是四个骗子之一，反问她还要不要他，等她表态。",
+    "en": "In the suite he just admitted being one of the four liars and asked if she still wants him."
+   },
+   "A": {
+    "zh": "我留下他，说“我要的就是实话”，让他今晚别急着睡，陪我聊到天亮",
+    "en": "I stay: \"Honesty is what I wanted.\" He stays up and talks with me till dawn.",
+    "leads_to": "K03：天亮后 Mei 在沙滩宣布夺旗赛，赢的人得私人约会",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我当场拆他，抓起他的手看掌心的茧",
+    "en": "I call his bluff: grab his hand, check the calluses, ask who pays a liar.",
+    "leads_to": "K06：她抓住缆绳茧这条线索，逼他解释合同和身份",
+    "trimmed": true
+   }
+  },
+  "did": "她当众选了 Jasper，Sloane 挽走 Wes；两人回套房，他去睡日床沙发，她问他是不是那四个骗子之一"
+ },
+ {
+  "text": "嗯",
+  "sec": 37.5,
+  "model": "z-ai/glm-5.3-prime",
+  "attempts": 1,
+  "lint_left": [
+   "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+   "出现了“旗”：不写旗帜（会画出带标志的旗）"
+  ],
+  "seg1": [
+   [
+    "双人中近景，固定：套房夜里，暖黄台灯亮着，他站在日床沙发旁看着床边的她，嘴角有一点笑",
+    "I'll take that as a yes.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "单人中近景，缓推：他伸手按了按沙发上的枕头，抬眼看她，语气平静",
+    "There's a race tomorrow. Win it.",
+    "双人中近景，缓推",
+    "Jasper"
+   ],
+   [
+    "双人近景，固定：他直起身，手已经伸向床头台灯，眼神却还停在她脸上",
+    "Then I answer one question. A true one.",
+    "双人近景，固定",
+    "Jasper"
+   ],
+   [
+    "插入特写，固定：他的手按下台灯开关，暖光熄灭，房间里只剩窗外的月光",
+    "",
+    "双人中近景，固定",
+    ""
+   ]
+  ],
+  "seg2": [
+   [
+    "切到白沙海滩（夺旗赛起跑线）的空镜：画外传来Mei的人声，画面里没有人",
+    "",
+    "空镜，固定",
+    ""
+   ],
+   [
+    "双人全景，固定：她光脚站在起跑线上，Jasper站在画面左侧边线抱着手臂，Mei举着卡片站在起跑线旁",
+    "Flags at the far end. Winner gets a private date.",
+    "双人全景，固定",
+    "Mei"
+   ],
+   [
+    "Mei单人近景，固定：她微笑扫过起跑线上的众人，把卡片在指间转了一下",
+    "First flag wins. Go!",
+    "Mei单人近景，固定",
+    "Mei"
+   ],
+   [
+    "中景，短跟随：她光脚冲刺跑在最前面，裙摆和长发向后飞，沙子溅起",
+    "",
+    "中景，短跟随",
+    ""
+   ],
+   [
+    "Sloane单人近景，固定：她跑到一半扑倒在沙上，双手抱住脚踝，脸皱成一团",
+    "Wait—my ankle! Help me!",
+    "Sloane单人近景，固定",
+    "Sloane"
+   ],
+   [
+    "双人中近景，固定：她停在跑道上回头看向倒地的Sloane，Jasper站在画面左侧边线看着她，没有动",
+    "Don't look at me.",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "pending": {
+   "who": "Sloane",
+   "goal": "骗她回头，抢走胜利和约会",
+   "move": "扑倒抱着脚踝大喊Help me，等她回头",
+   "needs": "她回头扶，还是冲向红旗"
+  },
+  "next": {
+   "cue": {
+    "zh": "她跑在最前面，Sloane在身后抱着脚踝求救，红旗就在二十米外。",
+    "en": "She leads the race. Sloane is down behind her, crying for help, the flags twenty meters ahead."
+   },
+   "A": {
+    "zh": "我头也不回冲过去拔旗，赢下私人约会，再回头看他敢不敢说真话",
+    "en": "I sprint for the flag, win the date, then make him keep his promise.",
+    "leads_to": "K04：她赢下约会卡，Mei当晚宣布换搭档约会，她被安排和别人单独约会",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我跑回去扶Sloane，盯着她的脚踝问她装给谁看",
+    "en": "I run back, help her up, and ask whose show this is.",
+    "leads_to": "Sloane被当面拆穿恼羞成怒当众反咬她假好心，Jasper开口替她作证",
+    "trimmed": true
+   }
+  },
+  "did": "他把她的嗯当作留下，立赌约：她赢比赛他答一个真问题；第二天沙滩夺旗赛，她领跑时Sloane扑倒喊脚扭"
+ }
+]

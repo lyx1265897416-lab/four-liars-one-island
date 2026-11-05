@@ -1,0 +1,211 @@
+[
+ {
+  "text": "我选 Jasper。",
+  "sec": 100.4,
+  "model": "moonshotai/kimi-k3.1-pro",
+  "attempts": 2,
+  "lint_left": [
+   "【必改】有 2 拍只有表情没有台词和动作（她皱眉看他一眼，明确选定他。；她把鸡尾酒放在石质矮墙上，Jasper ）：整轮最多一拍，其余改成一句台词或一个推动剧情的动作（V3.0）",
+   "道具“酒杯”标的是地点里本来就有：set 里要写到它（放在哪）"
+  ],
+  "seg1": [
+   [
+    "她皱眉看他一眼，明确选定他。",
+    "",
+    "双人中景，固定",
+    ""
+   ],
+   [
+    "Jasper 愣了半秒，眉梢微动，目光从酒杯移到她脸上。",
+    "That was fast. Should I worry?",
+    "Jasper双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "Mei 在篝火旁的画外宣布配对，Jasper 闭着嘴，下颌微收。",
+    "Sofia and Jasper. Midnight's first match.",
+    "Jasper双人中近景，固定",
+    "画外:Mei"
+   ],
+   [
+    "Sloane 在泳池方向的画外招呼 Wes，她闭着嘴，神情冷淡。",
+    "Wes, darling. Our suite awaits.",
+    "她双人中近景，固定",
+    "画外:Sloane"
+   ],
+   [
+    "她把鸡尾酒放在石质矮墙上，Jasper 收起调侃，认真看着她。",
+    "",
+    "双人中近景，固定",
+    ""
+   ]
+  ],
+  "seg2": [
+   [
+    "切到配对套房的空镜：白色大床、窗边日床和月光下的白纱帘，床头台灯亮着暖光。",
+    "",
+    "空镜，固定",
+    ""
+   ],
+   [
+    "两人在套房内面对面站着，Jasper 从大床上拿起白色枕头。",
+    "I'll take the daybed.",
+    "双人中景，固定",
+    "Jasper"
+   ],
+   [
+    "他把枕头放到窗边日床沙发上，她看了一眼大床，抱起手臂。",
+    "",
+    "双人中景，缓推",
+    ""
+   ],
+   [
+    "她警惕地盯住他，直接问出最关键的问题。",
+    "Are you one of the four?",
+    "她单人近景，固定",
+    "她"
+   ],
+   [
+    "Jasper 停在日床旁，手指收紧枕角又松开，没有躲开她的目光。",
+    "Yes. Still want me?",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "pending": {
+   "who": "Jasper",
+   "goal": "确认她是否只看重财富",
+   "move": "他自称四个骗子之一，反问她是否还要他",
+   "needs": "等她决定留下还是改选"
+  },
+  "next": {
+   "cue": {
+    "zh": "他刚自称骗子，把是否继续搭档的决定丢回给她。",
+    "en": "He claims to be a liar and leaves their partnership in her hands."
+   },
+   "A": {
+    "zh": "我留下他，但把答案押到明天，沙滩夺旗，赢下约会也赢审问权",
+    "en": "I keep him, win tomorrow's beach flags, then claim a date and answers.",
+    "leads_to": "K03：第二天上午她参加沙滩夺旗赛，争取私人约会和审问权",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我暂不判决，天亮先找 Ravi 读人，再带他的判断去沙滩夺旗",
+    "en": "I consult Ravi at dawn, then test his reading during the flag race.",
+    "leads_to": "Ravi 指出 Jasper 在谎称自己是骗子，随后进入 K03 沙滩夺旗赛",
+    "trimmed": true
+   }
+  },
+  "did": "她选择 Jasper 完成配对；回套房后他让出大床，自称四个骗子之一并反问她。"
+ },
+ {
+  "text": "嗯",
+  "sec": 99.3,
+  "model": "moonshotai/kimi-k3.1-pro",
+  "attempts": 2,
+  "lint_left": [
+   "道具“一排红色小旗”标的是地点里本来就有：set 里要写到它（放在哪）"
+  ],
+  "seg1": [
+   [
+    "他把白色枕头放到日床沙发上，皱眉审视她，右手仍攥着枕角。",
+    "That sounded almost like a yes.",
+    "双人中景，固定",
+    "Jasper"
+   ],
+   [
+    "他松开枕角，向她靠近半步，神情仍冷淡，嘴角却动了一下。",
+    "Don't worry. I charge extra for enthusiasm.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "他伸出右手，掌心向上，像要击掌立约；她警惕地看着他。",
+    "Next challenge, beat me.",
+    "双人中景，固定",
+    "Jasper"
+   ],
+   [
+    "他没有收回目光，右手仍停在两人之间，神情认真起来。",
+    "You win, I answer one question. Honestly.",
+    "双人中近景，缓推",
+    "Jasper"
+   ],
+   [
+    "她没有击掌；他收回右手，把枕头拍松，故作随意地挑起眉。",
+    "Lose, and you owe me breakfast.",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "seg2": [
+   [
+    "切到白沙海滩的空镜：棕榈叶摇动。，画面里没有人",
+    "",
+    "空镜，固定",
+    ""
+   ],
+   [
+    "Mei站在起跑线旁，神情从容，把空着的右手伸出画外。",
+    "",
+    "固定",
+    ""
+   ],
+   [
+    "Mei收回右手，手里拿着素面奶油色卡片，举起卡片宣布规则。",
+    "Far flags. Winner gets a private date.",
+    "Mei单人中近景，固定",
+    "Mei"
+   ],
+   [
+    "Jasper在左、她在右俯身准备起跑，发令后两人同时向前冲出。",
+    "Go.",
+    "双人全景，固定",
+    "画外:Mei"
+   ],
+   [
+    "两人沿沙滩并排冲刺，她稍稍领先，他侧头看她，呼吸急促。",
+    "You're smiling. Rookie mistake.",
+    "双人全景，侧面短跟随",
+    "Jasper"
+   ],
+   [
+    "Sloane在后方突然扑进沙里，抱紧脚踝，痛苦地朝她伸手。",
+    "Wait—my ankle! Help me!",
+    "Sloane单人中景，固定",
+    "Sloane"
+   ],
+   [
+    "两人在终点前急停，她皱眉望向Sloane，他绷紧下颌盯着她。",
+    "Flag or performance. Your call.",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "pending": {
+   "who": "Jasper",
+   "goal": "看清她更看重胜利还是别人",
+   "move": "他指着终点红旗，要她在拔旗和回头救人间选择",
+   "needs": "她立刻冲向旗帜或回头"
+  },
+  "next": {
+   "cue": {
+    "zh": "终点红旗近在眼前，Sloane倒在身后；他要她当场做出选择。",
+    "en": "The flag is within reach and Sloane is down; he demands her choice."
+   },
+   "A": {
+    "zh": "我拔旗赢下约会，把机会押给Jasper，再赴Wes的换搭档约会",
+    "en": "I grab the flag, choose Jasper for the date, then meet Wes tonight.",
+    "leads_to": "K04：她拔旗赢下私人约会，Mei宣布换搭档约会，她与Wes在吧台单独见面",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我回头试探Sloane的脚踝，再拉Jasper一起冲过终点",
+    "en": "I test Sloane’s ankle, then pull Jasper across the finish with me.",
+    "leads_to": "她当众试探Sloane是否装伤，可能输掉约会，也让Jasper重新判断她",
+    "trimmed": true
+   }
+  },
+  "did": "他把她的含糊回应暂作留下，定下挑战赌约；上午夺旗赛开始，Sloane中途扑倒求助。"
+ }
+]

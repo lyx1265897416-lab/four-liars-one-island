@@ -1405,7 +1405,7 @@ def _shape(sp, mode):
     sp['cast'] = [c for c in (sp.get('cast') or []) if c in L.CAST]
 
 
-FALLBACK_MODEL = 'z-ai/glm-5.3-prime'  # V3.6b：OpenRouter 对这个账户的 Anthropic/OpenAI/Google 一律 403（2026-11-04 19:20 起，“violation of provider Terms Of Service”）时这一次改用它；meet 干跑两轮 18–32 秒、JSON 完整、他主动推进；Kimi K3.1 要 60 秒，Grok 4.7、Qwen3.8 Max、DeepSeek V4 Pro 输出被截断。主模型恢复后自动回到主模型
+FALLBACK_MODEL = os.environ.get('DIRECTOR_FALLBACK', 'moonshotai/kimi-k3.1-pro')  # V3.11（Vicky 11-05：GLM 写的剧情台词安错人、编造前情）：同两轮对照 GLM 38 秒但遗留问题多、台词归属错；Kimi K3.1 Pro 约 100 秒，台词归属对、每拍写表情；Grok 4.7 最好但 150–200 秒；DeepSeek V4 Pro 不如 GLM；Qwen 3.8 Max 被截断（tests/model_ab/）。想换回：环境变量 DIRECTOR_FALLBACK=z-ai/glm-5.3-prime。原注释：  # V3.6b：OpenRouter 对这个账户的 Anthropic/OpenAI/Google 一律 403（2026-11-04 19:20 起，“violation of provider Terms Of Service”）时这一次改用它；meet 干跑两轮 18–32 秒、JSON 完整、他主动推进；Kimi K3.1 要 60 秒，Grok 4.7、Qwen3.8 Max、DeepSeek V4 Pro 输出被截断。主模型恢复后自动回到主模型
 
 
 def _call(msgs, timeout, model=None):
@@ -1419,7 +1419,7 @@ def _call(msgs, timeout, model=None):
     try:
         with U.urlopen(req, timeout=timeout) as r: j = json.loads(r.read())
     except U.HTTPError as e:
-        if e.code == 403 and model != FALLBACK_MODEL: return _call(msgs, timeout, FALLBACK_MODEL)
+        if e.code == 403 and model != FALLBACK_MODEL: return _call(msgs, max(timeout, 120), FALLBACK_MODEL)  # V3.11：Kimi 单次约 50 秒，超时放宽
         raise
     ch = j['choices'][0]
     if ch.get('finish_reason') in ('length', 'max_tokens'): raise ValueError('导演层输出被截断')

@@ -1,0 +1,221 @@
+[
+ {
+  "text": "我选 Jasper。",
+  "sec": 125.3,
+  "model": "deepseek/deepseek-v4-pro",
+  "attempts": 2,
+  "lint_left": [
+   "道具“酒杯”标的是地点里本来就有：set 里要写到它（放在哪）",
+   "道具“鸡尾酒”标的是地点里本来就有：set 里要写到它（放在哪）",
+   "【必改】上车下车、坐下站起、躺下都放进 seg1 或直接省掉，seg2 从第一拍起就已经是变化之后的姿态（两段同时生成，放在 seg2 会反复横跳）"
+  ],
+  "seg1": [
+   [
+    "Mei 的画外音响起，Jasper 和她面对面站在篝火边，她抬眼看向声音的方向",
+    "\"Ladies, choose your partner.\"",
+    "双人中景，固定",
+    "画外:Mei"
+   ],
+   [
+    "她看向 Jasper，举了一下手里的鸡尾酒杯",
+    "\"You.\"",
+    "双人中近景，固定",
+    "她"
+   ],
+   [
+    "Jasper 眉梢微动，嘴角有一丝不易察觉的弧度",
+    "\"You sure?\"",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "她朝他走近一步，停在他面前，两人相距半臂",
+    "",
+    "双人中景，缓推",
+    "她"
+   ],
+   [
+    "他低头看她，眼神认真，轻轻点了一下头，伸手接过她手里的酒杯放在旁边的台面上",
+    "\"Then let's go.\"",
+    "双人近景，固定",
+    "Jasper"
+   ]
+  ],
+  "seg2": [
+   [
+    "切到配对套房的空镜：白色灰泥墙，浅色木地板，整面落地窗挂着白纱帘，窗外夜色海面，床头一盏暖黄台灯",
+    "\"Sofia has chosen Jasper. Sloane has chosen Wes.\"",
+    "空镜，固定",
+    "画外:Mei"
+   ],
+   [
+    "Jasper 和她站在房间里，他从床上拿起一个白色枕头",
+    "",
+    "双人全景，固定",
+    ""
+   ],
+   [
+    "他把枕头放在日床沙发一端，直起身，她看着他，开口",
+    "",
+    "双人中景，固定",
+    "她"
+   ],
+   [
+    "他停住，转过身来看着她，没有躲",
+    "\"Yes.\"",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "他顿了一拍，眼神认真",
+    "\"Still want me?\"",
+    "双人中景，固定",
+    "Jasper"
+   ]
+  ],
+  "pending": {
+   "who": "Jasper",
+   "goal": "测试她是否在意他没钱",
+   "move": "他承认自己是四个骗子之一，然后反问她还选不选他",
+   "needs": "她是否还愿意要他"
+  },
+  "next": {
+   "cue": {
+    "zh": "他刚承认自己是骗子，问她还要不要他",
+    "en": "He just admitted he's one of the four liars, and asked if she still wants him."
+   },
+   "A": {
+    "zh": "我放下酒杯，看着他的眼睛说，\"我要的是你，不管真假。\"",
+    "en": "\"I want you. Real or fake.\"",
+    "leads_to": "K03：她留下，他用一句玩笑接住，第二天上午 Mei 在沙滩宣布夺旗赛",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我转身走向门口，说，\"那晚安了，骗子。\"",
+    "en": "\"Goodnight then, liar.\"",
+    "leads_to": "K03：她转身要走，他在身后说了一句话让她停下，第二天上午 Mei 在沙滩宣布夺旗赛",
+    "trimmed": true
+   }
+  },
+  "did": "Mei 画外宣布选择，她举杯回应后走向 Jasper；切到套房，他拿起枕头去睡日床沙发，她问他是不是四个骗子之一，他承认并反问还选我吗"
+ },
+ {
+  "text": "嗯",
+  "sec": 152.7,
+  "model": "deepseek/deepseek-v4-pro",
+  "attempts": 2,
+  "lint_left": [
+   "【必改】台词在拖延（Sleep on it. We have a race tomorrow.）：不把事情往后推，同一拍里给出一样具体的东西——线索、动作、条件或赌约（V3.0）",
+   "道具“卡片”标的是地点里本来就有：set 里要写到它（放在哪）",
+   "道具“枕头”标的是地点里本来就有：set 里要写到它（放在哪）",
+   "出现了“旗”：不写旗帜（会画出带标志的旗）"
+  ],
+  "seg1": [
+   [
+    "Jasper 听到她只“嗯”了一声，嘴角微微一扯",
+    "You don't have to answer tonight.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "她伸手想碰他的手臂，但停在半空",
+    "I wasn't trying to—",
+    "双人近景，她，固定",
+    "她"
+   ],
+   [
+    "他没有回头，拿起枕头拍了拍",
+    "Sleep on it. We have a race tomorrow.",
+    "双人中景，固定",
+    "Jasper"
+   ],
+   [
+    "他躺下，拉过薄毯盖住自己",
+    "",
+    "双人全景，固定",
+    ""
+   ],
+   [
+    "她站在床边，月光洒在她肩上，轻声说",
+    "",
+    "双人近景，固定",
+    "她"
+   ]
+  ],
+  "seg2": [
+   [
+    "切到白沙海滩的空镜：平整的白沙，明亮的阳光，无人",
+    "",
+    "空镜，固定",
+    ""
+   ],
+   [
+    "Mei 站在起跑线旁，手持素面奶油色卡片，微笑宣布",
+    "Flags at the far end. Winner gets a private date.",
+    "单人近景，Mei，固定",
+    "Mei"
+   ],
+   [
+    "站到她右边，挑衅地看了她一眼",
+    "I'm not letting you win today.",
+    "三人中景，固定，Jasper 左，她中，Sloane 右",
+    "Sloane"
+   ],
+   [
+    "她冲出起跑线，Sloane 跑在她身后几步，突然扑倒在沙上，抱着脚踝喊",
+    "My ankle! Help me!",
+    "双人全景，跟拍，她跑在前，Sloane 在后",
+    "Sloane"
+   ],
+   [
+    "她回头看了一眼，但继续冲刺，举起手",
+    "",
+    "双人中景，固定，她举旗，Jasper 在终点微笑",
+    "她"
+   ],
+   [
+    "Jasper 走到她身边，嘴角带着罕见的笑意",
+    "Nice.",
+    "双人中近景，固定",
+    "Jasper"
+   ],
+   [
+    "Mei 走到他们面前，收起笑容，举起另一张卡片",
+    "",
+    "单人近景，Mei，固定",
+    "Mei"
+   ],
+   [
+    "她看向 Jasper，他眉头微皱；Sloane 在远处得意地笑",
+    "",
+    "双人全景，固定",
+    ""
+   ]
+  ],
+  "pending": {
+   "who": "Mei",
+   "goal": "制造节目悬念，打破固定搭档",
+   "move": "宣布今晚每位女嘉宾要和另一位男嘉宾单独约会",
+   "needs": "她是否接受安排"
+  },
+  "next": {
+   "cue": {
+    "zh": "她刚赢下夺旗赛，Mei 却宣布今晚换搭档约会。",
+    "en": "She just won the flag race, but Mei announced a partner-swap date tonight."
+   },
+   "A": {
+    "zh": "我拉 Jasper 到一边，低声说‘相信我，我去套点线索’，然后走向吧台赴约",
+    "en": "I pull Jasper aside, whisper 'Trust me, I'll get some intel,' then head to the bar for the date.",
+    "leads_to": "K04：换搭档约会，她和 Wes 在吧台私聊，Jasper 在远处看着",
+    "trimmed": true
+   },
+   "B": {
+    "zh": "我走到 Mei 面前，说‘我今晚的约会对象是谁？’，然后直接去吧台，不回头",
+    "en": "I walk up to Mei, ask 'Who's my date tonight?' and head straight to the bar without looking back.",
+    "leads_to": "K04：换搭档约会，她直接赴约，Wes 透露 Jasper 的疑点",
+    "trimmed": true
+   }
+  },
+  "did": "Jasper 让她先睡，时间跳到第二天沙滩夺旗赛，她拔旗获胜，Mei 宣布赢者得私人约会，紧接着宣布今晚换搭档约会"
+ }
+]

@@ -293,9 +293,12 @@ def seg2_cast_refs(sp):
 def plate_for(sp):
     """V3.0（三真四假 S001455553：换到套房后第 2 段漂回泳池边，下一轮整轮都在泳池）：masters/urls.json 的 plates 是 {"地点关键词|关键词": 空景图}，这一轮的地点对上就用它当地点参考；没有 plates 的剧照旧。"""
     loc = str(sp.get('location') or '') + str(sp.get('set') or '')[:20]
-    for k, u in (TU.get('plates') or {}).items():
-        if any(x and x in loc for x in k.split('|')): return u
-    return None
+    when = str(sp.get('location') or '') + str(sp.get('set') or '')
+    day = bool(re.search('白天|上午|下午|中午|清晨|早上|早晨|晨光|阳光|日出|天亮', when)) and not re.search('夜|午夜|深夜|傍晚|黄昏|月光', str(sp.get('location') or ''))
+    hit = [(k, u) for k, u in (TU.get('plates') or {}).items() if any(x and x in loc for x in k.split('@')[0].split('|'))]
+    for k, u in hit:  # V3.11：键名带 @day 的是白天版空景（三真四假：泳池、套房、吧台），剧情写着白天就用它；原来白天的泳池戏照着夜景空景拍成了夜里
+        if k.endswith('@day') == day: return u
+    return next((u for k, u in hit if '@' not in k), None)
 
 
 def prompts(sp, mode, hands_in_frame=False, set_start=None, seg2_first=False, stage_start=None, worn=None, jacket_start=False):
