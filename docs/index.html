@@ -201,7 +201,7 @@ addEventListener('resize', placeSubs);
 // 一个画面切到另一个：新的先盖上，再停旧的
 function show(el){ const old = front; front = el; el.classList.add('on'); const retire = () => { if (old !== front){ old.classList.remove('on'); old.pause(); } }; requestAnimationFrame(retire); setTimeout(retire, 60); }
 function spare(){ return pool.find(v => v !== front && !v.dataset.keep) || pool.find(v => v !== front); }
-function load(el, src, loop){ el.loop = !!loop; el.muted = !!loop; el.preload = 'auto'; el.src = src; el.load(); }
+function load(el, src, loop){ el.loop = !!loop; el.muted = !!loop; el.preload = 'auto'; el._tl = Date.now(); el._dl = null; el.src = src; el.load(); }
 // 缓冲够了才开播（11-05 Vicky：网页播放特别卡）：真的缓冲到前面 need 秒或到片尾才算够。不信 readyState 4：Chrome 的“能播完”是估的，
 // 第 1 段、第 2 段和待机循环同时下载、抢一条带宽时，第 1 段没下完就开播，中途停 3 次共 8 秒（实测）。
 // 只到 readyState 3 的（iPhone 上暂停时不预载）等满 wait 秒也放行，免得一直不开播
@@ -211,6 +211,9 @@ function pick(v, s){ return s.url ? (v.dataset.started ? v.dataset.src : s.url) 
 // 等着的时候让这一段静音、0.0625 倍速在后台“播”，浏览器就一直下到结尾；真开播时退回 0 秒、恢复正常速度和声音。
 function warm(v){ if (!v.src || v.dataset.started || !v.paused || v.readyState < 1) return; const b = v.buffered; if (v.duration > 0 && b.length && b.end(b.length - 1) >= v.duration - 0.3) return;
   v.dataset.warm = '1'; v.muted = true; try { v.playbackRate = 0.0625; } catch (e) {} v.play().catch(() => {}); }
+function bufEta(v){ const b = v.buffered, end = b.length ? b.end(b.length - 1) : 0; if (!(v.duration > 0) || !end) return Infinity; if (end >= v.duration - 0.3) return 0;
+  if (!v._b0 || v._bsrc !== v.src){ v._b0 = Date.now(); v._e0 = end; v._bsrc = v.src; return Infinity; } const dt = (Date.now() - v._b0) / 1000, rate = (end - v._e0) / dt;
+  return dt > 1.5 && rate > 0 ? (v.duration - end) / rate : Infinity; }  // 还要几秒下完（按这一段实测的缓冲速度）
 function enough(v, need, wait){ const b = v.buffered, end = b.length ? b.end(b.length - 1) : 0;
   if (v.duration > 0 && end >= Math.min(v.duration - 0.3, v.currentTime + need)) return true;
   if (v.readyState >= 3){ const now = Date.now(); if (!v._r3 || v._r3src !== v.src){ v._r3 = now; v._r3src = v.src; } return now - v._r3 >= (wait || 10000); } return false; }
@@ -313,8 +316,10 @@ async function liveRound(kind, choice, said){
   // V1.5 提速：第 1 段不等第 2 段出片——按第 2 段的预计出片时间（中转给的 eta_left）倒推开播，第 1 段播完正好接上第 2 段
   const LOCAL = location.hostname === '127.0.0.1', M = LOCAL ? 1.5 : 3.0;  // 轮询、隧道延迟和第 2 段从 Vivix CDN 缓冲的余量（秒）
   const segErr = () => r && r.segs && r.segs.some(s => s.status === 'error');
-  const seg1Ok = () => r && r.segs && r.segs[0] && r.segs[0].url && srcOf(r.segs[0]).includes(V[0].dataset.src) && enough(V[0], 99, 25000);
-  const seg2Soon = () => { const s2 = r.segs[1]; if (!s2 || s2.url) return true; const d1 = V[0].duration || r.segs[0].dur || 5; return s2.eta_left != null && s2.eta_left <= d1 - M - (s2.dur >= 15 ? 1.5 : 0); };
+  const seg1Ok = () => r && r.segs && r.segs[0] && r.segs[0].url && srcOf(r.segs[0]).includes(V[0].dataset.src) && enough(V[0], 99, 25000) && (V[0]._dl != null || (V[0]._dl = (Date.now() - V[0]._tl) / 1000), true);
+  const seg2Soon = () => { const s2 = r.segs[1]; if (!s2) return true;
+    if (s2.url){ const d1 = V[0].duration || r.segs[0].dur || 15, v = V[1]; if (!v._u0) v._u0 = Date.now();  // 11-05：第 2 段到了，按它实测的下载速度估：第 1 段播完前下得完才开播（宁可开头多等，不在中间停）；等 35 秒还估不出就照开
+      return srcOf(s2).includes(v.dataset.src) && (bufEta(v) <= d1 - 2 || Date.now() - v._u0 > 35000); } const d1 = V[0].duration || r.segs[0].dur || 5; return s2.eta_left != null && s2.eta_left + (V[0]._dl != null ? V[0]._dl : 8) <= d1 - M - (s2.dur >= 15 ? 1.5 : 0); };  // 11-05：再留出浏览器下载第 2 段的时间（按第 1 段实测的下载用时）
   await hold(null, () => (r && r.status === 'error') || segErr() || (seg1Ok() && seg2Soon()));
   if (my !== liveRun){ clearInterval(poll); return; }
   const view = {};
