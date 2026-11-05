@@ -155,9 +155,10 @@ const Q = new URLSearchParams(location.search), K = Q.get('k') || '', MODE = Q.g
 const PAGES = location.hostname.endsWith('github.io');
 // 两条男主线各有一个中转（Wes 8906、Jasper 8907）：开场后的配对选择决定这一局走哪条线。relay.json = {wes, jasper}。
 const LOCAL_API = {wes: 'http://127.0.0.1:8906', jasper: 'http://127.0.0.1:8907'};
-let APIS = Object.assign({}, LOCAL_API), LINE = null, API = LOCAL_API.wes;
+const AQ = Q.get('api');  // 即兴剧场 APP 嵌入时带 api（里面的 {line} 换成 wes / jasper），不再读 relay.json
+let APIS = AQ ? {wes: AQ.replace('{line}', 'wes'), jasper: AQ.replace('{line}', 'jasper')} : Object.assign({}, LOCAL_API), LINE = null, API = APIS.wes;
 const HE = {wes: 'Wes', jasper: 'Jasper'};
-const relayReady = PAGES ? fetch('relay.json?t=' + Date.now(), {cache: 'no-store'}).then(r => r.json()).then(j => { APIS = j; API = j.wes; }) : Promise.resolve();
+const relayReady = PAGES && !AQ ? fetch('relay.json?t=' + Date.now(), {cache: 'no-store'}).then(r => r.json()).then(j => { APIS = j; API = j.wes; }) : Promise.resolve();
 const useLine = l => { LINE = l; API = APIS[l]; $('brandHe').textContent = HE[l]; };
 const CDN = {"media/OPEN.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/b7c79cccba3a4a08aac9e28c555b765f/OPEN.mp4", "media/IDLE0.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/d2da982c075045569647a167c8c73611/IDLE0.mp4", "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/88a44e4c43414e85bd215b2fd7a531bd/poster.jpg", "audio/WAIT.mp3": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/37d71df984094a42bdd9014882082ad3/WAIT.mp3"};
 const SRC = p => PAGES && CDN[p] ? CDN[p] : p;
