@@ -83,3 +83,4 @@ Vicky 人工测后复盘；时延（考虑默认 5+15）；嫌疑板页面、预
 - 实测：干跑两条线各 5 轮（tests/dry_v311_*.log）反转都串起来了；实拍 L0258042ec（Jasper 线，去泳池找 Ravi）：第 2 段是 Ravi 本人（灰亚麻西装、白 T），两人都没笑，154 秒出完。第一次实拍关键帧把 Ravi 画成了 Jasper → 已改不画关键帧。
 - 还剩：泳池空景是夜景，白天的泳池戏会变成夜里；带前情换线时第 1 段用的是开场首帧（夜里篝火），和前情地点不一致；开播前检查走兜底 qwen 时偶尔 23 秒超时直接放行；飞书 8️⃣ 已同步。
 - 11-05 补完剩下三件：① 白天空景（day_plates.py，泳池、套房、吧台白天版，plates 键名 @day，共用 plate_for 按时间挑）；实拍 S032531823 泳池找 Kian：第 2 段是白天泳池、Kian 定装对、无笑场。② 导演层兜底换 Kimi K3.1 Pro（tests/model_ab/ 五个模型对照，GLM 快但错多、Grok 最好但太慢）；单轮导演约 64–100 秒。③ 换线约会的前情写成“夜里在篝火露台碰头再去吧台”，和新线第一张画面（开场首帧）对上；重新配对本来就在篝火露台。另：顶替段开播检查不再按男主衣服查。
+- 11-05 导演层改用 Opus 5.5（Vicky 看过 tests/model_ab2/对比结论.md 后定）：OpenRouter 仍拒绝 Anthropic，改经本机已登录的 Claude Code 调用（共用模板 DIRECTOR_CLI；run.sh 里 ila-wes / ila-jasper 设 DIRECTOR_CLI=claude-opus-5-5，备份 run.sh.before-opus），失败自动退回 OpenRouter（Sonnet → Kimi）。实测 L035310978：写剧情 45.8 秒、整轮 108 秒、约 0.1 美元/轮（占 Max 订阅额度，只适合她自己测；给别人测要换 Anthropic API Key）。

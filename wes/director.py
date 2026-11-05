@@ -1408,7 +1408,35 @@ def _shape(sp, mode):
 FALLBACK_MODEL = os.environ.get('DIRECTOR_FALLBACK', 'moonshotai/kimi-k3.1-pro')  # V3.11（Vicky 11-05：GLM 写的剧情台词安错人、编造前情）：同两轮对照 GLM 38 秒但遗留问题多、台词归属错；Kimi K3.1 Pro 约 100 秒，台词归属对、每拍写表情；Grok 4.7 最好但 150–200 秒；DeepSeek V4 Pro 不如 GLM；Qwen 3.8 Max 被截断（tests/model_ab/）。想换回：环境变量 DIRECTOR_FALLBACK=z-ai/glm-5.3-prime。原注释：  # V3.6b：OpenRouter 对这个账户的 Anthropic/OpenAI/Google 一律 403（2026-11-04 19:20 起，“violation of provider Terms Of Service”）时这一次改用它；meet 干跑两轮 18–32 秒、JSON 完整、他主动推进；Kimi K3.1 要 60 秒，Grok 4.7、Qwen3.8 Max、DeepSeek V4 Pro 输出被截断。主模型恢复后自动回到主模型
 
 
+CLI_MODEL = os.environ.get('DIRECTOR_CLI')  # V3.11（Vicky 11-05 定用 Opus 5.5）：OpenRouter 拒绝 Anthropic 期间，经本机已登录的 Claude Code 调用，例如 claude-opus-5-5；没设就照旧走 OpenRouter
+CLAUDE_BIN = os.path.expanduser('~/.local/bin/claude')
+
+
+def _call_cli(msgs, timeout, model):
+    """本机 Claude Code（claude -p）当导演层：编剧/导演 PE + 资料包作系统提示词，打回重写时把上一次输出和要改的地方接在后面。
+    同一份系统提示词由 Claude Code 自己缓存（1 小时）。失败抛异常，由 _call 退回 OpenRouter。Sonnet 5.5 / Opus 5.5 / Kimi 对照见三真四假 tests/model_ab2/。"""
+    import subprocess, tempfile
+    sysm = msgs[0]['content']; sysm = ''.join(x['text'] for x in sysm) if isinstance(sysm, list) else sysm
+    conv = msgs[1:]; prompt = conv[0]['content']
+    for k in range(1, len(conv) - 1, 2): prompt += '\n\n【你上一次输出的 JSON】\n' + conv[k]['content'] + '\n\n【要改】\n' + conv[k + 1]['content']
+    with tempfile.NamedTemporaryFile('w', suffix='.txt', delete=False, encoding='utf-8') as f: f.write(sysm); spf = f.name
+    env = {k: v for k, v in os.environ.items() if k not in ('ANTHROPIC_BASE_URL', 'ANTHROPIC_API_KEY')}
+    try:
+        r = subprocess.run([CLAUDE_BIN, '-p', '--model', model, '--system-prompt-file', spf, '--tools', '', '--output-format', 'json', '--no-session-persistence',
+                            '--strict-mcp-config', '--setting-sources', '', '--effort', 'low', prompt], capture_output=True, text=True, timeout=max(timeout, 180), env=env, cwd=tempfile.gettempdir())
+    finally: os.unlink(spf)
+    j = json.loads(r.stdout)
+    if j.get('is_error'): raise OSError('Claude Code 出错：' + str(j.get('result'))[:200])
+    txt = j.get('result') or ''; i = txt.find('{')
+    if i < 0: raise ValueError('导演层没有返回 JSON：' + txt[:200])
+    obj, _ = json.JSONDecoder().raw_decode(txt[i:])
+    return obj, txt, {'model': 'claude-code:' + model, 'cost_usd': j.get('total_cost_usd'), 'api_ms': j.get('duration_api_ms')}
+
+
 def _call(msgs, timeout, model=None):
+    if CLI_MODEL and model is None:
+        try: return _call_cli(msgs, timeout, CLI_MODEL)
+        except Exception as e: print('DIRECTOR_CLI failed, back to OpenRouter:', repr(e)[:200], flush=True)
     model = model or MODEL
     body = {'model': model, 'max_tokens': 6400,  # V2.9：多了 news、he_move，选项更长，3800 会截断；11-04 三真四假 5200 截断过一次，加到 6400
             'reasoning': {'effort': 'low'}, 'temperature': 0.7, 'messages': msgs}
