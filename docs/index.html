@@ -160,7 +160,7 @@ let APIS = AQ ? {wes: AQ.replace('{line}', 'wes'), jasper: AQ.replace('{line}', 
 const HE = {wes: 'Wes', jasper: 'Jasper'};
 const relayReady = PAGES && !AQ ? fetch('relay.json?t=' + Date.now(), {cache: 'no-store'}).then(r => r.json()).then(j => { APIS = j; API = j.wes; }) : Promise.resolve();
 const useLine = l => { LINE = l; API = APIS[l]; $('brandHe').textContent = HE[l]; };
-const CDN = {"media/OPEN.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/b7c79cccba3a4a08aac9e28c555b765f/OPEN.mp4", "media/IDLE0.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/d2da982c075045569647a167c8c73611/IDLE0.mp4", "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/88a44e4c43414e85bd215b2fd7a531bd/poster.jpg", "audio/WAIT.mp3": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/37d71df984094a42bdd9014882082ad3/WAIT.mp3"};
+const CDN = {"media/OPEN.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/local/uau_97b449e358664c5f91830989808ba718-OPEN_v2.mp4", "media/IDLE0.mp4": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/d2da982c075045569647a167c8c73611/IDLE0.mp4", "media/poster.jpg": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/88a44e4c43414e85bd215b2fd7a531bd/poster.jpg", "audio/WAIT.mp3": "https://storage.googleapis.com/waku-core-aicap/uploads/usr_4a6e5fb234d64da0a9429e519b299f07/37d71df984094a42bdd9014882082ad3/WAIT.mp3"};
 const SRC = p => PAGES && CDN[p] ? CDN[p] : p;
 const PICK = {cue: {zh: '午夜到了，Mei 请她选出今晚的搭档。', en: "Midnight. Mei asks her to pick tonight's partner."}, A: {zh: '我选 Wes。', en: 'I pick Wes.'}, B: {zh: '我选 Jasper。', en: 'I pick Jasper.'}, pick: true};
 const PREVIEW_NEXT = PICK;
@@ -201,7 +201,12 @@ addEventListener('resize', placeSubs);
 // 一个画面切到另一个：新的先盖上，再停旧的
 function show(el){ const old = front; front = el; el.classList.add('on'); const retire = () => { if (old !== front){ old.classList.remove('on'); old.pause(); } }; requestAnimationFrame(retire); setTimeout(retire, 60); }
 function spare(){ return pool.find(v => v !== front && !v.dataset.keep) || pool.find(v => v !== front); }
-function load(el, src, loop){ el.loop = !!loop; el.muted = !!loop; el.src = src; el.load(); }
+function load(el, src, loop){ el.loop = !!loop; el.muted = !!loop; el.preload = 'auto'; el.src = src; el.load(); }
+// 缓冲够了才开播（11-05 Vicky：网页播放特别卡）：浏览器判断能一口气播完（readyState 4），或已缓冲到前面 need 秒、到片尾；
+// 只到 readyState 3 的（iPhone 上暂停时不预载）等满 wait 秒也放行，免得一直不开播
+function enough(v, need, wait){ if (v.readyState >= 4) return true; const b = v.buffered, end = b.length ? b.end(b.length - 1) : 0;
+  if (end - v.currentTime >= need || (v.duration > 0 && end >= v.duration - 0.3)) return true;
+  if (v.readyState >= 3){ const now = Date.now(); if (!v._r3 || v._r3src !== v.src){ v._r3 = now; v._r3src = v.src; } return now - v._r3 >= (wait || 10000); } return false; }
 
 let sid = null, next = null, round = 0, busy = false;
 async function api(path, body){ await relayReady; const r = await fetch(API + path, {method: body ? 'POST' : 'GET', headers: {'Content-Type': 'application/json'}, body: body ? JSON.stringify(Object.assign({k: K}, body)) : undefined}); const raw = await r.text(); let j; try { j = JSON.parse(raw); } catch (e){ throw new Error(T('The server hiccuped. Please send again.', '服务刚才没响应，请再发一次')); } if (!r.ok) throw new Error(j.err || r.status); return j; }
@@ -230,7 +235,11 @@ let replayFn = null;
 function playOpening(){
   showSub(null); ov.currentTime = 0; ov.muted = false; ov.loop = false;
   RT.begin({key: 'OPEN', parts: [{v: ov, d: 101.5}]}); replayFn = playOpening;
-  ov.play().then(() => show(ov)).catch(() => { show(ov); toast(T('Tap the screen to start', '点一下画面开始')); });
+  const go = () => ov.play().then(() => show(ov)).catch(() => { show(ov); toast(T('Tap the screen to start', '点一下画面开始')); });
+  if (enough(ov, 8, 6000)) go();
+  else {  // 先在点击里起播再停住（保住播放权限），缓冲够了再接着播
+    ov.play().then(() => { if (!enough(ov, 8, 6000)){ ov.pause(); show(ov); toast(T('Loading the opening…', '开场片缓冲中…')); const t = setInterval(() => { if (enough(ov, 8, 6000)){ clearInterval(t); go(); } }, 250); } else show(ov); }).catch(() => { show(ov); toast(T('Tap the screen to start', '点一下画面开始')); });
+  }
   ov.ontimeupdate = () => { const t = ov.currentTime; const c = OPEN_CUES.find(q => t >= q.s && t <= q.e); showSub(c || null, c && (c.who === 'Her' ? T('Her', '她') : c.who)); };
   ov.onended = () => { RT.done('OPEN'); RT.clear(); ov.ontimeupdate = null; idle.currentTime = 0; idle.play().catch(() => {}); show(idle); openChoice(); };
 }
@@ -297,7 +306,7 @@ async function liveRound(kind, choice, said){
   // V1.5 提速：第 1 段不等第 2 段出片——按第 2 段的预计出片时间（中转给的 eta_left）倒推开播，第 1 段播完正好接上第 2 段
   const LOCAL = location.hostname === '127.0.0.1', M = LOCAL ? 1.5 : 3.0;  // 轮询、隧道延迟和第 2 段从 Vivix CDN 缓冲的余量（秒）
   const segErr = () => r && r.segs && r.segs.some(s => s.status === 'error');
-  const seg1Ok = () => r && r.segs && r.segs[0] && r.segs[0].url && V[0].dataset.src === r.segs[0].url && V[0].readyState >= 3;
+  const seg1Ok = () => r && r.segs && r.segs[0] && r.segs[0].url && V[0].dataset.src === r.segs[0].url && enough(V[0], 15);
   const seg2Soon = () => { const s2 = r.segs[1]; if (!s2 || s2.url) return true; const d1 = V[0].duration || r.segs[0].dur || 5; return s2.eta_left != null && s2.eta_left <= d1 - M - (s2.dur >= 15 ? 1.5 : 0); };
   await hold(null, () => (r && r.status === 'error') || segErr() || (seg1Ok() && seg2Soon()));
   if (my !== liveRun){ clearInterval(poll); return; }
@@ -307,7 +316,7 @@ async function liveRound(kind, choice, said){
     view.play_at = Date.now(); view.seg2_eta = r.segs[1] ? r.segs[1].eta_left : null;
     RT.begin({key: 'round:' + rid, mix: r.mix, parts: r.segs.map((x, i) => ({v: V[i], d: x.dur || x.seconds})), label: T(`Scene ${round + 1}`, `第 ${round + 1} 幕`)}); RT.part(0);
     await play(0); view.seg1_end = Date.now();
-    const ok2 = () => segErr() || (r.segs[1].url && V[1].dataset.src === r.segs[1].url && V[1].readyState >= 3);
+    const ok2 = () => segErr() || (r.segs[1].url && V[1].dataset.src === r.segs[1].url && enough(V[1], 15, 6000));
     if (!ok2()){ waitMusic(true); while (!ok2() && my === liveRun) await new Promise(res => setTimeout(res, 100)); waitMusic(false); }  // 第 2 段还没到：停在第 1 段最后一帧
     view.stall = (Date.now() - view.seg1_end) / 1000;
     if (my === liveRun && !segErr()){ RT.part(1); await play(1); RT.done('round:' + rid); }
