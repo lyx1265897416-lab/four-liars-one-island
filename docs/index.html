@@ -94,6 +94,23 @@ body.choosing #bar,body.ended #bar,body.start #bar{display:none}
 #menu{position:absolute;z-index:9;top:calc(58px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));min-width:200px;background:rgba(14,16,20,.96);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:6px;display:flex;flex-direction:column}
 #menu button{background:none;border:0;text-align:left;padding:11px 12px;border-radius:9px;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
 #menu button:hover{background:rgba(255,255,255,.06)}
+/* 人物资料（11-05 Vicky：多人内容右上角加资料夹，能查人物信息，不然分不清谁是谁） */
+.acts{display:flex;gap:8px;align-items:center}
+#cast{position:absolute;inset:0;z-index:9;background:rgba(8,9,12,.97);display:flex;flex-direction:column;gap:12px;padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#cast .ch{display:flex;justify-content:space-between;align-items:center}
+#cast h2{font-family:var(--display);font-size:24px;font-weight:600;letter-spacing:.06em;margin:0;text-transform:uppercase}
+#cast .rule{font-size:13px;color:var(--mute);line-height:1.45}
+#cast .rule .zh{font-family:var(--zh)}
+#castList{flex:1;overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+.pc{border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.03);display:flex;flex-direction:column}
+.pc img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#f2f2f2}
+.pc .pb{padding:8px 10px 10px;display:flex;flex-direction:column;gap:3px}
+.pc .pn{font-family:var(--display);font-size:16px;letter-spacing:.04em}
+.pc .pr{font-size:11px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+.pc .pd{font-size:12.5px;line-height:1.4;color:#d9d4cb}
+.pc .tag{align-self:flex-start;font-size:10.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--gold);margin-top:2px}
+.pc.out img{filter:grayscale(1) brightness(.6)}
+.pc.out .tag{border-color:rgba(255,255,255,.25);color:#cfcfcf}
 #menu button small{color:var(--mute)}
 #toast{position:absolute;z-index:10;left:50%;top:calc(64px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.14);padding:8px 14px;border-radius:999px;font-size:12.5px;white-space:nowrap}
 .dots{display:inline-flex;gap:4px}.dots i{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:d 1s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
@@ -118,8 +135,14 @@ body.lang-en .zh{display:none!important}
   <div class="shade" id="shade"></div>
   <header id="top">
     <div class="brand"><b id="brandHe">Island</b> Four Liars <span>LIVE</span></div>
-    <button class="icon" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="1.8" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
+    <div class="acts"><button class="icon" id="castBtn" aria-label="Cast"><svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="1.7" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></button>
+    <button class="icon" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="1.8" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button></div>
   </header>
+  <aside id="cast" hidden aria-label="Cast">
+    <div class="ch"><h2 id="castTitle">Cast</h2><button class="icon" id="castClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="rule" id="castRule"></div>
+    <div id="castList"></div>
+  </aside>
   <nav id="menu" hidden>
     <button id="mLang"><span>Interface language</span><small id="mLangV"></small></button>
     <button id="mRestart"><span>Restart from the opening</span></button>
@@ -176,7 +199,7 @@ const waitMusic = on => { waitTarget = on ? .3 : 0; if (on && wait.paused) wait.
 const LANGQ = (Q.get('lang') || '').toLowerCase();
 let lang = LANGQ.startsWith('zh') ? 'zh' : LANGQ.startsWith('en') ? 'en' : (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
 const T = (en, zh) => lang === 'zh' ? zh : en;
-RT.init({drama: 'four-liars-one-island', zh: () => lang === 'zh'});
+RT.init({drama: 'four-liars-one-island', zh: () => lang === 'zh', ignore: '#cast'});
 
 const applyLang = () => {
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en'; document.body.classList.toggle('lang-en', lang === 'en');
@@ -242,6 +265,32 @@ $('startBtn').onclick = async () => {
   startSession().catch(e => setChip('<b>Could not start</b> · ' + esc(e.message)));
   playOpening();
 };
+// 人物资料：只写节目里公开的、她能看到的东西，不剧透谁真谁假；淘汰的人按 Mei 公开的结果标出来
+const CAST_INFO = [
+  ['her', 'You · Sofia', '你 · 索菲亚', 'Contestant (you)', '女嘉宾（你）', 'Here for someone real, not a paycheck.', '想找一个真的人，不是一张支票。'],
+  ['wes', 'Wes', 'Wes', 'Contestant', '男嘉宾', 'Says he owns a surf bar in San Diego. Warm, remembers every little thing you say.', '自称在圣地亚哥开冲浪酒吧。会照顾人，记得你说过的每件小事。'],
+  ['jasper', 'Jasper', 'Jasper', 'Contestant', '男嘉宾', 'Says little, never talks money. Asked you why you picked him.', '话少，从不谈钱。最在意你为什么选他。'],
+  ['mei', 'Mei', 'Mei', 'Host', '主持人', 'Knows who is real and who is lying. Only reveals it at ceremonies.', '知道谁真谁假，只在仪式上揭晓。'],
+  ['sloane', 'Sloane', 'Sloane', 'Contestant · your rival', '女嘉宾 · 你的对手', 'Sweet with a sting. Wants a real millionaire for herself.', '甜里带刺，也想抢到一个真富豪。'],
+  ['ethan', 'Ethan', 'Ethan', 'Contestant', '男嘉宾', 'Shy, laughs when he is nervous. Looks the least like a millionaire.', '腼腆，一紧张就笑，看起来最不像富豪。'],
+  ['kian', 'Kian', 'Kian', 'Contestant', '男嘉宾', 'Bold and direct. Says he owns a boat and is not shy about it.', '从容直接，说自己有船，一点也不藏。'],
+  ['brody', 'Brody', 'Brody', 'Contestant', '男嘉宾', 'His smile is a little too practiced. Lines sound rehearsed.', '笑得太熟练，台词像背过的。'],
+  ['jude', 'Jude', 'Jude', 'Contestant', '男嘉宾', 'Former model. Cold, keeps his distance.', '前模特，冷淡，不爱搭话。'],
+  ['ravi', 'Ravi', 'Ravi', 'Contestant', '男嘉宾', 'Quiet, watches everyone. Says he is an investor.', '安静，爱观察所有人，自称投资人。'],
+];
+const CAST_OUT = {K05: ['ethan', 'Eliminated · real millionaire', '已淘汰 · 真富豪'], K09: ['brody', 'Eliminated · liar', '已淘汰 · 骗子']};
+function renderCast(){
+  $('castTitle').textContent = T('Cast', '人物资料');
+  $('castRule').innerHTML = esc(T('Seven men: three real millionaires, four liars. Pick a liar and you go home with him.', '七个男人：三个真富豪，四个骗子。选到骗子，就得跟他回家。'));
+  const out = {}; Object.keys(CAST_OUT).forEach(k => { if ((lastCards || []).includes(k)) out[CAST_OUT[k][0]] = T(CAST_OUT[k][1], CAST_OUT[k][2]); });
+  $('castList').innerHTML = CAST_INFO.map(([id, en, zh, ren, rzh, den, dzh]) => {
+    const tag = out[id] || (LINE === id ? T('Your partner', '你的搭档') : '');
+    return `<div class="pc${out[id] ? ' out' : ''}"><img src="media/cast/${id}.jpg" alt="" loading="lazy"><div class="pb"><div class="pn">${esc(T(en, zh))}</div><div class="pr">${esc(T(ren, rzh))}</div><div class="pd">${esc(T(den, dzh))}</div>${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div></div>`;
+  }).join('');
+}
+function closeCast(){ $('cast').hidden = true; if ($('cast').dataset.resume){ delete $('cast').dataset.resume; front.play().catch(() => {}); } }
+$('castBtn').onclick = () => { $('menu').hidden = true; if (!front.paused){ front.pause(); $('cast').dataset.resume = 1; } renderCast(); $('cast').hidden = false; };
+$('castClose').onclick = closeCast;
 let replayFn = null;
 function playOpening(){
   showSub(null); ov.currentTime = 0; ov.muted = false; ov.loop = false;
