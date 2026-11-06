@@ -28,7 +28,7 @@ video.v.on{opacity:1;z-index:1}
 .shade.deep{background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 18%,transparent 34%,rgba(0,0,0,.9))}
 /* top bar */
 #top{position:absolute;left:0;right:0;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
-body.embed #top{padding-left:62px}  /* 嵌入即兴剧场 APP 时左上角是 APP 的返回键，顶栏往右让出位置 */
+body.embed #top{padding-left:62px}body.embed #top .brand{white-space:nowrap;font-size:.9em;min-width:0;overflow:hidden;text-overflow:ellipsis}  /* 嵌入即兴剧场 APP 时左上角是 APP 的返回键，顶栏往右让出位置 */
 .brand{font-family:var(--display);letter-spacing:.18em;font-size:13px;text-transform:uppercase;color:var(--concrete);display:flex;gap:10px;align-items:baseline;min-width:0}
 .brand b{color:var(--gold);font-weight:400}
 .brand span{font-family:var(--body);letter-spacing:.08em;font-size:11px;color:var(--mute);white-space:nowrap}
