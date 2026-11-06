@@ -111,6 +111,11 @@ body.choosing #bar,body.ended #bar,body.start #bar{display:none}
 .pc .pd{font-size:12.5px;line-height:1.4;color:#d9d4cb}
 .pc .tag{align-self:flex-start;font-size:10.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--gold);margin-top:2px}
 .pc.out img{filter:grayscale(1) brightness(.6)}
+#castBtn{position:relative}
+#castBtn.new::after{content:"";position:absolute;top:5px;right:5px;width:9px;height:9px;border-radius:50%;background:#ff5c8d;box-shadow:0 0 0 2px #08090c}
+.pc.rvd{border-color:rgba(255,92,141,.6)}
+.pc .rv{margin-top:5px;padding:6px 8px;border-radius:8px;background:rgba(255,92,141,.12);border:1px solid rgba(255,92,141,.45);font-size:12px;line-height:1.4;color:#ffe1ea}
+.pc .rv b{display:block;font-size:10.5px;letter-spacing:.06em;color:#ff8fb3;font-weight:600;margin-bottom:2px}
 .pc.out .tag{border-color:rgba(255,255,255,.25);color:#cfcfcf}
 #menu button small{color:var(--mute)}
 #toast{position:absolute;z-index:10;left:50%;top:calc(64px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.14);padding:8px 14px;border-radius:999px;font-size:12.5px;white-space:nowrap}
@@ -253,7 +258,7 @@ async function api(path, body){ await relayReady; const r = await fetch(API + pa
 // 开场
 const ov = pool[1]; load(ov, SRC('media/OPEN.mp4')); const idle = pool[2]; load(idle, SRC('media/IDLE0.mp4'), true);
 if (PAGES) [[ov, 'media/OPEN.mp4'], [idle, 'media/IDLE0.mp4']].forEach(([v, p]) => v.addEventListener('error', () => { if (!v.src.endsWith(p)) { v.src = p; v.load(); } }));
-async function startSession(){ next = PICK; sid = null; round = 0; LINE = null; $('brandHe').textContent = 'Island'; }  // 会话在她选了搭档之后才在那条线的中转上开
+async function startSession(){ next = PICK; sid = null; round = 0; LINE = null; UNLOCK = {}; saveUnlock(); $('castBtn').classList.remove('new'); $('brandHe').textContent = 'Island'; }  // 会话在她选了搭档之后才在那条线的中转上开
 async function openLine(l, recap, cards){ useLine(l); const j = await api('/api/session', Object.assign({mode: MODE}, recap ? {recap, cards: cards || [], rounds: round} : {})); sid = j.sid; if (!recap) round = 0; }
 // V3.2 换搭档（恋综重新配对）：她点“重新配对：我改选 Jasper/Wes”或打类似的话，就在另一条线的中转上开会话，带上这一刻的剧情状态和已演过的关键片段，接着演
 let lastState = '', lastCards = [];
@@ -280,18 +285,28 @@ const CAST_INFO = [
   ['jude', 'Jude', 'Jude', 'Contestant', '男嘉宾', 'Former model. Cold, keeps his distance.', '前模特，冷淡，不爱搭话。'],
   ['ravi', 'Ravi', 'Ravi', 'Contestant', '男嘉宾', 'Quiet, watches everyone. Says he is an investor.', '安静，爱观察所有人，自称投资人。'],
 ];
+// V3.14（Vicky 11-05：她解锁了人物的真实身份，人物资料里要体现）：中转每轮给 unlock [{who, zh, en}]，这一幕播完时记下，卡片上标“已揭晓”，文件夹按钮亮红点
+let UNLOCK = {}; try { UNLOCK = JSON.parse(sessionStorage.getItem('ila_unlock') || '{}'); } catch (e) {}
+const saveUnlock = () => { try { sessionStorage.setItem('ila_unlock', JSON.stringify(UNLOCK)); } catch (e) {} };
+function addUnlock(list, rd){
+  let hit = false;
+  (list || []).forEach(u => { const w = String(u.who || '').trim().toLowerCase(); const c = CAST_INFO.find(x => x[0] === w || x[1].toLowerCase() === w);
+    if (!c || c[0] === 'her' || !(u.zh || u.en)) return; UNLOCK[c[0]] = {zh: u.zh || u.en, en: u.en || u.zh, rd}; hit = true; });
+  if (hit){ saveUnlock(); $('castBtn').classList.add('new'); }
+}
 const CAST_OUT = {K05: ['ethan', 'Eliminated · real millionaire', '已淘汰 · 真富豪'], K09: ['brody', 'Eliminated · liar', '已淘汰 · 骗子']};
 function renderCast(){
   $('castTitle').textContent = T('Cast', '人物资料');
   $('castRule').innerHTML = esc(T('Seven men: three real millionaires, four liars. Pick a liar and you go home with him.', '七个男人：三个真富豪，四个骗子。选到骗子，就得跟他回家。'));
   const out = {}; Object.keys(CAST_OUT).forEach(k => { if ((lastCards || []).includes(k)) out[CAST_OUT[k][0]] = T(CAST_OUT[k][1], CAST_OUT[k][2]); });
   $('castList').innerHTML = CAST_INFO.map(([id, en, zh, ren, rzh, den, dzh]) => {
-    const tag = out[id] || (LINE === id ? T('Your partner', '你的搭档') : '');
-    return `<div class="pc${out[id] ? ' out' : ''}"><img src="media/cast/${id}.jpg" alt="" loading="lazy"><div class="pb"><div class="pn">${esc(T(en, zh))}</div><div class="pr">${esc(T(ren, rzh))}</div><div class="pd">${esc(T(den, dzh))}</div>${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div></div>`;
+    const tag = out[id] || (LINE === id ? T('Your partner', '你的搭档') : ''), uk = UNLOCK[id];
+    const rv = uk ? `<div class="rv"><b>${esc(T('Revealed · Act ' + uk.rd, '已揭晓 · 第 ' + uk.rd + ' 幕'))}</b>${esc(T(uk.en, uk.zh))}</div>` : '';
+    return `<div class="pc${out[id] ? ' out' : ''}${uk ? ' rvd' : ''}"><img src="media/cast/${id}.jpg" alt="" loading="lazy"><div class="pb"><div class="pn">${esc(T(en, zh))}</div><div class="pr">${esc(T(ren, rzh))}</div><div class="pd">${esc(T(den, dzh))}</div>${rv}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div></div>`;
   }).join('');
 }
 function closeCast(){ $('cast').hidden = true; if ($('cast').dataset.resume){ delete $('cast').dataset.resume; front.play().catch(() => {}); } }
-$('castBtn').onclick = () => { $('menu').hidden = true; if (!front.paused){ front.pause(); $('cast').dataset.resume = 1; } renderCast(); $('cast').hidden = false; };
+$('castBtn').onclick = () => { $('menu').hidden = true; $('castBtn').classList.remove('new'); if (!front.paused){ front.pause(); $('cast').dataset.resume = 1; } renderCast(); $('cast').hidden = false; };
 $('castClose').onclick = closeCast;
 let replayFn = null;
 function playOpening(){
@@ -398,7 +413,7 @@ async function liveRound(kind, choice, said){
     RT.begin({hist: {r: r, her: (typeof herLine !== 'undefined' ? herLine : (typeof said !== 'undefined' && said ? (said.zh || said.en || '') : ''))}, key: 'round:' + rid, mix: r.mix, free: true, parts: r.segs.map((x, i) => ({v: V[i], d: x.dur || x.seconds})), label: T(`Scene ${sceneNo}`, `第 ${sceneNo} 幕`), jump: (j, t) => { V.forEach(x => { if (x !== V[j]){ x.pause(); x.onended = null; x.ontimeupdate = null; } }); go(j, t); }});
     go(0, 0);
   };
-  round++; next = r.next || next; lastState = r.state || lastState; lastCards = r.cards_after || lastCards; openChoice();
+  round++; next = r.next || next; lastState = r.state || lastState; lastCards = r.cards_after || lastCards; addUnlock(r.unlock, round); openChoice();
 
   function subLine(i, v){
     const Lns = (r.lines['seg' + (i + 1)] || []).filter(Boolean), Z = ((r.zh || {})['seg' + (i + 1)] || []).filter(Boolean), off = i === 1 ? 2 : 0;  // 第 2 段前 2 秒是静止承接
